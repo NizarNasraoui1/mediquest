@@ -1,0 +1,5 @@
+<div class="questionnaire-container" *ngIf="questionnaireLinks">
+    <div class="questionnaire-link" *ngFor="let questionnaireLink of questionnaireLinks">
+        <app-questionnaire-link [questionnaireLink]="questionnaireLink"></app-questionnaire-link>
+    </div>
+</div>

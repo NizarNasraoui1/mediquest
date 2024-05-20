@@ -1,0 +1,26 @@
+.canvas-border {
+    border: 1px solid #dcdcdc;
+}
+
+@media (max-width: 767px) {
+    .button-group button {
+        min-width: 100px;
+    }
+}
+
+@media (min-width: 767px) {
+    .button-group button {
+        min-width: 70px;
+    }
+}
+
+.button-group button.active {
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 1px 1px #007bff;
+}
+
+.draw-container {
+    margin-top: 10px;
+    margin-left: 10px;
+}

@@ -1,0 +1,396 @@
+<div [ngClass]="!preview?'view-questionnaire-container':''" id="questionnaire-container">
+    <main class="app__main" *ngIf="this.questionnaire && !isSubmitted">
+        <div class="ui-container ui-controls sc-controls app__controls">
+            <div class="ui-controls__container">
+                <div class="sc-question-wrapper">
+                    <div class="-enter-from" style="visibility: hidden; position: absolute;">
+                        <div id="question-loader" eager-load-component="true"
+                            class="sc-question-wrapper__loader ui-loader" aria-valuetext="Chargement..."
+                            role="progressbar" tabindex="-1" aria-live="polite" aria-busy="false">
+                            <div class="ui-loader-skeleton">
+                                <div class="ui-loader-skeleton__block"></div>
+                                <div class="ui-loader-skeleton__block" style="--loader-skeleton-block-width: 75%;">
+                                </div>
+                                <div class="ui-loader-skeleton__block ui-loader-skeleton__block--large"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-enter-from -enter-active -enter-to">
+                        <div class="ui-question sc-question risk-factors" headingattrs="[object Object]">
+                            <h1 class="question-title">{{topicNames[topicIndex]}}</h1>
+                            <mat-progress-bar mode="determinate" value="{{progressBarValue}}"></mat-progress-bar>
+                            <div class="ui-question__content">
+                                <div class="ui-multiple-choices" source="suggest">
+                                    <div class="ui-alert ui-alert--default ui-multiple-choices__hint">
+                                    </div>
+                                    <ul class="ui-list ui-multiple-choices__items">
+                                        <!-- Welcome -->
+                                        <ng-container *ngIf="topicIndex==0">
+                                            <app-welcome></app-welcome>
+                                        </ng-container>
+
+
+
+                                        <!-- informations générales -->
+                                        <ng-container *ngIf="topicIndex==1">
+                                            <form class="questionnaire" [formGroup]="generalInformtionsForm">
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">Nom :</p>
+                                                                <li class="inputText ui-multiple-choices-item__option">
+                                                                    <input formControlName="lastName" type="text"
+                                                                        pInputText class="p-input" />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">Prénom :</p>
+                                                                <li class="inputText ui-multiple-choices-item__option">
+                                                                    <input formControlName="firstName" type="text"
+                                                                        pInputText class="p-input" />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options ">
+                                                                <p class="questionLabel">Date de naissance :</p>
+                                                                <li style="width:300px"
+                                                                    class="p-inputText ui-multiple-choices-item__option">
+                                                                    <input placeholder="JJ/MM/AAAA" type="text"
+                                                                        mask="XX/XX/XXXX"
+                                                                        [dropSpecialCharacters]="false"
+                                                                        formControlName="birthday" type="text"
+                                                                        pInputText class="p-input" />
+
+
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">Adresse :</p>
+                                                                <li class="inputText ui-multiple-choices-item__option">
+                                                                    <input type="text" formControlName="address"
+                                                                        pInputText class="p-input" />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">Téléphone :</p>
+                                                                <li class="inputText ui-multiple-choices-item__option">
+                                                                    <input formControlName="tel" type="number"
+                                                                        pInputText class="p-input" />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">Adresse mail :</p>
+                                                                <li class="inputText ui-multiple-choices-item__option">
+                                                                    <input formControlName="mail" type="text" pInputText
+                                                                        class="p-input" />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">Profession :</p>
+                                                                <li class="inputText ui-multiple-choices-item__option">
+                                                                    <input formControlName="profession" type="text"
+                                                                        pInputText class="p-input" />
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+                                            </form>
+                                            <li class="ui-list-item ui-multiple-choices-item">
+                                                <fieldset
+                                                    class="ui-list-item__content ui-multiple-choices-item__content"
+                                                    aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                    <div class="ui-multiple-choices-item__choices">
+                                                        <ul class="ui-list ui-multiple-choices-item__options ">
+                                                            <p class="questionLabel">Date de rendez vous :</p>
+                                                            <li style="width:300px"
+                                                                class="p-inputText ui-multiple-choices-item__option">
+                                                                <input placeholder="JJ/MM/AAAA" type="text"
+                                                                    mask="XX/XX/XXXX" [dropSpecialCharacters]="false"
+                                                                    [(ngModel)]="appointmentDate" type="text" pInputText
+                                                                    class="p-input" />
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </fieldset>
+                                            </li>
+                                        </ng-container>
+                                        <!-- questionnaire -->
+
+                                        <ng-container *ngIf="topicIndex!=0">
+                                            <form class="questionnaire" [formGroup]="questionForm">
+                                                <ng-container *ngFor="let question of slicedQuestionnaireArray">
+                                                    <ng-container *ngIf="verifyCondition(question.id)">
+                                                        <li class="ui-list-item ui-multiple-choices-item">
+                                                            <fieldset
+                                                                class="ui-list-item__content ui-multiple-choices-item__content"
+                                                                aria-labelledby="p_8" role="radiogroup"
+                                                                source="suggest">
+                                                                <div class="ui-multiple-choices-item__choices">
+                                                                    <ul
+                                                                        class="ui-list ui-multiple-choices-item__options">
+                                                                        <ng-container
+                                                                            *ngIf="question.type===questionTypeEnum.RADIO">
+                                                                            <p class="questionLabel">{{question.label}}
+                                                                            </p>
+                                                                            <app-button-select
+                                                                                formControlName="{{question.id}}"
+                                                                                [options]="question.content!!"></app-button-select>
+
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="question.type===questionTypeEnum.NUMBER">
+                                                                            <p class="questionLabel">{{question.label}}
+                                                                            </p>
+                                                                            <li
+                                                                                class="inputText ui-multiple-choices-item__option">
+                                                                                <input type="number"
+                                                                                    formControlName="{{question.id}}"
+                                                                                    pInputText class="p-input" />
+                                                                            </li>
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="question.type===questionTypeEnum.CHECKBOX">
+                                                                            <p class="questionLabel">{{question.label}}
+                                                                            </p>
+                                                                            <ng-container
+                                                                                *ngFor="let option of question.content">
+                                                                                <li
+                                                                                    class="list_options  ui-multiple-choices-item__option">
+                                                                                    <p-checkbox
+                                                                                        [formControl]="getControl(question.id)"
+                                                                                        value="{{option.id}}"
+                                                                                        inputId="ny"></p-checkbox>
+                                                                                    <label class="checkbox-label"
+                                                                                        for="ny">
+                                                                                        {{option.label}}</label>
+                                                                                </li>
+
+                                                                            </ng-container>
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="question.type===questionTypeEnum.TEXT">
+                                                                            <p class="questionLabel">{{question.label}}
+                                                                            </p>
+                                                                            <li
+                                                                                class="inputText ui-multiple-choices-item__option">
+                                                                                <input type="text"
+                                                                                    formControlName="{{question.id}}"
+                                                                                    pInputText class="p-input" />
+                                                                            </li>
+                                                                        </ng-container>
+                                                                    </ul>
+                                                                </div>
+                                                            </fieldset>
+                                                        </li>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </form>
+                                        </ng-container>
+
+
+                                        <!-- certification -->
+
+                                        <ng-container *ngIf="isPaginationEnd">
+                                            <!-- <ng-container *ngIf="topicIndex==0"> -->
+                                            <form class="questionnaire" [formGroup]="certificationForm">
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel certification-question">
+                                                                    En cochant la case ci-dessous, je certifie que
+                                                                    les informations fournies au chirurgien-dentiste
+                                                                    sont
+                                                                    correctes et
+                                                                    complètes. Je m'engage à lui signaler toute
+                                                                    modification
+                                                                    de mon état
+                                                                    de santé par la suite:
+                                                                </p>
+                                                                <li
+                                                                    class="list_options  ui-multiple-choices-item__option">
+                                                                    <p-checkbox formControlName="certification"
+                                                                        value="true" inputId="ny"></p-checkbox>
+                                                                    <label class="checkbox-label certification-label"
+                                                                        for="ny">
+                                                                        Je certifie que les informations fournies au
+                                                                        chirurgien-dentiste sont correctes et complètes.
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">
+                                                                    Le questionnaire médical est rempli par :
+                                                                </p>
+
+                                                                <li
+                                                                    class="list_options  ui-multiple-choices-item__option">
+                                                                    <app-button-select formControlName="filledBy"
+                                                                        [options]="['Le patient','Un parent','Le tuteur']">
+                                                                    </app-button-select>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+
+
+
+                                                <li class="ui-list-item ui-multiple-choices-item">
+                                                    <fieldset
+                                                        class="ui-list-item__content ui-multiple-choices-item__content"
+                                                        aria-labelledby="p_8" role="radiogroup" source="suggest">
+                                                        <div class="ui-multiple-choices-item__choices">
+                                                            <ul class="ui-list ui-multiple-choices-item__options">
+                                                                <p class="questionLabel">
+                                                                    Signature
+                                                                </p>
+                                                                <li
+                                                                    class="list_options  ui-multiple-choices-item__option">
+                                                                    <ng-container *ngIf="signature">
+                                                                        <app-draw [signature]="signature"></app-draw>
+                                                                    </ng-container>
+                                                                    <div *ngIf="!signature"
+                                                                        (click)="openSignatureModal()"
+                                                                        class="button-group">
+                                                                        <button class="active">
+                                                                            Ajouter la signature
+                                                                        </button>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </fieldset>
+                                                </li>
+                                            </form>
+                                        </ng-container>
+                                    </ul>
+
+
+
+                                    <div class="ui-controls__bottom">
+                                        <!-- <button *ngIf="!isPaginationEnd" (click)="onNext()" mat-stroked-button color="primary">Suivant</button> -->
+                                        <button *ngIf="!isPaginationEnd" (click)="onNext()"
+                                            class="ui-button ui-controls__back ui-button--text">
+
+                                            <svg transform="rotate(180 0 0)" style="translate: 75px"
+                                                class="rtl-supported ui-icon ui-button__icon" viewBox="0 0 48 48"
+                                                role="img">
+                                                <path fill-rule="evenodd"
+                                                    d="m28 12 2.828 2.828L21.656 24l9.172 9.172L28 36 16 24zm0 0">
+                                                </path>
+                                            </svg> Suivant
+                                        </button>
+                                        <button *ngIf="isPaginationEnd" (click)="submit()"
+                                            class="ui-button ui-controls__back ui-button--text">
+
+                                            <svg transform="rotate(180 0 0)" style="translate: 75px"
+                                                class="rtl-supported ui-icon ui-button__icon" viewBox="" role="img">
+                                                <path fill-rule="evenodd"
+                                                    d="m28 12 2.828 2.828L21.656 24l9.172 9.172L28 36 16 24zm0 0">
+                                                </path>
+                                            </svg> Envoyer
+                                        </button>
+                                        <button *ngIf="!isFirstPage" (click)="onPrevious()"
+                                            class="ui-button ui-controls__back ui-button--text">
+
+                                            <svg class="rtl-supported ui-icon ui-button__icon" viewBox="0 0 48 48"
+                                                role="img">
+                                                <path fill-rule="evenodd"
+                                                    d="m28 12 2.828 2.828L21.656 24l9.172 9.172L28 36 16 24zm0 0">
+                                                </path>
+                                            </svg> Précédent
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="spinner-container" *ngIf="!questionnaire">
+        <mat-spinner></mat-spinner>
+    </div>
+
+
+    <ng-container *ngIf="isSubmitted">
+        <app-submit-seccesseful></app-submit-seccesseful>
+    </ng-container>
+
+</div>

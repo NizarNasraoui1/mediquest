@@ -1,0 +1,29 @@
+
+
+  .button-group button {
+    padding: 10px;
+    margin: 6px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 4px;
+    transition: box-shadow 0.3s ease;
+    display: block;
+  }
+  @media(max-width: 767px){
+    .button-group button{
+        min-width: 300px;
+    }
+  }
+
+  @media(min-width: 767px){
+    .button-group button{
+        min-width: 70px;
+    }
+  }
+
+  .button-group button.active {
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 3px 1px #007bff;
+  }

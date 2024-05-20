@@ -1,0 +1,44 @@
+.layout-wrapper {
+    overflow-x: scroll;
+}
+
+/* ::ng-deep .p-datatable-tbody > tr > td {
+    @media(max-width: 960px){
+        display: initial !important;
+    width: 100% !important;
+    align-items: center;
+    justify-content: space-between;
+    }
+} */
+@media screen and (max-width: 960px) {
+    #pr_id_2 .p-datatable-tbody>tr>td {
+        display: table-cell !important;
+    }
+}
+
+
+@media screen and (max-width: 960px) {
+
+    #pr_id_2 .p-datatable-thead>tr>th,
+    #pr_id_2 .p-datatable-tfoot>tr>td {
+        display: table-cell !important;
+    }
+}
+
+
+.p-datatable-wrapper{
+    border-radius: 9px;
+}
+
+td{
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+}
+
+/* .p-paginator{
+    display: none;
+} */
+
+.questionnaire-response-line{
+    cursor: pointer;
+}

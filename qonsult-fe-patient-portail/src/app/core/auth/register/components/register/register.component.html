@@ -1,0 +1,63 @@
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
+    style="margin-top: -3rem">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width: 70%">
+        <div class="col-12 xl:col-6 loginWrapper">
+            <div class="h-full w-full m-0 py-7 px-4 loginContent" style="padding-top: 2rem !important">
+                <div class="text-center mb-5">
+                    <img src="assets/layout/images/{{
+                            layoutService.config.colorScheme === 'light'
+                                ? 'QconsultLogo'
+                                : 'QconsultLogo'
+                        }}.png" alt="logo" style="width: 100px; height: 100px; margin-bottom: 1rem" />
+                    <div class="text-900 text-3xl font-medium mb-3">
+                        Bienvenue sur MediQuest!
+                    </div>
+                    <span class="text-600 font-medium"></span>
+                </div>
+
+                <div class="w-full md:w-10 mx-auto">
+                    <form [formGroup]="userForm">
+                        <label class="block text-900 text-xl font-medium mb-2">Nom</label>
+                    <input formControlName="firstName" type="text" placeholder="Nom" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+
+                    <label class="block text-900 text-xl font-medium mb-2">Prénom</label>
+                    <input formControlName="lastName" type="text" placeholder="Prénom" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+
+                    <label class="block text-900 text-xl font-medium mb-2">Nom d'utilisteur</label>
+                    <input formControlName="username" type="text" placeholder="Nom d'utilisteur" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+                    <label
+                        class="block text-900 text-xl font-medium mb-2">Email</label>
+                    <input formControlName="email" type="text" placeholder="Email" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+
+                    <label class="block text-900 text-xl font-medium mb-2">Mot de passe</label>
+                    <input formControlName="password" type="text" placeholder="Mot de passe" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+                    </form>
+
+                    <form [formGroup]="centerForm">
+                        <label class="block text-900 text-xl font-medium mb-2">Nom du centre médical</label>
+                    <input formControlName="name" type="text" placeholder="Nom du centre médical" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+
+                    <label class="block text-900 text-xl font-medium mb-2">Adresse du centre médical</label>
+                    <input formControlName="address" type="text" placeholder="Adresse du centre médical" pInputText
+                        class="w-full mb-3" style="padding: 1rem" />
+                    </form>
+
+                    <div class="flex align-items-center justify-content-between mb-5">
+                    </div>
+                    <ng-container *ngIf="isLoginFailed">
+                        <p [ngStyle]="{ 'text-align': 'center', color: 'red' }">
+                            Verify your credentails!
+                        </p>
+                    </ng-container>
+                    <button (click)="onSubmit()" pButton pRipple label="Sign In" class="w-full p-3 text-xl"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

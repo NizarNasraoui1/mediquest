@@ -1,0 +1,9 @@
+<div class="button-group">
+    <button
+      *ngFor="let option of options; let i = index"
+      [class.active]="selectedOption === option.id || selectedOption === option"
+      (click)="selectOption(option)">
+      <ng-container *ngIf="option.label; else elseBloc">{{option.label}}</ng-container>
+      <ng-template #elseBloc>{{option}}</ng-template>
+    </button>
+  </div>

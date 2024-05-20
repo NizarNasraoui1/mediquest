@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="title">
+        <h3>Envoyer un Questionnaire</h3>
+    </div>
+    <form [formGroup]="form">
+        <div class="row">
+            <div id="main" class="col-sm-6">
+                <p class="field">Chercher un questionnaire :</p>
+                <p-autoComplete class="select-questionnaire" formControlName="questionnaire" [virtualScroll]="true" [suggestions]="filteredQuestionnaires" (completeMethod)="filterQuestionnaireNames($event)" field="name" [dropdown]="true"> </p-autoComplete>
+                <div class="questionnaire-preview">
+                    <app-question *ngIf="form.value.questionnaire.id;else noQuestionnaireSelected" [preview]="true" [id]="form.value.questionnaire.id"></app-question>
+                    <ng-template #noQuestionnaireSelected>
+                        <div class="noQuestionnaireSelected">Selectionner un questionnaire pour le visualiser ici</div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row">
+                    <p class="field">Emails :</p>
+                    <p-autoComplete class="autocomplete" formControlName="emails" [suggestions]="emails"
+                        (completeMethod)="search($event)" [multiple]="true" (keydown.enter)="handleKeyPress()">
+                    </p-autoComplete>
+                </div>
+                <div class="row">
+                    <p class="field">Date du rendez vous :</p>
+                    <mat-card class="demo-inline-calendar-card">
+                        <mat-calendar (selectedChange)="updateFormDate($event)" [(selected)]="selected"></mat-calendar>
+                    </mat-card>
+                </div>
+            </div>
+
+        </div>
+        <p-button class="send-button" label="Envoyer" (click)="sendInvitation()"></p-button>
+    </form>
+</div>

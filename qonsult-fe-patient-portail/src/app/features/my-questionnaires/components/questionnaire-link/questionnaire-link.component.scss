@@ -1,0 +1,30 @@
+.centered-text{
+    text-align: center;
+}
+:host ::ng-deep canvas{
+    transform: translate(20%,-6%);
+}
+.clickable {
+    cursor: pointer;
+}
+.links{
+    transform: translate(20px,0px);
+}
+:host ::ng-deep .p-card-body{
+    max-height: 450px;
+}
+
+:host ::ng-deep .p-card .p-card-body{
+    padding: 0rem;
+}
+
+.print{
+    background-color: transparent;
+    border: none;
+    pointer-events: none;
+    padding: 0px;
+
+}
+.print *{
+    pointer-events: auto;
+}

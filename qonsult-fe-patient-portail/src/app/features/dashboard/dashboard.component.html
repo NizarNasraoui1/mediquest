@@ -1,0 +1,26 @@
+<div class="grid">
+    <div *ngFor="let dashboardCard of DashboardCards; let idx=index" class="col-4">
+        <div class="dashboard-card" [style.--key-color]="getCardColorLoop(idx)">
+            <h4 class="label">{{dashboardCard.label}} </h4>
+            <h2>{{dashboardCard.value}}</h2>
+        </div>
+    </div>
+    </div>
+    <div class="card">
+        <p-chart type="line" [data]="data" [options]="options"></p-chart>
+    </div>
+
+    <!-- <div style="padding: 1rem; min-height:110px" class="col-4 jalon-button-wrapper">
+        <button><i class="pi pi-plus"></i>
+            <span>Ajouter un jalon favoris</span></button>
+    </div>
+</div>
+
+<div class="grid justify-content-end align-items-end">
+    <div style="padding: 1rem;" class="col-4 newP-button-wrapper">
+        <button class="p-ripple p-element p-button">
+            <div style="flex: 1 1 auto;"><i class="pi pi-pencil"></i><span>Nouvelle fiche
+                    patient</span></div>
+        </button>
+    </div>
+</div> -->

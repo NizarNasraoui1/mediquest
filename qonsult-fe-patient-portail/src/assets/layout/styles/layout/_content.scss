@@ -1,0 +1,73 @@
+.layout-main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: space-between;
+    padding: 7rem 2rem 1rem 4rem;
+    transition: margin-left $transitionDuration;
+}
+
+.layout-main {
+    flex: 1 1 auto;
+}
+.content {
+    max-width: 1140px;
+    margin: 0 auto;
+    position: relative;
+    .card-form {
+        box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    background: white;
+    height: 50vh;
+    }
+}
+.questionnaire {
+    &__question {
+        padding-bottom: 20px;
+        span {
+            font-size: 16px;
+            color:#2B3674;
+            margin-right: 25px;
+        }
+        .my-custom-select {
+            background: #ffffff;
+            border: 1px solid #ced4da;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+            border-radius: 6px;
+            padding: 10px;
+            padding-bottom: 10px;          }
+    }
+
+}
+.bottom-button {
+    position: absolute;
+    bottom: 40px;
+}
+
+option.ng-star-inserted {
+    /* Ajoutez vos styles personnalisés pour les options ici */
+    background-color: #f0f0f0;
+    color: #2B3674;
+    /* Autres styles */
+  }
+.button {
+font-size: 16px;
+font-weight: 700;
+line-height: 32px;
+text-align: center;
+border-radius: 70px;
+padding-left: 15px;
+padding-right: 15px;
+border:none;
+width: 100px;
+
+&.previous {
+    background-color: #0170FC;
+    color: white;
+    margin-right: 20px;
+}
+&.next {
+    background-color: #00BCB4;
+    color: white;
+}
+}

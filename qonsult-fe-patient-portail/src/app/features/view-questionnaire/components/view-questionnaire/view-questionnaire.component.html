@@ -1,0 +1,90 @@
+<div *ngIf="pdfUrl;else showSpinner">
+    <pdf-viewer [src]="pdfUrl" [rotation]="0" [original-size]="true" [show-all]="true" [fit-to-page]="true" [zoom]="1"
+        [zoom-scale]="'page-width'" [stick-to-page]="true" [render-text]="true" [external-link-target]="'blank'"
+        [autoresize]="true" [show-borders]="true" style="width: 100%; height: 800px;"></pdf-viewer>
+</div>
+
+<button (click)="printPdf()">print</button>
+
+<div *ngIf="questionnaireReponse" style="display: none;" >
+    <div id="questionnaire-pdf">
+        <h1 style="text-align: center;margin-bottom: 50px;">{{questionnaireReponse.name}}</h1>
+
+        <div class="form-section"
+            style="border: 1px solid black; padding: 10px; margin-bottom: 10px;background-color:blanc">
+            <!-- <h2>1. Informations générales</h2> -->
+            <p style="margin: 5px 0;padding-bottom: 5px;">Nom :<span>{{questionnaireReponse.patientInformations.firstName}}</span></p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Prénom : {{questionnaireReponse.patientInformations.lastName}}</p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Date de naissance :{{questionnaireReponse.patientInformations.birthday}}</p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Adresse : {{questionnaireReponse.patientInformations.address}}</p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Email : {{questionnaireReponse.patientInformations.email}}</p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Sexe : {{questionnaireReponse.patientInformations.sex}}</p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Profession : {{questionnaireReponse.patientInformations.job}}</p>
+            <p style="margin: 5px 0;padding-bottom: 5px;">Tel : {{questionnaireReponse.patientInformations.tel}}</p>
+
+        </div>
+
+        <!-- <div class="form-section"style="border: 2px solid black; padding: 10px; margin-bottom: 10px;">
+            <h2>2. Antécédent, problèmes de santé</h2>
+            <p >Avez vous des problèmes de santé ou antécédents ?
+                <span style="font-weight: bold;">Oui</span>
+            </p>
+            <p style="margin-left: 5px 0">Quel est le motif de votre consultation ?</p>
+                <ul>
+                    <li>Urgence</li>
+                    <li>Douleur</li>
+                </ul>
+            <p style="margin-left: 5px 0">Avez-vous déjà subit une opération ?</p>
+            <ul>
+                <li>Cardiaque</li>
+                <li>Vasculaire</li>
+            </ul>
+        </div> -->
+
+
+        <div *ngFor="let topic of questionnaireReponse.topics" class="form-section"
+        style="border: 1px solid black; padding: 10px; margin-bottom: 10px;background-color:blanc">
+            <h2>{{topic.name}}</h2>
+            <div *ngFor="let e of topic.content">
+                <div *ngIf="e.questionType==questionTypeEnum.CHECKBOX">
+                    <p style="margin-left: 5px 0">{{e.question}}</p>
+                    <ul>
+                        <li *ngFor="let option of e.response">{{option}}</li>
+                    </ul>
+                </div>
+
+                <div *ngIf="e.questionType==questionTypeEnum.RADIO">
+                    <p style="margin-left: 5px 0; display: inline;">{{e.question}}</p>
+                    <span style="font-weight: bold;"> {{e.response[0]}}</span>
+                </div>
+
+                <div *ngIf="e.questionType==questionTypeEnum.TEXT">
+                    <p style="margin-left: 5px 0; display: inline;">{{e.question}}</p>
+                    <span style="font-weight: bold;"> {{e.response[0]}}</span>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div>
+            <app-draw *ngIf="questionnaireReponse" [signature]="questionnaireReponse.signature"></app-draw>
+
+        </div>
+        <div style="margin-left: 400px;">
+            <p>Date et signature du patient (parent/tuteur) :</p>
+            <p>Le {{date | date:'dd/MM/yyyy'}}</p>
+            <img src="{{ src }}" />
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<ng-template #showSpinner>
+    <div class="spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
+
+

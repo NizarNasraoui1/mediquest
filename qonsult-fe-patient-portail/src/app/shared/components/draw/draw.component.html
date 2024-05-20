@@ -1,0 +1,17 @@
+<div class="draw-container">
+    <canvas
+        id="canvas"
+        width="285"
+        height="120"
+        [class.canvas-border]="mode === enumExposed.EDIT"
+    >
+    </canvas>
+
+    <ng-container *ngIf="mode === enumExposed.EDIT">
+        <div mat-dialog-actions class="button">
+            <div (click)="doAction()" class="button-group">
+                <button class="active">Terminer</button>
+            </div>
+        </div>
+    </ng-container>
+</div>

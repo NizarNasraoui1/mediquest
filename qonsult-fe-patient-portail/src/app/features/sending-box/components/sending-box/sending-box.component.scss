@@ -1,0 +1,74 @@
+.row {
+    margin-bottom: 2%;
+}
+
+.p-autocomplete {
+    width: 100%;
+}
+
+// @media(max-width:767px){
+//     ul.p-autocomplete-multiple-container{
+//         height: 30px;
+//     }
+// }
+// @media(min-width:767px){
+//     ul.p-autocomplete-multiple-container{
+//         height: 140%;
+//     }
+// }
+
+.demo-inline-calendar-card {
+    width: 350px;
+    margin: auto;
+  }
+
+.questionnaire-preview{
+    overflow-x:scroll;
+    overflow: scroll;
+    margin-top: 10px;
+    display: flex;
+    height: 600px;
+}
+.container{
+    justify-content: center ! important;
+}
+
+@media(max-width:767px){
+    .questionnaire-preview{
+        height: 400px;
+    }
+}
+
+ul.p-autocomplete-multiple-container{
+    width: 100% !important;
+    min-height: 50px;
+}
+
+.noQuestionnaireSelected {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.field{
+    font-weight: 500;
+}
+
+.select-questionnaire{
+    height: 30px !important;
+    width: 30px !important;
+}
+
+.p-inputtext.p-component.ng-star-inserted{
+    min-height: 50px !important;
+    width: 100% !important;
+}
+
+.send-button{
+    display: flex;
+    justify-content: end;
+}
