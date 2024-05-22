@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name= "questionnaire_response")
 public class QuestionnaireResponse {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="patient_information_id")
@@ -33,6 +33,6 @@ public class QuestionnaireResponse {
     private String signature;
     private String filledBy;
     @OneToOne
-    @JoinTable(name = "questionnaire_request_response")
+    @JoinTable(name = "questionnaire_request_response",joinColumns = @JoinColumn(name="questionnaire_response_id"),inverseJoinColumns = @JoinColumn(name = "questionnaire_request_id"))
     QuestionnaireRequest questionnaireRequest;
 }

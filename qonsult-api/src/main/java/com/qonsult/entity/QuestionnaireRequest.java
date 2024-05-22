@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,9 +19,10 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name="questionnaire_request")
+@EntityListeners(AuditingEntityListener.class)
 public class QuestionnaireRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private LocalDate appointmentDate;
     @Enumerated(EnumType.STRING)
@@ -34,7 +36,7 @@ public class QuestionnaireRequest {
     @JoinColumn(name="questionnaire_model_id")
     QuestionnaireModel questionnaireModel;
     @OneToOne
-    @JoinTable(name = "questionnaire_request_response")
+    @JoinTable(name = "questionnaire_request_response",joinColumns = @JoinColumn(name="questionnaire_request_id"),inverseJoinColumns = @JoinColumn(name = "questionnaire_response_id"))
     QuestionnaireResponse questionnaireResponse;
 
 }

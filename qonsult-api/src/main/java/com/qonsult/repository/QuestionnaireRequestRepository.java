@@ -11,4 +11,5 @@ import java.util.UUID;
 @Repository
 public interface QuestionnaireRequestRepository extends GenericRepository<QuestionnaireRequest, UUID> {
     List<QuestionnaireRequest> findAllByAppointmentDate(LocalDate localDate);
+    List<QuestionnaireRequest> findAllByUsedForQrCodeTrue();
 }
