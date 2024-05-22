@@ -1,7 +1,7 @@
 package com.qonsult.resource;
 
 import com.qonsult.dto.ReceivedQuestionnaireDTO;
-import com.qonsult.service.ReceivedQuestionnaireAnswerService;
+import com.qonsult.service.QuestionnaireResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("api/received-questionnaires")
 @RequiredArgsConstructor
 public class ReceivedQuestionnaireAnswerResource {
-    private final ReceivedQuestionnaireAnswerService receivedQuestionnaireAnswerService;
+    private final QuestionnaireResponseService questionnaireResponseService;
 
     @GetMapping
     public ResponseEntity<List<ReceivedQuestionnaireDTO>>getReceivedQuestionnaires(@RequestParam(name = "date") LocalDate date){
-        return new ResponseEntity<>(receivedQuestionnaireAnswerService.getQuestionnaireAnswersByAppointmentDate(date), HttpStatus.OK);
+        return new ResponseEntity<>(questionnaireResponseService.getQuestionnaireAnswersByAppointmentDate(date), HttpStatus.OK);
     }
 }

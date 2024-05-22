@@ -2,7 +2,7 @@ package com.qonsult.init;
 
 import com.qonsult.entity.CodeLabel;
 import com.qonsult.entity.Question;
-import com.qonsult.entity.Questionnaire;
+import com.qonsult.entity.QuestionnaireModel;
 import com.qonsult.entity.Topic;
 import com.qonsult.enumeration.QuestionTypeEnum;
 import com.qonsult.repository.QuestionnaireRepository;
@@ -18,10 +18,10 @@ public class InitDenstistQuestionnaire implements DBInitializer{
     private final String questionnaireName = "Questionnaire Dentiste";
     public void initQuestionnaire(){
             if(!isAlreadyInitialized()){
-                Questionnaire questionnaire = new Questionnaire();
-                questionnaire.setName(questionnaireName);
+                QuestionnaireModel questionnaireModel = new QuestionnaireModel();
+                questionnaireModel.setName(questionnaireName);
                 List<Topic>topics = new ArrayList<>();
-                questionnaire.setTopics(topics);
+                questionnaireModel.setTopics(topics);
                 Topic informationGenerales = new Topic();
                 informationGenerales.setName("Informations générales");
                 Topic antecedent = new Topic();
@@ -247,7 +247,7 @@ public class InitDenstistQuestionnaire implements DBInitializer{
                                 new CodeLabel("Brosse à dents manuelle"),new CodeLabel("Brosse à dents électrique")
                         ))).build());
 
-                questionnaireRepository.save(questionnaire);
+                questionnaireRepository.save(questionnaireModel);
             }
     }
 

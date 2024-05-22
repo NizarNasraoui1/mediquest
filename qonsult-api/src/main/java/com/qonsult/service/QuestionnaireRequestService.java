@@ -8,5 +8,6 @@ import com.qonsult.mapper.QuestionnaireRequestMapper;
 import com.qonsult.repository.QuestionnaireRepository;
 import com.qonsult.repository.QuestionnaireRequestRepository;
 
-public interface QuestionnaireRequestService extends GenericService<QuestionnaireRequest, QuestionnaireRequestDTO,Long, QuestionnaireRequestRepository, QuestionnaireRequestMapper> {
+public interface QuestionnaireRequestService {
+    void saveQuestionnaireRequest(QuestionnaireRequestDTO questionnaireRequestDTO);
 }

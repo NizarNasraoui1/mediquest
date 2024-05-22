@@ -2,6 +2,8 @@ package com.qonsult.service;
 
 import com.qonsult.dto.QuestionnaireViewDTO;
 
+import java.util.UUID;
+
 public interface QuestionnaireViewService {
-    QuestionnaireViewDTO viewQuestionnaireById(Long id);
+    QuestionnaireViewDTO viewQuestionnaireByQuestionnaireResponseId(UUID id);
 }

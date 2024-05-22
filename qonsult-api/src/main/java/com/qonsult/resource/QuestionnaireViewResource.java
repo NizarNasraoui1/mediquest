@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/view-questionnaire")
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class QuestionnaireViewResource {
     private final QuestionnaireViewService questionnaireViewService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuestionnaireViewDTO>viewQuestionnaireById(@PathVariable("id")Long id){
-        return new ResponseEntity<>(questionnaireViewService.viewQuestionnaireById(id), HttpStatus.OK);
+    public ResponseEntity<QuestionnaireViewDTO>viewQuestionnaireById(@PathVariable("id") UUID id){
+        return new ResponseEntity<>(questionnaireViewService.viewQuestionnaireByQuestionnaireResponseId(id), HttpStatus.OK);
     }
 }

@@ -1,42 +1,40 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.dto.*;
-import com.qonsult.entity.Question;
-import com.qonsult.entity.QuestionAnswer;
-import com.qonsult.entity.Questionnaire;
-import com.qonsult.entity.QuestionnaireAnswer;
+import com.qonsult.entity.*;
 import com.qonsult.enumeration.QuestionTypeEnum;
 import com.qonsult.mapper.PatientInformationMapper;
-import com.qonsult.repository.QuestionnaireAnswerRepository;
-import com.qonsult.service.QuestionnaireAnswerService;
+import com.qonsult.repository.QuestionnaireResponseRepository;
 import com.qonsult.service.QuestionnaireViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class QuestionnaireViewServiceImpl implements QuestionnaireViewService {
-    private final QuestionnaireAnswerRepository questionnaireAnswerRepository;
+    private final QuestionnaireResponseRepository questionnaireResponseRepository;
     private final PatientInformationMapper patientInformationMapper;
 
-    public QuestionnaireViewDTO viewQuestionnaireById(Long id){
-        QuestionnaireAnswer questionnaireAnswer = questionnaireAnswerRepository.findById(id).orElseThrow(()->new EntityNotFoundException("questionnaire not found"));
-        List<QuestionAnswer> questionAnswers = questionnaireAnswer.getQuestionAnswers();
-        Questionnaire questionnaire = questionnaireAnswer.getQuestionnaire();
+    public QuestionnaireViewDTO viewQuestionnaireByQuestionnaireResponseId(UUID id){
+        QuestionnaireResponse questionnaireResponse = questionnaireResponseRepository.findById(id).orElseThrow(()->new EntityNotFoundException("questionnaire not found"));
+        QuestionnaireRequest questionnaireRequest = questionnaireResponse.getQuestionnaireRequest();
+        List<QuestionAnswer> questionAnswers = questionnaireResponse.getQuestionAnswers();
+        QuestionnaireModel questionnaireModel = questionnaireRequest.getQuestionnaireModel();
         QuestionnaireViewDTO questionnaireViewDTO = new QuestionnaireViewDTO();
-        questionnaireViewDTO.setName(questionnaire.getName());
-        PatientInformationDTO patientInformationDTO = patientInformationMapper.toDto(questionnaireAnswer.getPatientInformation());
+        questionnaireViewDTO.setName(questionnaireModel.getName());
+        PatientInformationDTO patientInformationDTO = patientInformationMapper.toDto(questionnaireResponse.getPatientInformation());
         questionnaireViewDTO.setPatientInformations(patientInformationDTO);
-        SignatureDTO signatureDTO = new SignatureDTO();
-        questionnaireViewDTO.setSignature(signatureDTO);
-        signatureDTO.setClickX(questionnaireAnswer.getCertification().getClickX());
-        signatureDTO.setClickY(questionnaireAnswer.getCertification().getClickY());
-        signatureDTO.setClickDrag(questionnaireAnswer.getCertification().getClickDrag());
-        questionnaire.getTopics().forEach((topic -> {
+//        SignatureDTO signatureDTO = new SignatureDTO();
+//        questionnaireViewDTO.setSignature(signatureDTO);
+//        signatureDTO.setClickX(questionnaireResponse.getCertification().getClickX());
+//        signatureDTO.setClickY(questionnaireResponse.getCertification().getClickY());
+//        signatureDTO.setClickDrag(questionnaireResponse.getCertification().getClickDrag());
+        questionnaireModel.getTopics().forEach((topic -> {
             QuestionnaireViewTopicDTO questionnaireViewTopicDTO = new QuestionnaireViewTopicDTO();
             questionnaireViewDTO.getTopics().add(questionnaireViewTopicDTO);
             questionnaireViewTopicDTO.setName(topic.getName());

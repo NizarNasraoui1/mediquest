@@ -13,9 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionnaireInvitationDTO {
-    private Long id;
     private List<String> emails;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate appointmentDate;
-    QuestionnaireDTO questionnaire;
+    Long questionnaireId;
 }

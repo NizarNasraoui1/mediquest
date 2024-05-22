@@ -3,8 +3,8 @@ package com.qonsult.service.impl;
 import com.qonsult.dto.PaginatedResponse;
 import com.qonsult.dto.SearchQuestionnaireDTO;
 import com.qonsult.entity.PatientInformation;
-import com.qonsult.entity.QuestionnaireAnswer;
-import com.qonsult.repository.QuestionnaireAnswerRepository;
+import com.qonsult.entity.QuestionnaireResponse;
+import com.qonsult.repository.QuestionnaireResponseRepository;
 import com.qonsult.service.SearchQuestionnaireResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,27 +21,27 @@ import java.util.stream.Collectors;
 @Service
 public class SearchQuestionnaireResponseServiceImpl implements SearchQuestionnaireResponseService {
 
-    private final QuestionnaireAnswerRepository questionnaireAnswerRepository;
+    private final QuestionnaireResponseRepository questionnaireResponseRepository;
 
     public PaginatedResponse<SearchQuestionnaireDTO> searchQuestionnaireReponse(int page, int pageSize, SearchQuestionnaireDTO searchQuestionnaireDTO){
         PageRequest pageRequest = PageRequest.of(page,pageSize);
-        List<Specification<QuestionnaireAnswer>>specifications = new ArrayList<>();
+        List<Specification<QuestionnaireResponse>>specifications = new ArrayList<>();
         if(isValidField(searchQuestionnaireDTO.getFirstName())){
             specifications.add(((root, query, criteriaBuilder) -> {
-                Join<QuestionnaireAnswer,PatientInformation> questionnaireAnswerPatientInformationJoin = root.join("patientInformation");
+                Join<QuestionnaireResponse,PatientInformation> questionnaireAnswerPatientInformationJoin = root.join("patientInformation");
                 return criteriaBuilder.like(criteriaBuilder.lower(questionnaireAnswerPatientInformationJoin.get("firstName")),"%"+searchQuestionnaireDTO.getFirstName().toLowerCase()+"%");
             }));
 
         }
         if(isValidField(searchQuestionnaireDTO.getLastName())){
             specifications.add(((root, query, criteriaBuilder) -> {
-                Join<QuestionnaireAnswer,PatientInformation> questionnaireAnswerPatientInformationJoin = root.join("patientInformation");
+                Join<QuestionnaireResponse,PatientInformation> questionnaireAnswerPatientInformationJoin = root.join("patientInformation");
                 return criteriaBuilder.like(criteriaBuilder.lower(questionnaireAnswerPatientInformationJoin.get("lastName")),"%"+searchQuestionnaireDTO.getLastName().toLowerCase()+"%");
             }));
         }
         if(searchQuestionnaireDTO.getBirthdate()!=null){
             specifications.add(((root, query, criteriaBuilder) -> {
-                Join<QuestionnaireAnswer,PatientInformation> questionnaireAnswerPatientInformationJoin = root.join("patientInformation");
+                Join<QuestionnaireResponse,PatientInformation> questionnaireAnswerPatientInformationJoin = root.join("patientInformation");
                 return criteriaBuilder.equal(questionnaireAnswerPatientInformationJoin.get("birthday"),searchQuestionnaireDTO.getBirthdate());
             }));
         }
@@ -49,8 +49,8 @@ public class SearchQuestionnaireResponseServiceImpl implements SearchQuestionnai
             specifications.add(((root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("appointmentDate"),searchQuestionnaireDTO.getAppointmentDate())));
         }
-        Specification<QuestionnaireAnswer>questionnaireAnswerSpecification = specifications.stream().reduce(Specification::and).orElse(null);
-        Page<QuestionnaireAnswer> responsePage = questionnaireAnswerRepository.findAll(questionnaireAnswerSpecification,pageRequest);
+        Specification<QuestionnaireResponse>questionnaireAnswerSpecification = specifications.stream().reduce(Specification::and).orElse(null);
+        Page<QuestionnaireResponse> responsePage = questionnaireResponseRepository.findAll(questionnaireAnswerSpecification,pageRequest);
         PaginatedResponse<SearchQuestionnaireDTO> searchQuestionnaireDTOPaginatedResponse = new PaginatedResponse<>();
         searchQuestionnaireDTOPaginatedResponse.setPageSize(responsePage.getSize());
         searchQuestionnaireDTOPaginatedResponse.setTotalElements(responsePage.getTotalElements());
@@ -62,7 +62,7 @@ public class SearchQuestionnaireResponseServiceImpl implements SearchQuestionnai
                     searchQuestionnaireDTOResponse.setFirstName(questionnaireAnswer.getPatientInformation().getFirstName());
                     searchQuestionnaireDTOResponse.setLastName(questionnaireAnswer.getPatientInformation().getLastName());
                     searchQuestionnaireDTOResponse.setBirthdate(questionnaireAnswer.getPatientInformation().getBirthday());
-                    searchQuestionnaireDTOResponse.setAppointmentDate(questionnaireAnswer.getAppointmentDate());
+                    searchQuestionnaireDTOResponse.setAppointmentDate(questionnaireAnswer.getQuestionnaireRequest().getAppointmentDate());
                     return searchQuestionnaireDTOResponse;
                 })).collect(Collectors.toList()));
 

@@ -44,7 +44,7 @@ public class InitSuperAdminUser implements DBInitializer{
     public boolean existAdmin(){
         return !userRepository.findAll().isEmpty();
     }
-    
+
 
     public void createAdminUser() throws Exception {
         User user = new User();

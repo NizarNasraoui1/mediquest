@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Questionnaire {
+public class QuestionnaireModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
