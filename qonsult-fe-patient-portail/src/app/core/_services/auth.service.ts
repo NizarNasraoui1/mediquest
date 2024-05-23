@@ -15,7 +15,7 @@ export interface loginResponse{
     tenant:string
 }
 
-const AuthUrl = 'api/public/auth';
+const AuthUrl = 'api/mediquest/public/auth';
 
 @Injectable({
     providedIn: 'root',
