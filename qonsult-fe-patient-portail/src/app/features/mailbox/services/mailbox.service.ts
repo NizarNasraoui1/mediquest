@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { format } from 'date-fns';
 import { HttpUtilService } from 'src/app/util/service/http-util.service';
 
-const RECEIVED_QUESTIONNAIRES_API_URL = '/api/received-questionnaires'
+const RECEIVED_QUESTIONNAIRES_API_URL = '/api/mediquest/received-questionnaires'
 
 @Injectable({
   providedIn: 'root'

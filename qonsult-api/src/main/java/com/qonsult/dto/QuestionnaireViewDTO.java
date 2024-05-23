@@ -16,5 +16,5 @@ public class QuestionnaireViewDTO {
     private String name;
     private PatientInformationDTO patientInformations;
     private List<QuestionnaireViewTopicDTO> topics = new ArrayList<>();
-    private String imageData;
+    private String signature;
 }

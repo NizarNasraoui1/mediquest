@@ -4,7 +4,7 @@ import { SearchQuestionnaire } from '../model/search-questionnaire.model';
 import { PageResponse } from 'src/app/shared/models/page-response';
 import { Observable } from 'rxjs';
 
-const QUESTIONNAIRE_HISTORY_API_URL = '/api/historic/questionnaires';
+const QUESTIONNAIRE_HISTORY_API_URL = '/api/mediquest/historic/questionnaires';
 
 @Injectable({
   providedIn: 'root'

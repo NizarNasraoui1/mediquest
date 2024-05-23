@@ -24,12 +24,12 @@ public class QrcodeServiceImpl implements QrcodeService {
     @Override
     @Transactional
     public List<QrCodeDTO> getAllQrCodes() {
-        return questionnaireRequestRepository.findAllByUsedForQrCodeTrue().stream().map((questionnaireRequest -> {
+        return questionnaireRequestRepository.findAllByUsedForQrCodeTrue().stream().map(questionnaireRequest -> {
             QrCodeDTO codeDTO = new QrCodeDTO();
             codeDTO.setUrl(getConsentRequestUrl(questionnaireRequest));
             codeDTO.setName(questionnaireRequest.getQuestionnaireModel().getName());
             return codeDTO;
-        })).collect(Collectors.toList());
+        }).collect(Collectors.toList());
     }
 
     public String getConsentRequestUrl(QuestionnaireRequest questionnaireRequest){

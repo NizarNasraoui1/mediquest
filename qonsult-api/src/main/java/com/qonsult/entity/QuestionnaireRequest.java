@@ -19,7 +19,6 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name="questionnaire_request")
-@EntityListeners(AuditingEntityListener.class)
 public class QuestionnaireRequest {
     @Id
     @GeneratedValue(generator = "UUID")

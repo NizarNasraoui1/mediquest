@@ -65,14 +65,15 @@
                 <br>
             </div>
         </div>
-        <div>
+        <!-- <div>
             <app-draw *ngIf="questionnaireReponse" [signature]="questionnaireReponse.signature"></app-draw>
 
-        </div>
+        </div> -->
+        <img src="questionnaireReponse.signature" alt="">
         <div style="margin-left: 400px;">
             <p>Date et signature du patient (parent/tuteur) :</p>
             <p>Le {{date | date:'dd/MM/yyyy'}}</p>
-            <img src="{{ src }}" />
+            <img src="{{ questionnaireReponse.signature }}" />
         </div>
     </div>
 

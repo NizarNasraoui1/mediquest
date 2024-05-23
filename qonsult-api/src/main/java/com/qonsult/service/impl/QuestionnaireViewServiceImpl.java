@@ -29,6 +29,7 @@ public class QuestionnaireViewServiceImpl implements QuestionnaireViewService {
         questionnaireViewDTO.setName(questionnaireModel.getName());
         PatientInformationDTO patientInformationDTO = patientInformationMapper.toDto(questionnaireResponse.getPatientInformation());
         questionnaireViewDTO.setPatientInformations(patientInformationDTO);
+        questionnaireViewDTO.setSignature(questionnaireResponse.getSignature());
 //        SignatureDTO signatureDTO = new SignatureDTO();
 //        questionnaireViewDTO.setSignature(signatureDTO);
 //        signatureDTO.setClickX(questionnaireResponse.getCertification().getClickX());
