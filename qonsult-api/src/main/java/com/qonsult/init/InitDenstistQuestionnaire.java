@@ -2,7 +2,7 @@ package com.qonsult.init;
 
 import com.qonsult.entity.*;
 import com.qonsult.enumeration.QuestionTypeEnum;
-import com.qonsult.repository.QuestionnaireRepository;
+import com.qonsult.repository.QuestionnaireModelRepository;
 import com.qonsult.repository.QuestionnaireRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class InitDenstistQuestionnaire implements DBInitializer{
 
-    private final QuestionnaireRepository questionnaireRepository;
+    private final QuestionnaireModelRepository questionnaireModelRepository;
 
     private final QuestionnaireRequestRepository questionnaireRequestRepository;
     private final String questionnaireName = "Questionnaire Dentiste";
@@ -247,7 +247,7 @@ public class InitDenstistQuestionnaire implements DBInitializer{
                                 new CodeLabel("Brosse à dents manuelle"),new CodeLabel("Brosse à dents électrique")
                         ))).build());
 
-                questionnaireRepository.save(questionnaireModel);
+                questionnaireModelRepository.save(questionnaireModel);
                 QuestionnaireRequest questionnaireRequest = new QuestionnaireRequest();
                 questionnaireRequest.setQuestionnaireModel(questionnaireModel);
                 questionnaireRequest.setUsedForQrCode(true);
@@ -256,7 +256,7 @@ public class InitDenstistQuestionnaire implements DBInitializer{
     }
 
     public boolean isAlreadyInitialized(){
-        return questionnaireRepository.findByName(questionnaireName).isPresent();
+        return questionnaireModelRepository.findByName(questionnaireName).isPresent();
     }
 
     @Override

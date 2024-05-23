@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface QuestionnaireRepository extends GenericRepository<QuestionnaireModel,Long> {
+public interface QuestionnaireModelRepository extends GenericRepository<QuestionnaireModel,Long> {
     Optional<QuestionnaireModel> findByName(String name);
 }

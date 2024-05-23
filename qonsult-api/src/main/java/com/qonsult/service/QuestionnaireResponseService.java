@@ -9,4 +9,5 @@ import java.util.List;
 public interface QuestionnaireResponseService {
     List<ReceivedQuestionnaireDTO> getQuestionnaireAnswersByAppointmentDate(LocalDate appointmentDate);
     void saveQuestionnaireResponse(QuestionnaireResponseDTO questionnaireResponseDTO);
+
 }

@@ -1,18 +1,22 @@
 package com.qonsult.resource;
 
-import com.qonsult.dto.QuestionnaireModelDTO;
-import com.qonsult.entity.QuestionnaireModel;
-import com.qonsult.generic.GenericResource;
-import com.qonsult.mapper.QuestionnaireModelMapper;
-import com.qonsult.repository.QuestionnaireRepository;
-import com.qonsult.service.QuestionnaireService;
+import com.qonsult.dto.QuestionnaireLinkDTO;
+import com.qonsult.service.QuestionnaireModelService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/public/questionnaire")
-public class QuestionnaireResource extends GenericResource<QuestionnaireModel, QuestionnaireModelDTO,Long, QuestionnaireRepository, QuestionnaireModelMapper, QuestionnaireService> {
-    public QuestionnaireResource(QuestionnaireService service) {
-        super(service);
+@RequestMapping("/questionnaire-model")
+@RequiredArgsConstructor
+public class QuestionnaireResource {
+    private final QuestionnaireModelService questionnaireModelService;
+
+    @GetMapping("/names-links")
+    public ResponseEntity<List<QuestionnaireLinkDTO>>getQuestionnaireNamesAndLinks(){
+        return ResponseEntity.ok().body(questionnaireModelService.getQuestionnaireNamesAndLinks());
     }
 
 //    @GetMapping("/{id}")

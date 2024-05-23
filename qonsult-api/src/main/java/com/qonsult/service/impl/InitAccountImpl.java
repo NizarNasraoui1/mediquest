@@ -5,18 +5,19 @@ import com.qonsult.entity.CenterUser;
 import com.qonsult.init.InitQuestionnaires;
 import com.qonsult.service.CenterUserService;
 import com.qonsult.service.InitAccount;
-import com.qonsult.service.QuestionnaireService;
+import com.qonsult.service.QuestionnaireModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
 public class InitAccountImpl implements InitAccount {
 
-    private final QuestionnaireService questionnaireService;
+    private final QuestionnaireModelService questionnaireModelService;
     private final CenterUserService centerUserService;
     private final InitQuestionnaires initQuestionnaires;
 
@@ -41,7 +42,7 @@ public class InitAccountImpl implements InitAccount {
 
 
     public Mono<Boolean> isQuestionnaireInitialized(){
-        return questionnaireService.findAll().hasElements();
+        return Flux.just(questionnaireModelService.findAll()).hasElements();
     }
 
     public String getUserName(){

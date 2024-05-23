@@ -20,16 +20,4 @@
 //    public ResponseEntity<List<QuestionnaireLinkDTO>> getAllQuestionnaireLinks(){
 //        return new ResponseEntity<>(questionnaireLinkService.getAllStoreduestionnaireLinks(), HttpStatus.OK);
 //    }
-//
-//    @GetMapping("/names")
-//    public ResponseEntity<List<QuestionnaireLinkDTO>> getAllQuestionnaireNames(){
-//        return new ResponseEntity<>(questionnaireLinkService.getAllQuestionnaireLinks(), HttpStatus.OK);
-//    }
-//
-//
-//
-//    @PostMapping("/{id}")
-//    public ResponseEntity<QuestionnaireLinkDTO>saveQuestionnaireLink(@PathVariable("id")Long id){
-//        return new ResponseEntity<>(questionnaireLinkService.saveQuestionnireLink(id),HttpStatus.CREATED);
-//    }
 //}
