@@ -8,6 +8,7 @@ import com.qonsult.service.QrcodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class QrcodeServiceImpl implements QrcodeService {
     private String consentLink;
 
     @Override
+    @Transactional
     public List<QrCodeDTO> getAllQrCodes() {
         return questionnaireRequestRepository.findAllByUsedForQrCodeTrue().stream().map((questionnaireRequest -> {
             QrCodeDTO codeDTO = new QrCodeDTO();

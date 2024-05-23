@@ -37,9 +37,10 @@ export class QuestionnaireComponent implements OnInit {
     topicNames: string[] = [];
     topicQuestionsMap: Map<string, Question[]> = new Map();
     displayModal = true;
-    signature: Signature;
     appointmentDate: any;
     isSubmitted: boolean = false;
+    signature:Signature;
+    signatureData:string;
 
     constructor(private fb: FormBuilder, private questionnaireService: QuestionnaireService, private elRef: ElementRef,
         private primengConfig: PrimeNGConfig, public dialog: MatDialog, private zone: NgZone,private activatedRoute:ActivatedRoute,
@@ -82,10 +83,6 @@ export class QuestionnaireComponent implements OnInit {
             height: '25%'
         }).afterClosed().subscribe((data: any) => {
             this.signature = data;
-            setTimeout(() => {
-                this.certificationForm.get('signature')?.setValue(this.getSignatureData());
-                console.log(this.certificationForm.get('signature'))
-            }, 1000);
         });
     }
 
@@ -215,7 +212,7 @@ export class QuestionnaireComponent implements OnInit {
 
     submit() {
         if(!this.preview){
-            this.questionnaireService.saveQuestionnaire(this.questionnaire, this.generalInformtionsForm.value, this.questionForm.value, this.certificationForm.value, this.appointmentDate)
+            this.questionnaireService.saveQuestionnaire(this.id,this.questionnaire, this.generalInformtionsForm.value, this.questionForm.value, this.getSignatureData(), this.appointmentDate)
             .subscribe((res) => {
                 this.isSubmitted = true;
             });

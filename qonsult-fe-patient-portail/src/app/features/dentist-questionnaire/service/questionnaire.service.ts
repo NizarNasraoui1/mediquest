@@ -11,7 +11,7 @@ import { QUESTIONNAIRE_LINK_LIST_MOCK } from '../../my-questionnaires/mock/quest
 import { QuestionnaireLink } from '../../my-questionnaires/model/quetionnaire-link-list';
 
 const QUESTIONNAIRE_API_URL="/api/mediquest/public/questionnaire-request";
-const questionnaireAnswerApiUrl="/api/public/questionnaire-answer/";
+const QUESTIONNAIRE_RESPONSE_API_URL="/api/mediquest/public/questionnaire-response";
 
 @Injectable({
   providedIn: 'root'
@@ -30,15 +30,16 @@ export class QuestionnaireService {
     // return of(QUESTION_MOCK);
   }
 
-  saveQuestionnaire(questionnaire:Questionnaire,generalInformations: any,questionsForm:any[],certificationForm:any,appointmentDate:Date):Observable<QuestionnaireAnswer>{
+  saveQuestionnaire(questionnaireRequstId:string,questionnaire:Questionnaire,generalInformations: any,questionsForm:any[],signature:string,appointmentDate:Date):Observable<QuestionnaireAnswer>{
     let questionnaireAnswer : any = {
         appointmentDate: appointmentDate,
-        certification: this.formatCertificationForm(certificationForm),
+        signature: signature,
         questionnaire: questionnaire,
         patientInformation: generalInformations,
-        questionAnswers: this.formatQuestionsForm(questionsForm)
+        questionAnswers: this.formatQuestionsForm(questionsForm),
+        questionnaireRequestId:questionnaireRequstId
     }
-    return this.httpUtil.post(questionnaireAnswerApiUrl,questionnaireAnswer);
+    return this.httpUtil.post(QUESTIONNAIRE_RESPONSE_API_URL,questionnaireAnswer);
   }
 
   formatQuestionsForm(form:any[]):QuestionAnswer[]{
@@ -51,16 +52,6 @@ export class QuestionnaireService {
         });
     }
     return result;
-  }
-
-  formatCertificationForm(certificationForm:any):Certification{
-    return {
-        approved: certificationForm.certification.length>0,
-        filledBy:certificationForm.filledBy,
-        clickX:certificationForm.signature.clickX,
-        clickY:certificationForm.signature.clickY,
-        clickDrag:certificationForm.signature.clickDrag
-    }
   }
 
   getQuestionnaireLinks():Observable<QuestionnaireLink[]>{
