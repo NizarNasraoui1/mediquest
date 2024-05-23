@@ -4,7 +4,7 @@ import com.qonsult.dto.QuestionnaireModelDTO;
 import com.qonsult.entity.QuestionnaireModel;
 import com.qonsult.exception.EntityException;
 import com.qonsult.generic.GenericServiceImpl;
-import com.qonsult.mapper.QuestionnaireMapper;
+import com.qonsult.mapper.QuestionnaireModelMapper;
 import com.qonsult.repository.QuestionnaireRepository;
 import com.qonsult.service.QuestionnaireService;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class QuestionnaireServiceImpl  extends GenericServiceImpl<QuestionnaireModel, QuestionnaireModelDTO,Long, QuestionnaireRepository, QuestionnaireMapper> implements QuestionnaireService {
-    public QuestionnaireServiceImpl(QuestionnaireRepository repository, QuestionnaireMapper mapper) {
+public class QuestionnaireServiceImpl  extends GenericServiceImpl<QuestionnaireModel, QuestionnaireModelDTO,Long, QuestionnaireRepository, QuestionnaireModelMapper> implements QuestionnaireService {
+    public QuestionnaireServiceImpl(QuestionnaireRepository repository, QuestionnaireModelMapper mapper) {
         super(repository, mapper);
     }
 

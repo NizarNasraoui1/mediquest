@@ -6,6 +6,6 @@ import com.qonsult.generic.GenericMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface QuestionnaireMapper extends GenericMapper<QuestionnaireModel, QuestionnaireModelDTO> {
+public interface QuestionnaireModelMapper extends GenericMapper<QuestionnaireModel, QuestionnaireModelDTO> {
 
 }

@@ -34,7 +34,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
  * @since 7/10/2021
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user-management")
 @RequiredArgsConstructor
 public class UserResource {
     private final UserService userService;

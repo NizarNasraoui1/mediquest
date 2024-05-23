@@ -1,13 +1,12 @@
 package com.qonsult.service;
 
+import com.qonsult.dto.QuestionnaireModelDTO;
 import com.qonsult.dto.QuestionnaireRequestDTO;
-import com.qonsult.entity.QuestionnaireRequest;
-import com.qonsult.generic.GenericService;
-import com.qonsult.mapper.QuestionnaireMapper;
-import com.qonsult.mapper.QuestionnaireRequestMapper;
-import com.qonsult.repository.QuestionnaireRepository;
-import com.qonsult.repository.QuestionnaireRequestRepository;
+
+import java.util.UUID;
 
 public interface QuestionnaireRequestService {
     void saveQuestionnaireRequest(QuestionnaireRequestDTO questionnaireRequestDTO);
+
+    QuestionnaireModelDTO getQuestionnaireModelByQuestionnaireRequestId(UUID id);
 }

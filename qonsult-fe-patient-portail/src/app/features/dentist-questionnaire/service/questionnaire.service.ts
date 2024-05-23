@@ -10,7 +10,7 @@ import { Questionnaire } from '../models/questionnaire';
 import { QUESTIONNAIRE_LINK_LIST_MOCK } from '../../my-questionnaires/mock/questionnaire-list.mock';
 import { QuestionnaireLink } from '../../my-questionnaires/model/quetionnaire-link-list';
 
-const questionnaireApiUrl="/api/public/questionnaire/";
+const QUESTIONNAIRE_API_URL="/api/mediquest/public/questionnaire-request";
 const questionnaireAnswerApiUrl="/api/public/questionnaire-answer/";
 
 @Injectable({
@@ -26,7 +26,7 @@ export class QuestionnaireService {
   }
 
   getQuestions(id:string){
-    return this.httpUtil.get(`${questionnaireApiUrl}/${id}`);
+    return this.httpUtil.get(`${QUESTIONNAIRE_API_URL}/${id}/questionnaire-model`);
     // return of(QUESTION_MOCK);
   }
 

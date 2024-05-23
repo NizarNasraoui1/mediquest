@@ -22,5 +22,5 @@ public class QuestionnaireResponseDTO {
     private Date signedDate;
     private String signature;
     private String filledBy;
-    QuestionnaireRequest questionnaireRequest;
+    UUID questionnaireRequestId;
 }

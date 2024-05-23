@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/historic")
+@RequestMapping("/historic")
 @RequiredArgsConstructor
 public class SearchQuestionnaireResource {
     private final SearchQuestionnaireResponseService searchQuestionnaireResponseService;

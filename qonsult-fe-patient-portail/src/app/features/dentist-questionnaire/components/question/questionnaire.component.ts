@@ -2,9 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation, NgZo
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Question } from '../../models/question';
 import { QuestionnaireService } from '../../service/questionnaire.service';
-import { Condition } from '../../models/condition';
 import { QuestionTypeEnum } from '../../models/question-type.enum';
-import { map } from 'rxjs';
 import { ElementRef } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -13,7 +11,6 @@ import { Questionnaire } from '../../models/questionnaire';
 import { DrawComponent } from 'src/app/shared/components/draw/draw.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Signature } from 'src/app/shared/models/signature';
-import { CodeLabel } from 'src/app/shared/models/code-label';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'src/app/shared/services/toast.service';
 
@@ -85,9 +82,17 @@ export class QuestionnaireComponent implements OnInit {
             height: '25%'
         }).afterClosed().subscribe((data: any) => {
             this.signature = data;
-            this.certificationForm.get('signature')?.setValue(data.signature);
+            setTimeout(() => {
+                this.certificationForm.get('signature')?.setValue(this.getSignatureData());
+                console.log(this.certificationForm.get('signature'))
+            }, 1000);
         });
     }
+
+    getSignatureData(){
+        const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
+        return canvas.toDataURL('image/png');
+      }
 
     get questions(): Question[] {
         let questions = [];

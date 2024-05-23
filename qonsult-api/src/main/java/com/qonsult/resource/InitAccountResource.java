@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("api/init-account")
+@RequestMapping("/init-account")
 @RequiredArgsConstructor
 public class InitAccountResource {
     private final InitAccount initAccount;

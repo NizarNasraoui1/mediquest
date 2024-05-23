@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/received-questionnaires")
+@RequestMapping("/received-questionnaires")
 @RequiredArgsConstructor
 public class ReceivedQuestionnaireAnswerResource {
     private final QuestionnaireResponseService questionnaireResponseService;

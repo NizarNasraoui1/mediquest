@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mediquest/qr-codes")
+@RequestMapping("qr-codes")
 @RequiredArgsConstructor
 public class QrcodeResource {
     private final QrcodeService qrcodeService;

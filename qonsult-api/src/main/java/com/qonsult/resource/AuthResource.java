@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/public/auth")
+@RequestMapping("public/auth")
 @RequiredArgsConstructor
 public class AuthResource {
     private final AuthService authService;

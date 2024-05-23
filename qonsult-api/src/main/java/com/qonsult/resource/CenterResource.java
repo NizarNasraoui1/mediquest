@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("api/center")
+@RequestMapping("center")
 public class CenterResource extends GenericResource<Center, CenterDTO,Long, CenterRepository, CenterMapper, CenterService> {
     public CenterResource(CenterService service) {
         super(service);
