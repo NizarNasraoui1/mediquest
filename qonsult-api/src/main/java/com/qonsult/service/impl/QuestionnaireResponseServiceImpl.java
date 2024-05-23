@@ -11,6 +11,7 @@ import com.qonsult.repository.QuestionnaireResponseRepository;
 import com.qonsult.service.QuestionnaireResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class QuestionnaireResponseServiceImpl implements QuestionnaireResponseSe
 
     private final QuestionnaireResponseMapper questionnaireResponseMapper;
 
+    @Transactional
     public List<ReceivedQuestionnaireDTO>getQuestionnaireAnswersByAppointmentDate(LocalDate appointmentDate){
         List<QuestionnaireRequest> questionnaireRequests = questionnaireRequestRepository.findAllByAppointmentDate(appointmentDate);
         return questionnaireRequests.stream().map(questionnaireRequest -> {
