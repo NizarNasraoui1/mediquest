@@ -42,15 +42,7 @@
     </div>
     <form [formGroup]="form">
         <div class="row">
-            <div>
-                <div class="row">
-                    <p class="field">Emails :</p>
-                    <p-autoComplete class="autocomplete" formControlName="emails" [suggestions]="emails"
-                        (completeMethod)="search($event)" [multiple]="true" (keydown.enter)="handleKeyPress()">
-                    </p-autoComplete>
-                </div>
-            </div>
-            <div id="main" >
+            <div class="questionnaire-preview-container">
                 <p class="field">Selectionner un consentement :</p>
                 <div>
                     <p-dropdown [options]="questionnaireNames" formControlName="questionnaire" placeholder="selectionner un consentement" [editable]="true" optionLabel="name"></p-dropdown>
@@ -68,12 +60,21 @@
                 </div>
             </div>
 
-            <!-- <div class="row">
+            <div>
+                <div class="row">
+                    <p class="field">Emails :</p>
+                    <p-autoComplete class="autocomplete" formControlName="emails" [suggestions]="emails"
+                        (completeMethod)="search($event)" [multiple]="true" (keydown.enter)="handleKeyPress()">
+                    </p-autoComplete>
+                </div>
+            </div>
+
+            <div class="row">
                 <p class="field">Date du rendez vous :</p>
                 <mat-card class="demo-inline-calendar-card">
                     <mat-calendar (selectedChange)="updateFormDate($event)" [(selected)]="selected"></mat-calendar>
                 </mat-card>
-            </div> -->
+            </div>
 
 
         </div>
