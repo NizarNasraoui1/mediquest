@@ -60,21 +60,24 @@
                 </div>
             </div>
 
-            <div>
+
+
+
+
+            <ng-container *ngIf="form.value.questionnaire">
                 <div class="row">
                     <p class="field">Emails :</p>
                     <p-autoComplete class="autocomplete" formControlName="emails" [suggestions]="emails"
                         (completeMethod)="search($event)" [multiple]="true" (keydown.enter)="handleKeyPress()">
                     </p-autoComplete>
                 </div>
-            </div>
-
-            <div class="row">
-                <p class="field">Date du rendez vous :</p>
-                <mat-card class="demo-inline-calendar-card">
-                    <mat-calendar (selectedChange)="updateFormDate($event)" [(selected)]="selected"></mat-calendar>
-                </mat-card>
-            </div>
+                <div class="row">
+                    <p class="field">Date du rendez vous :</p>
+                    <mat-card class="demo-inline-calendar-card">
+                        <mat-calendar (selectedChange)="updateFormDate($event)" [(selected)]="selected"></mat-calendar>
+                    </mat-card>
+                </div>
+            </ng-container>
 
 
         </div>

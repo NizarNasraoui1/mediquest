@@ -60,7 +60,7 @@ export class SendingBoxComponent implements OnInit, OnDestroy {
         private sendingBoxService: SendingBoxService,
         private formBuilder: FormBuilder,
         private toasterService: ToasterService,
-        private elementRef: ElementRef,
+        private elementRef: ElementRef
     ) {
         this.dateAdapter.setLocale('fr');
     }
@@ -138,7 +138,11 @@ export class SendingBoxComponent implements OnInit, OnDestroy {
             .sendQuestionnaireInvitation(this.form.value)
             .subscribe(() => {
                 this.toasterService.addSuccessMessage('Invitations envoyées');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             });
+        console.log(this.form.value);
     }
 
     ngOnDestroy(): void {

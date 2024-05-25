@@ -15,7 +15,13 @@ export class SendingBoxService {
     return this.httpUtil.get(QUESTIONNAIRE_NAMES_URL);
   }
 
-  sendQuestionnaireInvitation(questionnaireInvitation:any){
+  sendQuestionnaireInvitation(questionnaireInvitationForm:any){
+    const questionnaireInvitation = {
+        emails:questionnaireInvitationForm.emails,
+        appointmentDate:questionnaireInvitationForm.appointmentDate,
+        questionnaireModelId:questionnaireInvitationForm.questionnaire.questionnaireModelId
+    }
+    console.log(questionnaireInvitation);
     return this.httpUtil.post(QUESTIONNAIRE_INVITATION_API_URL,questionnaireInvitation);
   }
 }
