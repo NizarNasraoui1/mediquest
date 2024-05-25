@@ -1,0 +1,40 @@
+.text-content{
+    text-align: justify;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 2%;
+}
+
+@media(min-width: 768px) {
+    .text-content{
+        width: 70%;
+    }
+    .container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+}
+
+@media(max-width: 768px) {
+    .img{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media(min-width: 768px){
+    .container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+img{
+    height: 80%;
+}

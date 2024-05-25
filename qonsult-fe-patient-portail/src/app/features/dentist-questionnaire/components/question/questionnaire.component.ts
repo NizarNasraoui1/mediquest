@@ -57,6 +57,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     isSubmitted: boolean = false;
     signature: Signature;
     signatureData: string;
+    questionnaireAlreadyPassed = false;
 
     constructor(
         private fb: FormBuilder,
@@ -96,8 +97,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
             this.initializeQuestionnaireSubArray();
             },
             error: ()=>{
-                this.topicIndex = 3;
-                debugger;
+                this.questionnaireAlreadyPassed = true;
             }
         });
     }
