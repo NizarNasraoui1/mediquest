@@ -3,6 +3,8 @@ package com.qonsult.service.impl;
 import com.qonsult.dto.QuestionnaireModelDTO;
 import com.qonsult.dto.QuestionnaireRequestDTO;
 import com.qonsult.entity.QuestionnaireRequest;
+import com.qonsult.enumeration.QuestionnaireRequestStateEnum;
+import com.qonsult.exception.QuestionnaireAlreadyPassedException;
 import com.qonsult.mapper.QuestionnaireModelMapper;
 import com.qonsult.repository.QuestionnaireRequestRepository;
 import com.qonsult.service.QuestionnaireRequestService;
@@ -24,8 +26,18 @@ public class QuestionnaireRequestServiceImpl implements QuestionnaireRequestServ
     }
 
     @Override
-    public QuestionnaireModelDTO getQuestionnaireModelByQuestionnaireRequestId(UUID id) {
-        return questionnaireModelMapper.toDto(questionnaireRequestRepository.findById(id).orElseThrow(()->new EntityNotFoundException("questionnaire request not found")).getQuestionnaireModel());
+    public QuestionnaireModelDTO getQuestionnaireModelByQuestionnaireRequestId(UUID id) throws QuestionnaireAlreadyPassedException {
+        QuestionnaireRequest questionnaireRequest = questionnaireRequestRepository.findById(id).orElseThrow(()->new EntityNotFoundException("questionnaire request not found"));
+        switch (questionnaireRequest.getQuestionnaireRequestState()){
+            case SENT:{
+                questionnaireRequest.setQuestionnaireRequestState(QuestionnaireRequestStateEnum.OPENED);
+                questionnaireRequestRepository.save(questionnaireRequest);
+            }
+            case TERMINATED:{
+                throw new QuestionnaireAlreadyPassedException("questionnaire already passed");
+            }
+        }
+        return questionnaireModelMapper.toDto(questionnaireRequest.getQuestionnaireModel());
     }
 
     @Override

@@ -176,7 +176,7 @@
                                         </ng-container>
                                         <!-- questionnaire -->
 
-                                        <ng-container *ngIf="topicIndex!=0">
+                                        <ng-container *ngIf="topicIndex!=0 && topicIndex!=3">
                                             <form class="questionnaire" [formGroup]="questionForm">
                                                 <ng-container *ngFor="let question of slicedQuestionnaireArray">
                                                     <ng-container *ngIf="verifyCondition(question.id)">
@@ -245,6 +245,10 @@
                                                     </ng-container>
                                                 </ng-container>
                                             </form>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="topicIndex==3">
+                                            <app-mediquest-already-passed></app-mediquest-already-passed>
                                         </ng-container>
 
 
@@ -384,7 +388,7 @@
         </div>
     </main>
 
-    <div class="spinner-container" *ngIf="!questionnaire">
+    <div class="spinner-container" *ngIf="!questionnaire && this.topicIndex!=3">
         <mat-spinner></mat-spinner>
     </div>
 

@@ -1,5 +1,21 @@
-import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation, NgZone } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    ViewEncapsulation,
+    NgZone,
+    OnChanges,
+    SimpleChanges,
+} from '@angular/core';
+import {
+    FormGroup,
+    FormBuilder,
+    Validators,
+    FormArray,
+    FormControl,
+} from '@angular/forms';
 import { Question } from '../../models/question';
 import { QuestionnaireService } from '../../service/questionnaire.service';
 import { QuestionTypeEnum } from '../../models/question-type.enum';
@@ -20,11 +36,11 @@ registerLocaleData(localeFr, 'fr');
     selector: 'app-question',
     templateUrl: './questionnaire.component.html',
     styleUrls: ['./questionnaire.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
-export class QuestionnaireComponent implements OnInit {
+export class QuestionnaireComponent implements OnInit, OnChanges {
     @Input() preview = false;
-    @Input()  id:string;
+    @Input() id: string;
     questionnaire: Questionnaire;
     generalInformtionsForm: FormGroup;
     questionForm!: FormGroup;
@@ -39,35 +55,50 @@ export class QuestionnaireComponent implements OnInit {
     displayModal = true;
     appointmentDate: any;
     isSubmitted: boolean = false;
-    signature:Signature;
-    signatureData:string;
+    signature: Signature;
+    signatureData: string;
 
-    constructor(private fb: FormBuilder, private questionnaireService: QuestionnaireService, private elRef: ElementRef,
-        private primengConfig: PrimeNGConfig, public dialog: MatDialog, private zone: NgZone,private activatedRoute:ActivatedRoute,
-        private toasterService:ToasterService) {
+    constructor(
+        private fb: FormBuilder,
+        private questionnaireService: QuestionnaireService,
+        private elRef: ElementRef,
+        private primengConfig: PrimeNGConfig,
+        public dialog: MatDialog,
+        private zone: NgZone,
+        private activatedRoute: ActivatedRoute,
+        private toasterService: ToasterService,
+        private router:Router
+    ) {
         this.configureCalendarLanguage();
-
     }
 
     ngOnInit(): void {
-        if(!this.preview){
-            this.activatedRoute.paramMap.subscribe((params)=>{
-                this.id= params.get('id');
-                this.getQuestionnaireAndInitParams()
+        if (!this.preview) {
+            this.activatedRoute.paramMap.subscribe((params) => {
+                this.id = params.get('id');
+                this.getQuestionnaireAndInitParams();
             });
-        }
-        else{
-            this.getQuestionnaireAndInitParams()
+        } else {
+            this.getQuestionnaireAndInitParams();
         }
     }
 
-    getQuestionnaireAndInitParams(){
-        this.questionnaireService.getQuestions(this.id).subscribe((res) => {
+    ngOnChanges(changes: SimpleChanges): void {
+        this.getQuestionnaireAndInitParams();
+    }
+
+    getQuestionnaireAndInitParams() {
+        this.questionnaireService.getQuestions(this.id).subscribe({
+            next: (res) => {
             this.questionnaire = res;
-            //this.sortQuestions();
             this.initForms();
             this.generateTopicQuestionsMap();
             this.initializeQuestionnaireSubArray();
+            },
+            error: ()=>{
+                this.topicIndex = 3;
+                debugger;
+            }
         });
     }
 
@@ -78,23 +109,28 @@ export class QuestionnaireComponent implements OnInit {
     openSignatureModal() {
         this.scrollToTopBar();
 
-        this.dialog.open(DrawComponent, {
-            width: '400px',
-            height: '25%'
-        }).afterClosed().subscribe((data: any) => {
-            this.signature = data;
-        });
+        this.dialog
+            .open(DrawComponent, {
+                width: '400px',
+                height: '25%',
+            })
+            .afterClosed()
+            .subscribe((data: any) => {
+                this.signature = data;
+            });
     }
 
-    getSignatureData(){
-        const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
+    getSignatureData() {
+        const canvas: HTMLCanvasElement = document.getElementById(
+            'canvas',
+        ) as HTMLCanvasElement;
         return canvas.toDataURL('image/png');
-      }
+    }
 
     get questions(): Question[] {
         let questions = [];
-        this.questionnaire.topics.forEach((topic)=>{
-            questions = [...questions,...topic.questions];
+        this.questionnaire.topics.forEach((topic) => {
+            questions = [...questions, ...topic.questions];
         });
         return questions;
     }
@@ -124,40 +160,42 @@ export class QuestionnaireComponent implements OnInit {
             address: new FormControl(''),
             tel: new FormControl(''),
             mail: new FormControl(''),
-            profession: new FormControl('')
-        })
+            profession: new FormControl(''),
+        });
     }
 
     initCertificationForm() {
         this.certificationForm = this.fb.group({
             certification: new FormControl(''),
             filledBy: new FormControl(''),
-            signature: new FormControl('')
-        })
+            signature: new FormControl(''),
+        });
     }
 
     generateTopicQuestionsMap() {
         this.topicQuestionsMap.set('Bienvenue', []);
         this.topicQuestionsMap.set('Informations Générales', []);
-        this.questionnaire.topics.forEach(topic => {
-            this.topicQuestionsMap.set(topic.name,topic.questions);
+        this.questionnaire.topics.forEach((topic) => {
+            this.topicQuestionsMap.set(topic.name, topic.questions);
         });
         this.topicNames = Array.from(this.topicQuestionsMap.keys());
-        this.topicNames = [...this.topicNames, "Certification"];
-
+        this.topicNames = [...this.topicNames, 'Certification'];
     }
 
     onNext() {
         this.scrollToTopBar();
         this.topicIndex += 1;
         this.slicedQuestionnaireArray = [];
-        this.slicedQuestionnaireArray = this.topicQuestionsMap.get(this.topicNames[this.topicIndex])!;
-
+        this.slicedQuestionnaireArray = this.topicQuestionsMap.get(
+            this.topicNames[this.topicIndex],
+        )!;
     }
 
     onPrevious() {
         this.topicIndex -= 1;
-        this.slicedQuestionnaireArray = this.topicQuestionsMap.get(this.topicNames[this.topicIndex])!;
+        this.slicedQuestionnaireArray = this.topicQuestionsMap.get(
+            this.topicNames[this.topicIndex],
+        )!;
         this.scrollToTopBar();
     }
 
@@ -167,7 +205,9 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     initializeQuestionnaireSubArray() {
-        this.slicedQuestionnaireArray = this.topicQuestionsMap.get(this.topicNames[0])!;
+        this.slicedQuestionnaireArray = this.topicQuestionsMap.get(
+            this.topicNames[0],
+        )!;
     }
 
     verifyCondition(id: string): boolean {
@@ -189,17 +229,51 @@ export class QuestionnaireComponent implements OnInit {
 
     configureCalendarLanguage() {
         this.primengConfig.setTranslation({
-            dayNames: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+            dayNames: [
+                'dimanche',
+                'lundi',
+                'mardi',
+                'mercredi',
+                'jeudi',
+                'vendredi',
+                'samedi',
+            ],
             dayNamesShort: ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'],
             dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-            monthNames: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
-            monthNamesShort: ['jan', 'fév', 'mar', 'avr', 'mai', 'jun', 'jul', 'aoû', 'sep', 'oct', 'nov', 'déc'],
-            today: 'Aujourd\'hui',
-            clear: 'Effacer'
+            monthNames: [
+                'janvier',
+                'février',
+                'mars',
+                'avril',
+                'mai',
+                'juin',
+                'juillet',
+                'août',
+                'septembre',
+                'octobre',
+                'novembre',
+                'décembre',
+            ],
+            monthNamesShort: [
+                'jan',
+                'fév',
+                'mar',
+                'avr',
+                'mai',
+                'jun',
+                'jul',
+                'aoû',
+                'sep',
+                'oct',
+                'nov',
+                'déc',
+            ],
+            today: "Aujourd'hui",
+            clear: 'Effacer',
         });
     }
     get progressBarValue() {
-        return (this.topicIndex / (this.topicQuestionsMap.size)) * 100;
+        return (this.topicIndex / this.topicQuestionsMap.size) * 100;
     }
 
     get isPaginationEnd() {
@@ -211,16 +285,24 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     submit() {
-        if(!this.preview){
-            this.questionnaireService.saveQuestionnaire(this.id,this.questionnaire, this.generalInformtionsForm.value, this.questionForm.value, this.getSignatureData(), this.appointmentDate)
-            .subscribe((res) => {
-                this.isSubmitted = true;
-            });
-        }
-        else{
-            this.toasterService.addWarnMessage("Vous ne pouvez pas soumettre ce questionnaire car vous êtes en mode visualisation uniquement");
+        if (!this.preview) {
+            this.questionnaireService
+                .saveQuestionnaire(
+                    this.id,
+                    this.questionnaire,
+                    this.generalInformtionsForm.value,
+                    this.questionForm.value,
+                    this.getSignatureData(),
+                    this.appointmentDate,
+                )
+                .subscribe((res) => {
+                    this.isSubmitted = true;
+                });
+        } else {
+            this.toasterService.addWarnMessage(
+                'Vous ne pouvez pas soumettre ce questionnaire car vous êtes en mode visualisation uniquement',
+            );
             this.isSubmitted = true;
         }
     }
-
 }

@@ -25,6 +25,7 @@ import { SubmitSeccessefulComponent } from './components/submit-seccesseful/subm
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { InputMaskModule } from 'primeng/inputmask';
 import { IConfig,NgxMaskDirective, provideNgxMask } from 'ngx-mask'
+import { QuestionnaireAlreadyPassedComponent } from './components/questionnaire-already-passed/questionnaire-already-passed.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -34,7 +35,8 @@ const maskConfig: Partial<IConfig> = {
   declarations: [
     QuestionnaireComponent,
     SubmitSeccessefulComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    QuestionnaireAlreadyPassedComponent
   ],
   imports: [
     CommonModule,
