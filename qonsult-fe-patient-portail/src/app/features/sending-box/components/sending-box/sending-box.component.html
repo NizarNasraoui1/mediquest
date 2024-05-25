@@ -1,4 +1,4 @@
-<div class="card">
+<!-- <div class="card">
     <div class="title">
         <h3>Envoyer un Questionnaire</h3>
     </div>
@@ -28,6 +28,46 @@
                     </mat-card>
                 </div>
             </div>
+
+        </div>
+        <p-button class="send-button" label="Envoyer" (click)="sendInvitation()"></p-button>
+    </form>
+</div> -->
+
+
+
+<div class="card">
+    <div class="title">
+        <h3>Envoyer un Questionnaire</h3>
+    </div>
+    <form [formGroup]="form">
+        <div class="row">
+            <div>
+                <div class="row">
+                    <p class="field">Emails :</p>
+                    <p-autoComplete class="autocomplete" formControlName="emails" [suggestions]="emails"
+                        (completeMethod)="search($event)" [multiple]="true" (keydown.enter)="handleKeyPress()">
+                    </p-autoComplete>
+                </div>
+            </div>
+            <div id="main" >
+                <p class="field">Selectionner un consentement :</p>
+                <div>
+                    <p-dropdown [options]="questionnaireNames" formControlName="questionnaire" placeholder="selectionner un consentement" [editable]="true" optionLabel="name"></p-dropdown>
+                </div>
+
+                <div class="consent-preview">
+                    <div class="sign-questionnaire-preview">
+                        <!-- <app-sign-consent *ngIf="form.value.consent.consentId;else noConsentSelected" [consentRequestId]="form.value.consent.consentRequestId"></app-sign-consent> -->
+                        <app-question *ngIf="form.value.questionnaire.questionnaireRequest;else noQuestionnaireSelected" [preview]="true" [id]="form.value.questionnaire.questionnaireRequest"></app-question>
+
+                    </div>
+                    <ng-template #noQuestionnaireSelected>
+                        <div class="no-questionnaire-selected">Selectionner un consentement pour le visualiser ici</div>
+                    </ng-template>
+                </div>
+            </div>
+
 
         </div>
         <p-button class="send-button" label="Envoyer" (click)="sendInvitation()"></p-button>

@@ -8,7 +8,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +19,7 @@ import { format } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { ToasterService } from 'src/app/shared/services/toast.service';
 import { SubSink } from 'subsink';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface AutoCompleteCompleteEvent {
     originalEvent: Event;
@@ -38,6 +39,7 @@ interface AutoCompleteCompleteEvent {
         QuestionnaireModule,
         ReactiveFormsModule,
         ButtonModule,
+        DropdownModule
     ],
     templateUrl: './sending-box.component.html',
     styleUrls: ['./sending-box.component.scss'],
@@ -49,7 +51,7 @@ export class SendingBoxComponent implements OnInit, OnDestroy {
     questionnaireNames: any[] | undefined = [];
     filteredQuestionnaires: any[] | undefined = [];
     selectedQuestionnaire: any;
-    form;
+    form:FormGroup;;
     subs = new SubSink();
     emails = [];
 
