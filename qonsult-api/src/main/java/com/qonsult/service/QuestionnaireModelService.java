@@ -6,6 +6,8 @@ import com.qonsult.entity.QuestionnaireModel;
 import java.util.List;
 
 public interface QuestionnaireModelService {
+
+    QuestionnaireModel getQuestionnaireModelById(Long id);
     List<QuestionnaireLinkDTO> getQuestionnaireNamesAndLinks();
 
     List<QuestionnaireModel> findAll();

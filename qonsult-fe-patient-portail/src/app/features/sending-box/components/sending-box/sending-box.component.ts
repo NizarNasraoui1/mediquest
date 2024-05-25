@@ -123,16 +123,20 @@ export class SendingBoxComponent implements OnInit, OnDestroy {
     sendInvitation() {
         const notValidMail = this.checkMails(this.form.value.emails);
         if(notValidMail!=''){
-            this.toasterService.addWarnMessage(`Veuillez vérifier le format de cette adresse mail ${notValidMail}`)
+            this.toasterService.addWarnMessage(`Veuillez vérifier le format de cette adresse mail ${notValidMail}`);
+            return;
         }
         if(this.form.value.emails==''){
             this.toasterService.addWarnMessage('Veuillez ajouter au moins une adresse mail');
+            return;
         }
         if(this.form.value.questionnaire==''){
             this.toasterService.addWarnMessage('Veuillez selectionner un questionnaire');
+            return;
         }
         if(this.form.value.appointmentDate==''){
             this.toasterService.addWarnMessage('Veuillez choisir une date de rendez vous');
+            return;
         }
         this.subs.sink = this.sendingBoxService
             .sendQuestionnaireInvitation(this.form.value)
@@ -140,9 +144,8 @@ export class SendingBoxComponent implements OnInit, OnDestroy {
                 this.toasterService.addSuccessMessage('Invitations envoyées');
                 setTimeout(() => {
                     window.location.reload();
-                }, 1500);
+                }, 2000);
             });
-        console.log(this.form.value);
     }
 
     ngOnDestroy(): void {

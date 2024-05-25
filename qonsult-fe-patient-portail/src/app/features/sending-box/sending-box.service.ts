@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpUtilService } from 'src/app/util/service/http-util.service';
 
 const QUESTIONNAIRE_NAMES_URL="/api/mediquest/questionnaire-model/names-links";
-const QUESTIONNAIRE_INVITATION_API_URL= "/api/questionnaire-invitation";
+const QUESTIONNAIRE_INVITATION_API_URL= "/api/mediquest/questionnaire-invitation";
 
 @Injectable({
   providedIn: 'root'

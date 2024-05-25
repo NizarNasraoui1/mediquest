@@ -21,8 +21,8 @@ public class QuestionnaireRequestServiceImpl implements QuestionnaireRequestServ
 
     private final QuestionnaireRequestRepository questionnaireRequestRepository;
     private final QuestionnaireModelMapper questionnaireModelMapper;
-    public void saveQuestionnaireRequest(QuestionnaireRequestDTO questionnaireRequestDTO) {
-
+    public void saveQuestionnaireRequest(QuestionnaireRequest questionnaireRequest) {
+        questionnaireRequestRepository.save(questionnaireRequest);
     }
 
     @Override

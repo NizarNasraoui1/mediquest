@@ -1,7 +1,7 @@
-//package com.qonsult.service;
-//
-//import com.qonsult.dto.QuestionnaireInvitationDTO;
-//
-//public interface QuestionnaireInvitationService {
-//    QuestionnaireInvitationDTO hundleQuestionnaireInvitationRequest(QuestionnaireInvitationDTO questionnaireInvitationDTO);
-//}
+package com.qonsult.service;
+
+import com.qonsult.dto.QuestionnaireInvitationDTO;
+
+public interface QuestionnaireInvitationService {
+    void sendQuestionnaireInvitationRequest(QuestionnaireInvitationDTO questionnaireInvitationDTO);
+}

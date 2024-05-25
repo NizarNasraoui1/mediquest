@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface QuestionnaireRequestService {
-    void saveQuestionnaireRequest(QuestionnaireRequestDTO questionnaireRequestDTO);
+    void saveQuestionnaireRequest(QuestionnaireRequest questionnaireRequest);
 
     QuestionnaireModelDTO getQuestionnaireModelByQuestionnaireRequestId(UUID id) throws QuestionnaireAlreadyPassedException;
 

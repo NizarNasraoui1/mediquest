@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,5 +40,9 @@ public class QuestionnaireModelServiceImpl implements QuestionnaireModelService 
     @Override
     public List<QuestionnaireModel> findAll() {
         return questionnaireModelRepository.findAll();
+    }
+
+    public QuestionnaireModel getQuestionnaireModelById(Long id){
+        return questionnaireModelRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("questionnaire model not found"));
     }
 }
