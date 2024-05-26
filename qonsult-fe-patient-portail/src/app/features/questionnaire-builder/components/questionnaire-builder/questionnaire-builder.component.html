@@ -10,18 +10,20 @@
                 *ngFor="let item of sections.controls; let i = index"
                 [formGroupName]="i"
             >
-                <div class="card">
-                    <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Nom de la section" />
-                    </mat-form-field>
+                <div class="card" style="margin-bottom: 1%;">
+                    <div (click)="removeItem(i)" class="delete-section">X</div>
                     <app-questionnaire-section
                         id="{{ i }}"
                         formControlName="questions"
                     ></app-questionnaire-section>
-                    <button type="button" (click)="removeItem(i)">Remove</button>
                 </div>
             </div>
+            <br>
         </div>
-        <button type="button" (click)="addItem()">Add Item</button>
-        <button type="submit">Submit</button>
+        <!-- <button type="button" (click)="addItem()">Add Item</button>
+        <button type="submit">Submit</button> -->
+
+        <div class="add-section" (click)="addItem()">
+            <i class="material-icons add-section-button">add</i> <span>Ajouter une section</span>
+        </div>
     </form>

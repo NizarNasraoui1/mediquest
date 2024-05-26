@@ -2,15 +2,38 @@
     min-width: 150px;
     max-width: 500px;
     width: 100%;
-  }
+}
 
-  .example-full-width {
+.example-full-width {
     width: 100%;
     background-color: white;
-  }
-  .white-background {
+}
+.white-background {
     background-color: white;
-  }
-.mat-mdc-text-field-wrapper{
+}
+.mat-mdc-text-field-wrapper {
     background-color: white !important;
+}
+
+.delete-section {
+    opacity: 0.6;
+    float: right;
+    font-size: large;
+    cursor: pointer;
+}
+
+.delete-section:hover {
+    opacity: 1;
+}
+
+.add-section-button{
+    transform: translate(0, 6px);
+    cursor: pointer;
+}
+
+.add-section{
+    cursor: pointer;
+    color: #0079ff;
+    width: 20%;
+    margin-bottom: 1%;
 }
