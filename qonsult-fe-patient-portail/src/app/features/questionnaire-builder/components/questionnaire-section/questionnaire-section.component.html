@@ -1,4 +1,4 @@
 <mat-form-field class="section">
-    <input matInput placeholder="Nom de la section" />
+    <input matInput [(ngModel)]="sectionTitle" placeholder="Nom de la section" />
 </mat-form-field>
-<google-form-builder></google-form-builder>
+<google-form-builder (formChanged)="setSectionQuestions($event)"></google-form-builder>

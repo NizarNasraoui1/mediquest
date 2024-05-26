@@ -13,16 +13,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class QuestionnaireSectionComponent implements ControlValueAccessor{
-    value;
-    onChange: (value: string) => void = () => {};
+export class QuestionnaireSectionComponent implements ControlValueAccessor {
+    sectionQuestions;
+    sectionTitle: string;
+    value: { sectionTitle: string; sectionQuestions: string };
+    onChange: (value: any) => void = () => {};
     onTouched: () => void = () => {};
 
-    writeValue(value: string): void {
-      this.value = value;
+    writeValue(value: any): void {
+        this.value = value;
     }
 
-    registerOnChange(fn: (value: string) => void): void {
+    registerOnChange(fn: (value: any) => void): void {
       this.onChange = fn;
     }
 
@@ -36,11 +38,24 @@ export class QuestionnaireSectionComponent implements ControlValueAccessor{
 
     handleInputChange(event: Event): void {
       const input = event.target as HTMLInputElement;
-      this.value = input.value;
+      this.sectionQuestions = input.value;
+      this.value = {
+        sectionTitle: this.sectionTitle,
+        sectionQuestions: this.sectionQuestions
+      };
       this.onChange(this.value);
     }
 
     handleBlur(): void {
       this.onTouched();
+    }
+
+    setSectionQuestions(sectionQuestions: string): void {
+      this.sectionQuestions = sectionQuestions;
+      this.value = {
+        sectionTitle: this.sectionTitle,
+        sectionQuestions: this.sectionQuestions
+      };
+      this.onChange(this.value);
     }
 }

@@ -94,7 +94,6 @@ export class GoogleFormBuilderComponent implements OnInit {
   }
 
   transformQuestionsFormat(questions) {
-    console.log(questions)
     return questions.map(question => {
         let form = {
             text: question.question.text,
