@@ -18,7 +18,6 @@ export class GoogleFormBuilderComponent implements OnInit {
   @Input() mainForm!: FormGroup;
   @Output() formChanged = new EventEmitter();
   @Output() onSaveButtonClicked = new EventEmitter();
-  firstQuestionAdded = false;
 
   newTextFormGroup = this.fb.group({
     id: [0],
@@ -130,7 +129,6 @@ export class GoogleFormBuilderComponent implements OnInit {
   async addNewQuestion() {
     let questionList = this.mainForm.get('questionList') as FormArray;
     let i = questionList.length;
-    if(this.firstQuestionAdded){
         questionList.insert(i + 1, this.fb.group({
             id: [i + 1],
             orderNo: [0],
@@ -158,8 +156,6 @@ export class GoogleFormBuilderComponent implements OnInit {
               ]),
             }),
           }));
-    }
-    this.firstQuestionAdded = true;
 
     // Update the order No
     await this.updateOrderNo();

@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-questionnaire-section',
   templateUrl: './questionnaire-section.component.html',
-  styleUrls: ['./questionnaire-section.component.scss']
+  styleUrls: ['./questionnaire-section.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => QuestionnaireSectionComponent),
+      multi: true
+    }
+  ]
 })
 export class QuestionnaireSectionComponent implements ControlValueAccessor{
     value;
@@ -25,6 +32,12 @@ export class QuestionnaireSectionComponent implements ControlValueAccessor{
 
     setDisabledState?(isDisabled: boolean): void {
       // Handle the disabled state here
+    }
+
+    handleInputChange(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      this.value = input.value;
+      this.onChange(this.value);
     }
 
     handleBlur(): void {

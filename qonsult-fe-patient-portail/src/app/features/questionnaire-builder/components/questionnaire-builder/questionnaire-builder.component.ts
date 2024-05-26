@@ -10,28 +10,28 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class QuestionnaireBuilderComponent {
     form: FormGroup;
 
-    constructor(private fb: FormBuilder) {
-      this.form = this.fb.group({
-        items: this.fb.array([])
-      });
-    }
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      sections: this.fb.array([])
+    });
+  }
 
-    get items() {
-      return this.form.get('items') as FormArray;
-    }
+  get sections() {
+    return this.form.get('sections') as FormArray;
+  }
 
-    addItem() {
-      const itemForm = this.fb.group({
-        section: ['', Validators.required]
-      });
-      this.items.push(itemForm);
-    }
+  addItem() {
+    const itemForm = this.fb.group({
+      questions: ['', Validators.required]
+    });
+    this.sections.push(itemForm);
+  }
 
-    removeItem(index: number) {
-      this.items.removeAt(index);
-    }
+  removeItem(index: number) {
+    this.sections.removeAt(index);
+  }
 
-    onSubmit() {
-      console.log(this.form.value);
-    }
+  onSubmit() {
+    console.log(this.form.value);
+  }
 }
