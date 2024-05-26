@@ -1,0 +1,44 @@
+.draggable {
+    display: block;
+    cursor: move;
+    z-index: 10;
+}
+
+.question-option {
+    height: 30px;
+    margin-left: 5%;
+    width: 90%;
+}
+
+.box {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    border-radius: 5px;
+    box-shadow: 4px 4px #ccc;
+}
+
+.question-title {
+    height: 30px;
+    width: 100%;
+}
+
+.questions-container{
+    width: 100%;
+}
+
+.title-input{
+    padding: 0px;
+}
+
+.add-option{
+    display: flex;
+    align-items: center;
+    /* margin-left: 1%; */
+    margin-top: 15px;
+    color: #0079ff;
+    cursor: pointer;
+    width: 20%;
+}

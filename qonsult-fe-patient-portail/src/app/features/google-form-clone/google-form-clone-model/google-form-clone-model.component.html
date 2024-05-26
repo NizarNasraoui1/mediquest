@@ -1,0 +1,16 @@
+<div class="container card mt-3">
+  <div
+    class="myDiv"
+    *ngFor="
+      let element of mainForm.get('questionList')['controls'];
+      let i = index
+    "
+  >
+    <dl class="row">
+      <dt class="col-3">Q.{{ i + 1 }}</dt>
+      <dd class="col-9">
+        <pre>{{ element.value | json }}</pre>
+      </dd>
+    </dl>
+  </div>
+</div>

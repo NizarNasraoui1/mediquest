@@ -1,0 +1,30 @@
+<div class="container">
+    <ng-container ngbNavItem>
+      <a ngbNavLink> Builder </a>
+      <ng-template ngbNavContent>
+        <div>
+          <form [formGroup]="mainForm">
+            <google-form-builder [mainForm]="mainForm"></google-form-builder>
+          </form>
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+      <a ngbNavLink>Viewer</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="mainForm">
+          <google-form-clone-viewer
+            [mainForm]="mainForm"
+          ></google-form-clone-viewer>
+        </form>
+      </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+      <a ngbNavLink>Model</a>
+      <ng-template ngbNavContent>
+        <google-form-clone-model
+          [mainForm]="mainForm"
+        ></google-form-clone-model>
+      </ng-template>
+    </ng-container>
+</div>

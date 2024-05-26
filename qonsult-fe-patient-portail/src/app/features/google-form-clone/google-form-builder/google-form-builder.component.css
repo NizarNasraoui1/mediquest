@@ -1,0 +1,20 @@
+.add-question{
+    cursor: pointer;
+    margin-top: 1%;
+    color: #0079ff;
+    width: 20%;
+}
+
+.add-question-button{
+    transform: translate(0, 6px);
+}
+
+.delete-button{
+    cursor: pointer;
+}
+
+.next-container{
+    display: flex;
+    justify-content: end;
+    padding-top: 10px;
+}

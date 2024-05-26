@@ -1,0 +1,114 @@
+<!-- title card -->
+
+<div #title class="card p-2 m-2">
+  <h1>Dynamic form samples</h1>
+  <!-- <i class="material-icons">add</i> -->
+</div>
+<div [formGroup]="mainForm" class="container card mt-3">
+  <ol>
+    <div>
+      <li
+        class="myDiv"
+        *ngFor="
+          let element of mainForm.get('questionList')['controls'];
+          let i = index
+        "
+      >
+        <app-question-viewer
+          [questionFormGroup]="element"
+          [questionIndex]="i"
+        ></app-question-viewer>
+      </li>
+
+      <!-- <pre>{{ element.value | json }}</pre> -->
+      <!-- <div class="row mt-3 mb-3" [id]="element.id">
+      <div class="row">
+        <div class="p-4 pt-0 pb-2">
+          <h6 class="form-label">
+            {{ element.question.text }}
+            <span *ngIf="element.required">*</span>
+          </h6>
+          <div [ngSwitch]="element.question.type">
+            <div *ngSwitchCase="'freeText'">
+              <div class="row">
+                <div class="col-6">
+                  <input
+                    class="form-control"
+                    *ngIf="element.question.type === 'freeText'"
+                    type="text"
+                    [placeholder]="freeTextQuestion.question.placeholder"
+                  />
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchCase="'radio'">
+              <div>
+                <div
+                  class="row"
+                  *ngFor="
+                    let offeredAnswer of element.question?.offeredAnswers;
+                    last as isLast
+                  "
+                >
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="offeredAnswer.id"
+                      />
+                      <label class="form-check-label" for="offeredAnswer.id">
+                        {{ offeredAnswer.value }}</label
+                      >
+                      <div *ngIf="offeredAnswer.remarkAnswer" class="col">
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="offeredAnswer.id+'remark'"
+                          placeholder="insert your remark"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchCase="'checkbox'">
+              <div>
+                <div
+                  class="row"
+                  *ngFor="
+                    let offeredAnswer of element.question?.offeredAnswers;
+                    last as isLast
+                  "
+                >
+                  <div class="col">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="offeredAnswer.id"
+                      />
+                      <label class="form-check-label" for="offeredAnswer.id">
+                        {{ offeredAnswer.value }}</label
+                      >
+                      <div *ngIf="offeredAnswer.remarkAnswer" class="col">
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="offeredAnswer.id+'remark'"
+                          placeholder="insert your remark"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    </div>
+  </ol>
+</div>

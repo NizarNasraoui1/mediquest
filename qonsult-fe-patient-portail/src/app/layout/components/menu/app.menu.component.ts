@@ -24,6 +24,16 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
+                label: 'Créer un questionnaire',
+                items: [
+                    {
+                        label: 'Dashboard',
+                        icon: 'pi pi-fw pi-pencil',
+                        routerLink: ['./build-questionnaire'],
+                    },
+                ],
+            },
+            {
                 label: 'Mes QR codes',
                 items: [
                     {

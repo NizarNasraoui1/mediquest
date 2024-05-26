@@ -39,6 +39,10 @@ import { HomeComponent } from './features/home/home/home.component';
             {
                 path: 'view-questionnaire',
                 loadChildren: () => import('./features/view-questionnaire/view-questionnaire-routing.module').then((m) => m.ViewQuestionnaireRoutingModule),
+            },
+            {
+                path: 'build-questionnaire',
+                loadChildren: () => import('./features/questionnaire-builder/questionnaire-builder.module').then((m) => m.QuestionnaireBuilderModule),
             }
         ],
         canActivate: [AuthGard],

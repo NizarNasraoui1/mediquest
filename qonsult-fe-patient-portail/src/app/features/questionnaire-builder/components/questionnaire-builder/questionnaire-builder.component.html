@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div formArrayName="items">
+      <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+        <div class="card">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Favorite food" value="Nom de la section">
+              </mat-form-field>
+
+              <app-questionnaire-section id="{{i}}" formControlName="section"></app-questionnaire-section>
+            <button type="button" (click)="removeItem(i)">Remove</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" (click)="addItem()">Add Item</button>
+    <button type="submit">Submit</button>
+  </form>
+
