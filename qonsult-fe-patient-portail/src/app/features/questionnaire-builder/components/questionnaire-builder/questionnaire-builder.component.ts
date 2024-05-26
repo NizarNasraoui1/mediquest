@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./questionnaire-builder.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class QuestionnaireBuilderComponent {
+export class QuestionnaireBuilderComponent implements OnInit {
     form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -15,6 +15,9 @@ export class QuestionnaireBuilderComponent {
       sections: this.fb.array([])
     });
   }
+    ngOnInit(): void {
+        this.addItem();
+    }
 
   get sections() {
     return this.form.get('sections') as FormArray;

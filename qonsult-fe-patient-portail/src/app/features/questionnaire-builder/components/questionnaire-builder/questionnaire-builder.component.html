@@ -1,16 +1,27 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div formArrayName="sections">
-      <div *ngFor="let item of sections.controls; let i = index" [formGroupName]="i">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="card">
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Nom de la section">
-              </mat-form-field>
-              <app-questionnaire-section id="{{i}}" formControlName="questions"></app-questionnaire-section>
-            <button type="button" (click)="removeItem(i)">Remove</button>
+                <input matInput placeholder="Titre du questionnaire" />
+            </mat-form-field>
         </div>
-      </div>
-    </div>
-    <button type="button" (click)="addItem()">Add Item</button>
-    <button type="submit">Submit</button>
-  </form>
 
+        <div formArrayName="sections">
+            <div
+                *ngFor="let item of sections.controls; let i = index"
+                [formGroupName]="i"
+            >
+                <div class="card">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Nom de la section" />
+                    </mat-form-field>
+                    <app-questionnaire-section
+                        id="{{ i }}"
+                        formControlName="questions"
+                    ></app-questionnaire-section>
+                    <button type="button" (click)="removeItem(i)">Remove</button>
+                </div>
+            </div>
+        </div>
+        <button type="button" (click)="addItem()">Add Item</button>
+        <button type="submit">Submit</button>
+    </form>
