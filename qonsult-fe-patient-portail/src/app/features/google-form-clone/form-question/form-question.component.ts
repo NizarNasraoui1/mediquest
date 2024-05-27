@@ -29,6 +29,10 @@ export class FormQuestionComponent implements OnInit {
             name: 'Choix multiple',
             value: 'multipleSelection',
         },
+        {
+            name: 'Texte',
+            value: 'text'
+        }
     ];
 
     mainForm: FormGroup;
