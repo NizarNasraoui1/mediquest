@@ -14,14 +14,18 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class QuestionnaireSectionComponent implements ControlValueAccessor {
-    sectionQuestions;
-    sectionTitle: string;
-    value: { sectionTitle: string; sectionQuestions: string };
+    sectionQuestions: string = '';
+    sectionTitle: string = '';
+    value: { sectionTitle: string; sectionQuestions: string } = { sectionTitle: '', sectionQuestions: '' };
     onChange: (value: any) => void = () => {};
     onTouched: () => void = () => {};
 
     writeValue(value: any): void {
-        this.value = value;
+        if (value) {
+            this.sectionTitle = value.sectionTitle || '';
+            this.sectionQuestions = value.sectionQuestions || '';
+            this.value = { sectionTitle: this.sectionTitle, sectionQuestions: this.sectionQuestions };
+        }
     }
 
     registerOnChange(fn: (value: any) => void): void {
@@ -36,26 +40,25 @@ export class QuestionnaireSectionComponent implements ControlValueAccessor {
       // Handle the disabled state here
     }
 
-    handleInputChange(event: Event): void {
-      const input = event.target as HTMLInputElement;
-      this.sectionQuestions = input.value;
-      this.value = {
-        sectionTitle: this.sectionTitle,
-        sectionQuestions: this.sectionQuestions
-      };
-      this.onChange(this.value);
-    }
-
     handleBlur(): void {
       this.onTouched();
     }
 
     setSectionQuestions(sectionQuestions: string): void {
       this.sectionQuestions = sectionQuestions;
-      this.value = {
-        sectionTitle: this.sectionTitle,
-        sectionQuestions: this.sectionQuestions
-      };
-      this.onChange(this.value);
+      this.updateValue();
+    }
+
+    onSectionTitleChange(newTitle: string): void {
+      this.sectionTitle = newTitle;
+      this.updateValue();
+    }
+
+    updateValue(): void {
+        this.value = {
+            sectionTitle: this.sectionTitle,
+            sectionQuestions: this.sectionQuestions
+        };
+        this.onChange(this.value);
     }
 }

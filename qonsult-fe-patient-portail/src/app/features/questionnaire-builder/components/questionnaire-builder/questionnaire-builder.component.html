@@ -1,29 +1,28 @@
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="card">
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Titre du questionnaire" />
-            </mat-form-field>
-        </div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Titre du questionnaire" />
+        </mat-form-field>
+    </div>
 
-        <div formArrayName="sections">
-            <div
-                *ngFor="let item of sections.controls; let i = index"
-                [formGroupName]="i"
-            >
-                <div class="card" style="margin-bottom: 1%;">
-                    <div (click)="removeItem(i)" class="delete-section">X</div>
-                    <app-questionnaire-section
-                        id="{{ i }}"
-                        formControlName="questions"
-                    ></app-questionnaire-section>
-                </div>
+    <div formArrayName="sections">
+        <div
+            *ngFor="let item of sections.controls; let i = index"
+            [formGroupName]="i"
+        >
+            <div class="card" style="margin-bottom: 1%;">
+                <div (click)="removeItem(i)" class="delete-section">X</div>
+                <app-questionnaire-section
+                    id="{{ i }}"
+                    formControlName="questions"
+                ></app-questionnaire-section>
             </div>
-            <br>
         </div>
+        <br>
+    </div>
 
-        <div class="add-section" (click)="addItem()">
-            <i class="material-icons add-section-button">add</i> <span>Ajouter une section</span>
-        </div>
-        <button type="submit">submit</button>
-    </form>
-
+    <div class="add-section" (click)="addItem()">
+        <i class="material-icons add-section-button">add</i> <span>Ajouter une section</span>
+    </div>
+    <button type="submit">submit</button>
+</form>
