@@ -73,8 +73,10 @@
                     </div>
                 </div>
                 <div class="add-option">
-                    <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter
-                        une option</span>
+                    <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
+                </div>
+                <div class="add-option float-right">
+                    <i class="material-icons add-question-button">add</i> <span (click)="onClickAddLogicCondition()">Ajouter une condition logique</span>
                 </div>
             </div>
 
@@ -111,10 +113,13 @@
                     </div>
                 </div>
                 <div class="add-option">
-                    <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter
-                        une option</span>
+                    <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
                 </div>
+                <!-- <div class="add-option">
+                    <i class="material-icons add-question-button">add</i> <span (click)="onClickAddLogicCondition()">Ajouter une condition logique</span>
+                </div> -->
             </div>
+
             <div *ngSwitchCase="'text'">
                     <input pInputText class="question-option" type="text" placeholder="Réponse">
             </div>
@@ -122,3 +127,11 @@
     </ng-template>
 
 </form>
+<div id="question-condition" [formGroup]="questionFormGroup" *ngIf="isConditionSectionVisible">
+    <p>Choisissez la condition d'affichage de la question suivante:</p>
+    <div >
+        <p-dropdown formControlName="type"
+            [options]="conditionChoices" optionValue="value" optionLabel="value" [showClear]="true">
+        </p-dropdown>
+    </div>
+</div>

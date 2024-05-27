@@ -40,5 +40,17 @@
     margin-top: 15px;
     color: #0079ff;
     cursor: pointer;
-    width: 20%;
+    width: 30%;
+}
+/* #question-condition{
+    width: 100%;
+}
+#question-condition .p-dropdown {
+    width: 25%;
+} */
+
+.float-right{
+    width: 100%;
+    display: flex;
+    justify-content: right;
 }

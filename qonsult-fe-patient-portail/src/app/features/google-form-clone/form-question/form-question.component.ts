@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
@@ -13,12 +13,13 @@ import { _ } from 'lodash';
     selector: 'form-question',
     templateUrl: './form-question.component.html',
     styleUrls: ['./form-question.component.css'],
+    // encapsulation: ViewEncapsulation.None
 })
 export class FormQuestionComponent implements OnInit {
     @Input() questionFormGroup!: FormGroup;
     @Input() questionIndex: number;
-
     selectedQuestionType: string;
+    isConditionSectionVisible = false;
 
     questionsTypes = [
         {
@@ -263,5 +264,13 @@ export class FormQuestionComponent implements OnInit {
         return this.questionFormGroup.get('question.offeredAnswers')[
             'controls'
         ];
+    }
+
+    get conditionChoices(){
+        console.log(this.questionFormGroup.value.question.offeredAnswers)
+        return this.questionFormGroup.value.question.offeredAnswers;
+    }
+    onClickAddLogicCondition(){
+        this.isConditionSectionVisible = true;
     }
 }
