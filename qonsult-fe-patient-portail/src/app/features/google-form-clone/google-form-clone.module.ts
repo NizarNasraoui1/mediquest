@@ -15,6 +15,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 const COMPONENTS = [
   GoogleFormCloneMainComponent,
@@ -35,7 +36,8 @@ const COMPONENTS = [
     RadioButtonModule,
     InputTextModule,
     DropdownModule,
-    ButtonModule
+    ButtonModule,
+    MultiSelectModule
   ],
   exports: [COMPONENTS],
   declarations: [COMPONENTS],

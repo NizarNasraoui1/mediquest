@@ -1,137 +1,115 @@
 <form>
     <div *ngIf="questionFormGroup.get('title'); then titleEle; else questionEle"></div>
     <ng-template #titleEle>
-        <div [formGroup]="questionFormGroup">
-            <div formGroupName="title" class="row">
-                <div class="col input-group-lg mb-1">
-                    <input class="form-control" type="text" placeholder="Insert title" formControlName="text" />
-                </div>
-            </div>
-            <div formGroupName="title" class="row">
-                <div class="col input-group-sm">
-                    <input class="form-control" type="text" placeholder="Description" formControlName="description" />
-                </div>
-            </div>
+      <div [formGroup]="questionFormGroup">
+        <div formGroupName="title" class="row">
+          <div class="col input-group-lg mb-1">
+            <input class="form-control" type="text" placeholder="Insert title" formControlName="text" />
+          </div>
         </div>
+        <div formGroupName="title" class="row">
+          <div class="col input-group-sm">
+            <input class="form-control" type="text" placeholder="Description" formControlName="description" />
+          </div>
+        </div>
+      </div>
     </ng-template>
 
     <ng-template #questionEle [formGroup]="questionFormGroup" class="pt-0 pb-2">
-        <div #questionEle formGroupName="question" class="d-flex justify-content-between pb-2">
-
-
-            <div class="row questions-container">
-                <div class="col-10">
-                    <div class="row">
-                        <div class="col-2">
-                            <h6>Titre de la question :</h6>
-                        </div>
-                        <div class="col-9 title-input">
-                            <input placeholder="Titre de la question" pInputText formControlName="text"
-                                class="form-control m-2 question-title">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <p-dropdown formControlName="type"
-                        (onChange)="onChangeQuestionType(questionFormGroup.get('orderNo').value)"
-                        [options]="questionsTypes" optionValue="value" optionLabel="name" [showClear]="true">
-                    </p-dropdown>
-                </div>
+      <div #questionEle formGroupName="question" class="d-flex justify-content-between pb-2">
+        <div class="row questions-container">
+          <div class="col-10">
+            <div class="row">
+              <div class="col-2">
+                <h6>Titre de la question :</h6>
+              </div>
+              <div class="col-9 title-input">
+                <input placeholder="Titre de la question" pInputText formControlName="text" class="form-control m-2 question-title">
+              </div>
             </div>
+          </div>
+          <div class="col-2">
+            <p-dropdown formControlName="type" (onChange)="onChangeQuestionType(questionFormGroup.get('orderNo').value)"
+              [options]="questionsTypes" optionValue="value" optionLabel="name" [showClear]="true">
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div [ngSwitch]="questionType.value" class="pt-2 pb-4">
+        <div *ngSwitchCase="'singleSelection'">
+          <div formGroupName="question" cdkDropList (cdkDropListDropped)="dropRadioAnswer($event)">
+            <div formArrayName="offeredAnswers" class="row" *ngFor="
+                let offeredAnswer of questionFormGroup.get('question.offeredAnswers')['controls'];
+                let i = index
+              " cdkDrag>
+              <div class="col-1 draggable">
+                <i class="material-icons text-muted">drag_indicator</i>
+              </div>
+              <div class="col-10" [formGroupName]="i">
+                <div class="form-check">
+                  <label class="form-check-label" [for]="'offeredAnswer' + offeredAnswer.value.orderNo">
+                    <input name="choice" class="form-check-input" type="radio" (change)="onRadioCheck(offeredAnswer, i)" />
+                    <input pInputText class="question-option" type="text" formControlName="value" placeholder="Taper le choix ici">
+                  </label>
+                </div>
+              </div>
+              <div class="col-1">
+                <i type="button" class="material-icons text-muted pointer" (click)="removeRadioAnswer(i)">close</i>
+              </div>
+            </div>
+          </div>
+          <div class="add-option">
+            <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
+          </div>
+          <div class="add-option float-right">
+            <i class="material-icons add-question-button">add</i> <span (click)="onClickAddLogicCondition()">Ajouter une condition logique</span>
+          </div>
         </div>
 
-        <div [ngSwitch]="questionType.value" class="pt-2 pb-4">
-            <div *ngSwitchCase="'singleSelection'">
-                <div formGroupName="question" cdkDropList (cdkDropListDropped)="dropRadioAnswer($event)">
-                    <div formArrayName="offeredAnswers" class="row" *ngFor="
-            let offeredAnswer of questionFormGroup.get(
-              'question.offeredAnswers'
-            )['controls'];
-            let i = index
-          " cdkDrag>
-                        <div class="col-1 draggable">
-                            <i class="material-icons text-muted">drag_indicator</i>
-                        </div>
-                        <div class="col-10" [formGroupName]="i">
-                            <div class="form-check">
-                                <label class="form-check-label" [for]="'offeredAnswer' + offeredAnswer.value.orderNo">
-                                    <input name="choice" class="form-check-input" type="radio"
-                                        (change)="onRadioCheck(offeredAnswer, i)" />
-                                    <!-- <p-radioButton name="choice" value="Cheese" (change)="onRadioCheck(offeredAnswer, i)"
-                                    inputId="ingredient1"></p-radioButton> -->
-                                    <input pInputText class="question-option" type="text" formControlName="value"
-                                        placeholder="Taper le choix ici">
-                                    <div *ngIf="offeredAnswer.value.remarkAnswer" class="col mt-1 mb-2">
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <i type="button" class="material-icons text-muted pointer"
-                                (click)="removeRadioAnswer(i)">close</i>
-                        </div>
-                    </div>
+        <div *ngSwitchCase="'multipleSelection'">
+          <div formGroupName="question" cdkDropList (cdkDropListDropped)="dropRadioAnswer($event)">
+            <div formArrayName="offeredAnswers" class="row" *ngFor="
+                let offeredAnswer of questionFormGroup.get('question.offeredAnswers')['controls'];
+                let i = index
+              " cdkDrag>
+              <div class="col-1 draggable">
+                <i class="material-icons text-muted">drag_indicator</i>
+              </div>
+              <div class="col-10" [formGroupName]="i">
+                <div class="form-check">
+                  <label class="form-check-label" [for]="'offeredAnswer' + offeredAnswer.value.orderNo">
+                    <input class="form-check-input" type="checkbox" (change)="onCheckboxCheck(offeredAnswer, i)"
+                      [name]="'offeredAnswer' + offeredAnswer.value.orderNo" />
+                    <input pInputText class="question-option" type="text" formControlName="value" placeholder="Taper le choix ici">
+                  </label>
                 </div>
-                <div class="add-option">
-                    <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
-                </div>
-                <div class="add-option float-right">
-                    <i class="material-icons add-question-button">add</i> <span (click)="onClickAddLogicCondition()">Ajouter une condition logique</span>
-                </div>
+              </div>
+              <div class="col-1">
+                <i type="button" class="material-icons text-muted pointer" (click)="removeRadioAnswer(i)">close</i>
+              </div>
             </div>
-
-
-            <div *ngSwitchCase="'multipleSelection'">
-                <div formGroupName="question" cdkDropList (cdkDropListDropped)="dropRadioAnswer($event)">
-                    <div formArrayName="offeredAnswers" class="row" *ngFor="
-              let offeredAnswer of questionFormGroup.get(
-                'question.offeredAnswers'
-              )['controls'];
-              let i = index
-            " cdkDrag>
-                        <div class="col-1 draggable">
-                            <i class="material-icons text-muted">drag_indicator</i>
-                        </div>
-                        <div class="col-10" [formGroupName]="i">
-                            <div class="form-check">
-                                <label class="form-check-label" [for]="'offeredAnswer' + offeredAnswer.value.orderNo">
-                                    <input class="form-check-input" type="checkbox"
-                                        (change)="onCheckboxCheck(offeredAnswer, i)"
-                                        [name]="'offeredAnswer' + offeredAnswer.value.orderNo" />
-                                    <input pInputText class="question-option" type="text" formControlName="value"
-                                        placeholder="Taper le choix ici">
-
-                                    <div *ngIf="offeredAnswer.value.remarkAnswer" class="col mt-1 mb-2">
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <i type="button" class="material-icons text-muted pointer"
-                                (click)="removeRadioAnswer(i)">close</i>
-                        </div>
-                    </div>
-                </div>
-                <div class="add-option">
-                    <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
-                </div>
-                <!-- <div class="add-option">
-                    <i class="material-icons add-question-button">add</i> <span (click)="onClickAddLogicCondition()">Ajouter une condition logique</span>
-                </div> -->
-            </div>
-
-            <div *ngSwitchCase="'text'">
-                    <input pInputText class="question-option" type="text" placeholder="Réponse">
-            </div>
+          </div>
+          <div class="add-option">
+            <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
+          </div>
         </div>
+
+        <div *ngSwitchCase="'text'">
+          <input pInputText class="question-option" type="text" placeholder="Réponse">
+        </div>
+      </div>
+
+        <div>
+
+      </div>
     </ng-template>
+  </form>
 
-</form>
-<div id="question-condition" [formGroup]="questionFormGroup" *ngIf="isConditionSectionVisible">
-    <p>Choisissez la condition d'affichage de la question suivante:</p>
-    <div >
-        <p-dropdown formControlName="type"
-            [options]="conditionChoices" optionValue="value" optionLabel="value" [showClear]="true">
-        </p-dropdown>
+  <div id="question-condition">
+    <!-- <div *ngIf="isConditionSectionVisible"> -->
+        <p>Choisissez la condition d'affichage de la question suivante:</p>
+      <p-multiSelect [(ngModel)]="selectedConditions" [options]="conditionChoices" optionLabel="value" placeholder=""
+      (onChange)="displayConditions()" />
     </div>
-</div>
+    <!-- </div> -->

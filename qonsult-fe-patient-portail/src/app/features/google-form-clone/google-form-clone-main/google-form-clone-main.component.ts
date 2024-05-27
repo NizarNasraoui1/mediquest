@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  FormGroupDirective,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'google-form-clone-main',
@@ -28,6 +23,7 @@ export class GoogleFormCloneMainComponent implements OnInit {
         type: ['freeText'],
         selectedAnswers: this.fb.array([]),
         offeredAnswers: this.fb.array([]),
+        conditions: this.fb.array([]),
       }),
     });
 
@@ -36,6 +32,7 @@ export class GoogleFormCloneMainComponent implements OnInit {
       orderNo: [0],
       type: ['title'],
       required: [true],
+      conditions: this.fb.array([]),
       title: this.fb.group({
         text: ['AMLCFT'],
         description: ['question title'],
@@ -52,6 +49,7 @@ export class GoogleFormCloneMainComponent implements OnInit {
         text: [''],
         type: ['singleSelection'],
         selectedAnswers: this.fb.array([]),
+        conditions: this.fb.array([]),
         offeredAnswers: this.fb.array([
           this.fb.group({
             id: ['01'],
@@ -70,12 +68,9 @@ export class GoogleFormCloneMainComponent implements OnInit {
         ]),
       }),
     });
+
     this.mainForm = this.fb.group({
-      questionList: this.fb.array([
-        titleFormGroup,
-        freeTextFormGroup,
-        radioFormGroup,
-      ]),
+      questionList: this.fb.array([titleFormGroup, freeTextFormGroup, radioFormGroup]),
     });
   }
 
