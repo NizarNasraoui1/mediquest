@@ -12,7 +12,8 @@ export class QuestionnaireBuilderComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      sections: this.fb.array([])
+      sections: this.fb.array([]),
+      questionnaireTitle:['']
     });
   }
     ngOnInit(): void {

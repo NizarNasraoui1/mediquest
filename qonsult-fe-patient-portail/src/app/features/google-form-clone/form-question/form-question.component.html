@@ -93,6 +93,9 @@
           <div class="add-option">
             <i class="material-icons add-question-button">add</i> <span (click)="addNewRadioOption()">Ajouter une option</span>
           </div>
+          <div class="add-option float-right">
+            <i class="material-icons add-question-button">add</i> <span (click)="onClickAddLogicCondition()">Ajouter une condition logique</span>
+          </div>
         </div>
 
         <div *ngSwitchCase="'text'">
@@ -106,7 +109,7 @@
     </ng-template>
   </form>
 
-  <div id="question-condition">
+  <div [hidden]="!isConditionSectionVisible" id="question-condition">
     <!-- <div *ngIf="isConditionSectionVisible"> -->
         <p>Choisissez la condition d'affichage de la question suivante:</p>
       <p-multiSelect [(ngModel)]="selectedConditions" [options]="conditionChoices" optionLabel="value" placeholder=""

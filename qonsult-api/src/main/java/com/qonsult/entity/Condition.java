@@ -17,10 +17,4 @@ public class Condition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     int rank;
-    int content;
-
-    public Condition(int rank,int content){
-        this.rank = rank;
-        this.content = content;
-    }
 }

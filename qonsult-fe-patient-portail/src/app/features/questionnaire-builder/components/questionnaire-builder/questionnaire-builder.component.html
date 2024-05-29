@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="card">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Titre du questionnaire" />
+            <input formControlName="questionnaireTitle" matInput placeholder="Titre du questionnaire" />
         </mat-form-field>
     </div>
 
