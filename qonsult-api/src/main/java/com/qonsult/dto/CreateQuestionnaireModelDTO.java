@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class QuestionnaireModelSaveDTO {
+public class CreateQuestionnaireModelDTO {
     private String questionnaireTitle;
     private List<Section> sections;
 
@@ -25,9 +25,8 @@ public class QuestionnaireModelSaveDTO {
             @Getter
             @Setter
             public static class SectionQuestion {
-                private String text;
+                private String questionTitle;
                 private String type;
-                private List<Integer> selectedAnswers;
                 private List<String> offeredAnswers;
                 private List<Integer> conditions;
             }

@@ -2,6 +2,7 @@ package com.qonsult.service.impl;
 
 import com.qonsult.dto.QuestionnaireModelDTO;
 import com.qonsult.dto.QuestionnaireRequestDTO;
+import com.qonsult.entity.QuestionnaireModel;
 import com.qonsult.entity.QuestionnaireRequest;
 import com.qonsult.enumeration.QuestionnaireRequestStateEnum;
 import com.qonsult.exception.QuestionnaireAlreadyPassedException;
@@ -43,6 +44,14 @@ public class QuestionnaireRequestServiceImpl implements QuestionnaireRequestServ
     @Override
     public List<QuestionnaireRequest> getAllQuestionnaireRequestForQrCode() {
         return questionnaireRequestRepository.findAllByUsedForQrCodeTrue();
+    }
+
+    @Override
+    public QuestionnaireRequest createQuestionnaireRequestFromModel(QuestionnaireModel questionnaireModel) {
+        QuestionnaireRequest questionnaireRequest = new QuestionnaireRequest();
+        questionnaireRequest.setQuestionnaireModel(questionnaireModel);
+        questionnaireRequest.setUsedForQrCode(true);
+        return questionnaireRequestRepository.save(questionnaireRequest);
     }
 
 }
