@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Question } from '../models/question';
-import { QUESTION_MOCK } from '../models/mock-questions';
 import { HttpUtilService } from 'src/app/util/service/http-util.service';
 import { QuestionAnswer } from '../models/question-answer';
 import { Certification } from '../models/certification.model';
@@ -19,8 +18,6 @@ const QUESTIONNAIRE_RESPONSE_API_URL="/api/mediquest/public/questionnaire-respon
 
 
 export class QuestionnaireService {
-  private questionsSubject = new BehaviorSubject<Question[]>(QUESTION_MOCK);
-  questions$ = this.questionsSubject.asObservable();
 
   constructor(private httpUtil:HttpUtilService) {
   }

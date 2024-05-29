@@ -29,6 +29,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Signature } from 'src/app/shared/models/signature';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'src/app/shared/services/toast.service';
+import { Condition } from '../../models/condition';
+import { CodeLabel } from 'src/app/shared/models/code-label';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -211,7 +213,28 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
 
     verifyCondition(id: string): boolean {
-        // const question = this.slicedQuestionnaireArray.filter(q => q.id == id)[0];
+        const question = this.slicedQuestionnaireArray.filter(q => q.id == this.transformSubtractAndReturn(id))[0];
+        if(question){
+            const condition = question.conditions.map(e=>e.rank);
+            if(condition.length==0){
+                return true;
+            }
+            const content = question.content;
+            var lastQuestionValue = this.questionForm.value[this.transformSubtractAndReturn(id)];
+            if(!Array.isArray(lastQuestionValue)){
+                lastQuestionValue = [lastQuestionValue];
+            }
+            if(lastQuestionValue.length>0){
+                const ranks = this.getRanksByIds(content,lastQuestionValue);
+                console.log("ranks " +ranks + "and conditions "+ condition);
+                if(!this.areArraysEqual(ranks,condition)){
+                    return false;
+                }
+            }
+
+        }
+
+        console.log("here")
         // const conditions:Condition[] = question.conditions!;
         // if(conditions && conditions.length>0){
         //     for(let condition of conditions){
@@ -225,6 +248,52 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         //     }
         // }
         return true;
+    }
+
+    areArraysEqual<T>(array1: T[], array2: T[]): boolean {
+        // Check if the arrays are the same length
+        if (array1.length !== array2.length) {
+            return false;
+        }
+
+        // Check if all elements are the same
+        for (let i = 0; i < array1.length; i++) {
+            if (array1[i] !== array2[i]) {
+                return false;
+            }
+        }
+
+        // If all checks passed, arrays are equal
+        return true;
+    }
+
+    getRanksByIds(items: CodeLabel[], ids: string[]): number[] {
+            // Create a map to store the rank of each ID
+    const idToRankMap = new Map<string, number>();
+
+    // Populate the map with ranks
+    items.forEach((item, index) => {
+        idToRankMap.set(item.id, index);
+    });
+
+    // Return an array of ranks for the given IDs
+    return ids.map(id => {
+        const rank = idToRankMap.get(id);
+        return rank !== undefined ? rank : -1;  // More explicit check for undefined
+    });
+    }
+
+    transformSubtractAndReturn(input: string): string {
+        // Convert the string to a number using the Number function
+        const num = Number(input);
+
+        // Subtract one from the number
+        const result = num - 1;
+
+        // Convert the result back to a string
+        const output = result.toString();
+
+        return output;
     }
 
     configureCalendarLanguage() {
