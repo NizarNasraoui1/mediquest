@@ -1,9 +1,9 @@
 package com.qonsult.init;
 
-import com.qonsult.entity.Role;
+import com.qonsult.entity.Group;
 import com.qonsult.entity.Schema;
 import com.qonsult.entity.User;
-import com.qonsult.repository.RoleRepository;
+import com.qonsult.repository.GroupRepository;
 import com.qonsult.repository.SchemaRepository;
 import com.qonsult.repository.UserRepository;
 import com.qonsult.service.UserService;
@@ -21,7 +21,7 @@ public class InitSuperAdminUser implements DBInitializer{
 
     private final UserRepository userRepository;
 
-    private final RoleRepository roleRepository;
+    private final GroupRepository groupRepository;
 
     private final UserService userService;
 
@@ -52,8 +52,8 @@ public class InitSuperAdminUser implements DBInitializer{
         user.setPassword(passwordEncoder.encode("admin"));
         user.setEmail("admin@gmail.com");
         user.setEmailChecked(true);
-        Role adminRole= roleRepository.findByName("ADMIN").orElseThrow(()->new EntityNotFoundException("role does not exists"));
-        user.setRole(adminRole);
+        Group adminGroup = groupRepository.findByName("ADMIN").orElseThrow(()->new EntityNotFoundException("role does not exists"));
+        user.setGroup(adminGroup);
         userService.saveUser(user);
         Schema schema = new Schema();
         schema.setUserName("admin");

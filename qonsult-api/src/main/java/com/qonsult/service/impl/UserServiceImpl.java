@@ -24,8 +24,8 @@ import java.util.List;
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final GroupRepository groupRepository;
     private final RoleRepository roleRepository;
-    private final PermissionRepository permissionRepository;
     private final SchemaRepository schemaRepository;
     private final TenantDataSource tenantDataSource;
     private final PasswordEncoder passwordEncoder;
@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
             }
             log.info("User found in the database: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            Role role = roleRepository.findByIdWithPermissions(user.getRole().getId());
-            role.getPermissions().forEach(permission -> {
-                authorities.add(new SimpleGrantedAuthority(permission.getName()));
-            });
+//            Group group = groupRepository.findByIdWithPermissions(user.getGroup().getId());
+//            group.getRoles().forEach(permission -> {
+//                authorities.add(new SimpleGrantedAuthority(permission.getName()));
+//            });
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         }
     }
@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public void saveCenterUser(User user){
-        Role adminRole =  roleRepository.findAll().get(0);
-        user.setRole(adminRole);
+        Group adminGroup =  groupRepository.findAll().get(0);
+        user.setGroup(adminGroup);
         try{
             saveUser(user);
         }
@@ -87,17 +87,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Role saveRole(Role role) throws RoleAlreadyExistsException {
-        if(!roleRepository.findByName(role.getName()).isPresent()){
-            log.info("Saving new role {} to the database", role.getName());
-            return roleRepository.save(role);
+    public Group saveRole(Group group) throws RoleAlreadyExistsException {
+        if(!groupRepository.findByName(group.getName()).isPresent()){
+            log.info("Saving new role {} to the database", group.getName());
+            return groupRepository.save(group);
         }
         throw new RoleAlreadyExistsException();
 
     }
     @Override
-    public void saveRoles(List<Role> roles) {
-        roles.forEach((role)->{
+    public void saveRoles(List<Group> groups) {
+        groups.forEach((role)->{
             try {
                 this.saveRole(role);
             } catch (RoleAlreadyExistsException e) {
@@ -121,20 +121,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Permission addPermission(String name) {
-        Permission permission = new Permission();
-        permission.setName(name);
-        return permissionRepository.save(permission);
+    public Role addPermission(String name) {
+        Role role = new Role();
+        role.setName(name);
+        return roleRepository.save(role);
     }
 
     @Override
-    public Role addPermissionToRole(Long roleId, Long authorityId) {
+    public Group addPermissionToRole(Long roleId, Long authorityId) {
         return null;
     }
 
     @Override
-    public List<Permission> getAllPermissions() {
-        return permissionRepository.findAll();
+    public List<Role> getAllPermissions() {
+        return roleRepository.findAll();
     }
 
 

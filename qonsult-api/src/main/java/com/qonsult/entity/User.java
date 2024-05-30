@@ -25,6 +25,9 @@ public class User {
     private boolean accountInitialized = false;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
-    private Role role;
+    private Group group;
+    @ManyToOne
+    @JoinColumn(name="center_id")
+    Center center;
 
 }

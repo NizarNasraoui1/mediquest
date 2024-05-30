@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.qonsult.entity.Role;
+import com.qonsult.entity.Group;
 import com.qonsult.entity.User;
 import com.qonsult.exception.RoleAlreadyExistsException;
 import com.qonsult.service.UserService;
@@ -51,9 +51,9 @@ public class UserResource {
     }
 
     @PostMapping("/role/save")
-    public ResponseEntity<Role>saveRole(@RequestBody Role role) throws RoleAlreadyExistsException {
+    public ResponseEntity<Group>saveRole(@RequestBody Group group) throws RoleAlreadyExistsException {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveRole(role));
+        return ResponseEntity.created(uri).body(userService.saveRole(group));
     }
 
 //    @PostMapping("/role/addtouser")
@@ -77,7 +77,7 @@ public class UserResource {
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getRole().getName())
+                        .withClaim("roles", user.getGroup().getName())
                         .sign(algorithm);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);

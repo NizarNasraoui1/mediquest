@@ -61,8 +61,6 @@ public class CenterServiceImpl extends GenericServiceImpl<Center, CenterDTO,Long
             return Mono.error(new Exception("Center already exists"));
         }
         Center center = this.mapper.toBo(centerDTO);
-//        center.setUuid(UUID.randomUUID());
-//        center.setSchemaName(schemaName);
         return Mono.justOrEmpty(this.repository.save(center)).subscribeOn(Schedulers.boundedElastic());
     }
 }

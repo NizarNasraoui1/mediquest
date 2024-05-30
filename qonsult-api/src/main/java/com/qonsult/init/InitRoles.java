@@ -1,34 +1,49 @@
 package com.qonsult.init;
 
+import com.qonsult.entity.Group;
 import com.qonsult.entity.Role;
-import com.qonsult.exception.RoleAlreadyExistsException;
 import com.qonsult.repository.RoleRepository;
-import com.qonsult.service.UserService;
+import com.qonsult.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.*;
 
-@Component("initSuperAdminRole")
+@Component("initRoles")
 @RequiredArgsConstructor
-public class InitRoles implements DBInitializer {
+public class InitRoles implements DBInitializer{
 
-    public final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    private final UserService userService;
+    private final GroupRepository groupRepository;
+
     @Override
-    public void init() throws RoleAlreadyExistsException {
-        if(isAlreadyInitialized()){
-            return ;
-        }
-        ArrayList<Role>roles = new ArrayList<>();
-        roles.add(new Role("ADMIN"));
-        roles.add(new Role("CENTER_ADMIN"));
-        userService.saveRoles(roles);
+    public boolean isAlreadyInitialized(){
+        return !roleRepository.findAll().isEmpty();
+    }
+    public void initRoles(){
+        List<String>rolesNames = Arrays.asList("ADD_QUESTIONNAIRE","READ_QUESTIONNAIRE","REMOVE_QUESTIONNAIRE");
+        List<Role> roles = getRolesFromNames(rolesNames);
+        roleRepository.saveAll(roles);
+//        Group group =  groupRepository.findAll().get(0);
+//        group.setRoles(roles);
+//            groupRepository.save(group);
     }
 
+    public List<Role> getRolesFromNames(List<String>rolesNames){
+        List<Role> roles = new ArrayList<>();
+        rolesNames.forEach(permissionName->{
+            Role role = new Role();
+            role.setName(permissionName);
+            roles.add(role);
+        });
+        return roles;
+    }
     @Override
-    public boolean isAlreadyInitialized() {
-        return !roleRepository.findAll().isEmpty();
+    public void init() {
+        if(isAlreadyInitialized()){
+            return;
+        }
+        initRoles();
     }
 }

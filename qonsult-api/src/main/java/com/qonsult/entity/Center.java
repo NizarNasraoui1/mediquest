@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -19,4 +20,6 @@ public class Center {
     private String name;
     private String address;
     private String schemaName;
+    @OneToMany(mappedBy = "center")
+    List<User>users;
 }

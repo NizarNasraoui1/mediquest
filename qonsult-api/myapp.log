@@ -24,9 +24,9 @@
 2023-09-25 10:36:14.401  INFO 24308 --- [main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
 2023-09-25 10:36:14.524  INFO 24308 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
 2023-09-25 10:36:14.575  INFO 24308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2023-09-25 10:36:14.633  INFO 24308 --- [main] c.crm.Crm.service.impl.UserServiceImpl   : Saving new role ADMIN to the database
+2023-09-25 10:36:14.633  INFO 24308 --- [main] c.crm.Crm.service.impl.UserServiceImpl   : Saving new group ADMIN to the database
 2023-09-25 10:36:14.667  INFO 24308 --- [main] c.crm.Crm.service.impl.UserServiceImpl   : Saving new user admin to the database
-2023-09-25 10:36:14.771  INFO 24308 --- [main] c.crm.Crm.service.impl.UserServiceImpl   : Adding role ADMIN to user admin
+2023-09-25 10:36:14.771  INFO 24308 --- [main] c.crm.Crm.service.impl.UserServiceImpl   : Adding group ADMIN to user admin
 2023-09-25 10:36:14.783  INFO 24308 --- [main] com.qonsult.CrmApplication               : Started CrmApplication in 5.94 seconds (JVM running for 6.75)
 2023-09-25 10:36:15.297  INFO 24308 --- [RMI TCP Connection(1)-192.168.1.11] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2023-09-25 10:36:15.297  INFO 24308 --- [RMI TCP Connection(1)-192.168.1.11] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'

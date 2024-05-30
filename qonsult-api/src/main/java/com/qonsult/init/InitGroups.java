@@ -7,9 +7,11 @@ import com.qonsult.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component("initCenterAdminRole")
+import java.util.ArrayList;
+
+@Component("initSuperAdminRole")
 @RequiredArgsConstructor
-public class InitCenterAdminRole implements DBInitializer {
+public class InitGroups implements DBInitializer {
 
     public final GroupRepository groupRepository;
 
@@ -19,10 +21,11 @@ public class InitCenterAdminRole implements DBInitializer {
         if(isAlreadyInitialized()){
             return ;
         }
-        Group adminCenterGroup =new Group();
-        adminCenterGroup.setName("CENTER_ADMIN");
-        adminCenterGroup.setRoles(userService.getAllPermissions());
-        userService.saveRole(adminCenterGroup);
+        ArrayList<Group> groups = new ArrayList<>();
+        groups.add(new Group("ADMIN"));
+        groups.add(new Group("DOCTOR"));
+        groups.add(new Group("OTHERS"));
+        userService.saveRoles(groups);
     }
 
     @Override

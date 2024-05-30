@@ -1,6 +1,6 @@
 package com.qonsult.service;
 
-import com.qonsult.entity.Permission;
+import com.qonsult.entity.Group;
 import com.qonsult.entity.Role;
 import com.qonsult.entity.User;
 import com.qonsult.exception.RoleAlreadyExistsException;
@@ -12,19 +12,19 @@ import java.util.List;
 
 public interface UserService {
     User saveUser(User user);
-    Role saveRole(Role role) throws RoleAlreadyExistsException;
+    Group saveRole(Group group) throws RoleAlreadyExistsException;
 
-    void saveRoles(List<Role>roles);
+    void saveRoles(List<Group> groups);
     void addRoleToUser(Long roleId, Long authorityId);
 
 
     User getUser(String username);
 
-    Permission addPermission(String name);
+    Role addPermission(String name);
 
-    Role addPermissionToRole(Long roleId, Long authorityId);
+    Group addPermissionToRole(Long roleId, Long authorityId);
 
-    List<Permission> getAllPermissions();
+    List<Role> getAllPermissions();
 
     List<User>getUsers();
 

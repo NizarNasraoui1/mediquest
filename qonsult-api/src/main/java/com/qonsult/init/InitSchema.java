@@ -7,13 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
 public class InitSchema {
 
-    private final InitPermission initPermission;
+    private final InitRoles initRoles;
     private final InitCenterAdminRole initCenterAdminRole;
     private final InitCenterAdminUser initCenterAdminUser;
     private final DataSourceBasedMultiTenantConnectionProviderImpl dataSourceBasedMultiTenantConnectionProvider;

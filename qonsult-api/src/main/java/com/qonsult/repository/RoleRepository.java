@@ -1,14 +1,13 @@
 package com.qonsult.repository;
 
 import com.qonsult.entity.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.qonsult.generic.GenericRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByName(String name);
-    @Query("SELECT r FROM Role r JOIN FETCH r.permissions WHERE r.id = :id")
-    Role findByIdWithPermissions(@Param("id") Long id);
+@Repository
+public interface RoleRepository extends GenericRepository<Role,Long> {
+    Role findByName(String name);
+    List<Role> findAllByNameIn(List<String>roles);
 }

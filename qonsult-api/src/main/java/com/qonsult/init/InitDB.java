@@ -24,7 +24,7 @@ public class InitDB implements ApplicationListener<ContextRefreshedEvent> {
     private final TenantDataSource tenantDataSource;
 
 
-    public InitDB(MigrateDB migrateDB, @Qualifier("initSuperAdminRole") DBInitializer initSuperAdminRole, @Qualifier("initPermission") DBInitializer initPermission, @Qualifier("initSuperAdminUser") InitSuperAdminUser initSuperAdminUser, @Qualifier("initDenstistQuestionnaire") InitDenstistQuestionnaire initDenstistQuestionnaire, InitQuestionnaires initQuestionnaires, TenantDataSource tenantDataSource) {
+    public InitDB(MigrateDB migrateDB, @Qualifier("initSuperAdminRole") DBInitializer initSuperAdminRole, @Qualifier("initRoles") DBInitializer initPermission, @Qualifier("initSuperAdminUser") InitSuperAdminUser initSuperAdminUser, @Qualifier("initDenstistQuestionnaire") InitDenstistQuestionnaire initDenstistQuestionnaire, InitQuestionnaires initQuestionnaires, TenantDataSource tenantDataSource) {
         this.migrateDB = migrateDB;
         this.initSuperAdminRole = initSuperAdminRole;
         this.initPermission = initPermission;
