@@ -17,6 +17,6 @@ public class Role {
 
     private String name;
 
-    @ManyToMany(mappedBy = "permissions")
+    @ManyToMany(mappedBy = "roles")
     private List<Group> groups = new ArrayList<>();
 }

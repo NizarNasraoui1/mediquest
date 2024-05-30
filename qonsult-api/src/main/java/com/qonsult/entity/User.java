@@ -26,8 +26,5 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Group group;
-    @ManyToOne
-    @JoinColumn(name="center_id")
-    Center center;
 
 }

@@ -12,9 +12,6 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class InitSchema {
 
-    private final InitRoles initRoles;
-    private final InitCenterAdminRole initCenterAdminRole;
-    private final InitCenterAdminUser initCenterAdminUser;
     private final DataSourceBasedMultiTenantConnectionProviderImpl dataSourceBasedMultiTenantConnectionProvider;
     private final MigrateDB migrateDB;
     private final TenantSchemaResolver tenantSchemaResolver;

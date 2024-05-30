@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Getter @Setter
+@Table(name = "UserGroup")
 public class Group {
 
     @Id
@@ -18,7 +19,7 @@ public class Group {
     private Long id;
 
     private String name;
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
 
     @ManyToOne
@@ -29,9 +30,9 @@ public class Group {
     @JoinTable(
             name = "roles_permission",
             joinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"),
+                    name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
-                    name = "premission_id", referencedColumnName = "id"))
+                    name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
 
     public Group(String roleName){

@@ -21,5 +21,5 @@ public class Center {
     private String address;
     private String schemaName;
     @OneToMany(mappedBy = "center")
-    List<User>users;
+    List<Group>groups;
 }
