@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
             }
             log.info("User found in the database: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//            Group group = groupRepository.findByIdWithPermissions(user.getGroup().getId());
-//            group.getRoles().forEach(permission -> {
-//                authorities.add(new SimpleGrantedAuthority(permission.getName()));
-//            });
+            Group group = user.getGroup();
+            group.getRoles().forEach(permission -> {
+                authorities.add(new SimpleGrantedAuthority(permission.getName()));
+            });
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         }
     }
