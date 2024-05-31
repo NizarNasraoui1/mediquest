@@ -43,7 +43,7 @@ public class HibernateConfig {
 		jpaPropertiesMap.put(Environment.FORMAT_SQL, true);
 		jpaPropertiesMap.put(Environment.SHOW_SQL, true);
 
-		jpaPropertiesMap.put(Environment.HBM2DDL_AUTO, "update"); // or "create", "create-drop", "validate", etc.
+		jpaPropertiesMap.put(Environment.HBM2DDL_AUTO, "validate"); // or "create", "create-drop", "validate", etc.
 
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource);

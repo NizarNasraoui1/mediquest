@@ -3,6 +3,8 @@ package com.qonsult.init;
 import com.qonsult.config.tenant_config.DataSourceBasedMultiTenantConnectionProviderImpl;
 import com.qonsult.config.tenant_config.TenantContext;
 import com.qonsult.config.tenant_config.TenantSchemaResolver;
+import com.qonsult.entity.User;
+import com.qonsult.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -55,7 +55,7 @@ public class InitPublicSchema implements DBInitializer {
             userRepository.save(user);
             Schema schema = new Schema();
             schema.setName("public");
-            schema.setUserName("admin");
+//            schema.setUserName("admin");
             schemaRepository.save(schema);
         }
     }
