@@ -12,23 +12,8 @@ import java.util.List;
 
 public interface UserService {
     User saveUser(User user);
-    Group saveRole(Group group) throws RoleAlreadyExistsException;
-
-    void saveRoles(List<Group> groups);
-    void addRoleToUser(Long roleId, Long authorityId);
-
-
-    User getUser(String username);
-
-    Role addPermission(String name);
-
-    Group addPermissionToRole(Long roleId, Long authorityId);
-
-    List<Role> getAllPermissions();
 
     List<User>getUsers();
 
-    void saveCenterUser(User user);
-
-    UserDetails loadUserByUsername(String username, String password) throws PasswordException;
+    User loadUserByUsername(String username, String password);
 }

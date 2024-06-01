@@ -31,8 +31,9 @@ public class AuthResource {
     }
 
     @PostMapping("/register")
-    public Mono<SuccessResponseDTO> register(@RequestBody RegisterDTO registerDTO){
-        return authService.register(registerDTO);
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) throws Exception {
+        authService.register(registerDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/mail-confirmation")

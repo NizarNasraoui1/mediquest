@@ -4,5 +4,5 @@ import com.qonsult.entity.Schema;
 import reactor.core.publisher.Mono;
 
 public interface SchemaService {
-    Mono<Schema> addSchema(String schemaName, String username);
+    Mono<Schema> addSchema(String schemaName);
 }

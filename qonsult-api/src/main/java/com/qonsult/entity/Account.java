@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Center {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +20,10 @@ public class Center {
     private String name;
     private String address;
     private String schemaName;
-    @OneToMany(mappedBy = "center")
+    @OneToMany(mappedBy = "account")
     List<Group>groups;
+
+    @OneToOne
+    @JoinColumn(name = "schema_id")
+    Schema schema;
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CenterDTO {
+public class AccountDTO {
     private int id;
     private UUID uuid;
     private String name;

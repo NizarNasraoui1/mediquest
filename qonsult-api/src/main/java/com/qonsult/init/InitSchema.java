@@ -16,13 +16,8 @@ public class InitSchema {
 
     private final DataSourceBasedMultiTenantConnectionProviderImpl dataSourceBasedMultiTenantConnectionProvider;
     private final MigrateDB migrateDB;
-    private final TenantSchemaResolver tenantSchemaResolver;
     public void initSchema(String schema){
         try{
-//            initCenterAdminUser.createAdminUser(schema+"_admin");
-            TenantContext.clear();
-            TenantContext.setCurrentTenant(schema);
-            tenantSchemaResolver.resolveCurrentTenantIdentifier();
             migrateSchema(schema);
         }
         catch (Exception e){

@@ -23,15 +23,15 @@ public class InitPublicSchema implements DBInitializer {
 
     private final RoleRepository roleRepository;
 
-    private final CenterRepository centerRepository;
+    private final AccountRepository accountRepository;
 
     private final SchemaRepository schemaRepository;
 
     @Override
     public void init() {
         if(!isAlreadyInitialized()){
-            Center center = new Center();
-            centerRepository.save(center);
+            Account account = new Account();
+            accountRepository.save(account);
 
             User user = new User();
             user.setUsername("admin");

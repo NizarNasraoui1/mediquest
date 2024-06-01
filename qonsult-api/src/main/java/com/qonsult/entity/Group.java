@@ -24,7 +24,7 @@ public class Group {
 
     @ManyToOne
     @JoinColumn(name="center_id")
-    private Center center;
+    private Account account;
 
     @ManyToMany
     @JoinTable(

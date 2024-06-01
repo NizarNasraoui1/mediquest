@@ -19,18 +19,15 @@ import reactor.core.publisher.Mono;
 public class SchemaServiceImpl implements SchemaService {
 
     private final SchemaRepository schemaRepository;
-    private final TenantDataSource tenantDataSource;
     private final DataSourceBasedMultiTenantConnectionProviderImpl dataSourceBasedMultiTenantConnectionProvider;
     private final InitSchema initSchema;
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public Mono<Schema> addSchema(String schemaName, String username) {
+    public Mono<Schema> addSchema(String schemaName) {
         Schema schema = new Schema();
-        schema.setUserName(username);
         schema.setName(schemaName);
         createSchema(schemaName);
-        tenantDataSource.getUsernameSchemaMap().put(username,schemaName);
         dataSourceBasedMultiTenantConnectionProvider.addDataSource(schemaName);
 
         try{

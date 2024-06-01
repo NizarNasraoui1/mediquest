@@ -11,7 +11,7 @@ public interface AuthService {
 
     Mono<Void>changePassword(ResetPasswordRequestDTO resetPasswordRequestDTO);
 
-    Mono<SuccessResponseDTO> register(RegisterDTO registerDTO);
+    void register(RegisterDTO registerDTO) throws Exception;
 
     Mono<Void> validateMail(String validationToken);
 

@@ -9,5 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface SchemaRepository extends JpaRepository<Schema, Long> {
-    Optional<Schema> findByUserName(String dbName);
 }

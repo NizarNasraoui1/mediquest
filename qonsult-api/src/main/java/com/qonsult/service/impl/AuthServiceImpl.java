@@ -4,33 +4,38 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.qonsult.config.tenant_config.TenantDataSource;
-import com.qonsult.dto.*;
-import com.qonsult.entity.*;
+import com.qonsult.dto.AuthRequest;
+import com.qonsult.dto.AuthResponseDTO;
+import com.qonsult.dto.RegisterDTO;
+import com.qonsult.dto.ResetPasswordRequestDTO;
+import com.qonsult.entity.Group;
+import com.qonsult.entity.User;
+import com.qonsult.entity.ValidationToken;
 import com.qonsult.exception.EntityException;
 import com.qonsult.mapper.UserMapper;
-import com.qonsult.repository.ValidationTokenRepository;
-import com.qonsult.repository.RoleRepository;
 import com.qonsult.repository.GroupRepository;
+import com.qonsult.repository.RoleRepository;
 import com.qonsult.repository.UserRepository;
+import com.qonsult.repository.ValidationTokenRepository;
 import com.qonsult.service.*;
 import com.qonsult.util.ForgotPasswordEmailTemplate;
 import com.qonsult.util.ValidateEmailTemplate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.openssl.PasswordException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final ApplicationContext context;
@@ -41,44 +46,62 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     private final GroupRepository groupRepository;
     private final RoleRepository roleRepository;
-    private final CenterService centerService;
+    private final AccountService accountService;
     private final SchemaService schemaService;
     private final UserService userService;
+    private final InitAccountService initAccountService;
     @Value("${reset-password-url}")
     private String resetPasswordUrl;
     @Value("${mail-validation-url}")
     private String mailValidationUrl;
 
-
     @Override
-    public Mono<AuthResponseDTO> authenticate(AuthRequest authRequest) {
-        return Mono.fromCallable(() -> userService.loadUserByUsername(authRequest.getUsername(),authRequest.getPassword()))
-                .subscribeOn(Schedulers.boundedElastic())
-                .flatMap(user -> {
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-                    TenantDataSource tenantDataSource = context.getBean(TenantDataSource.class);
-                    String schema = tenantDataSource.getUsernameSchemaMap().get(authRequest.getUsername());
+    public Mono<AuthResponseDTO> authenticate(AuthRequest authRequest) throws Exception {
+        String username = authRequest.getUsername();
+        String password = authRequest.getPassword();
+        User user = userService.loadUserByUsername(authRequest.getUsername(), authRequest.getPassword());
+        if (user == null) {
+            log.error("User " + username + " not found in the database");
+            throw new UsernameNotFoundException("bad credentials");
+        }
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            log.error("password for user " + user.getUsername().toString() + " is wrong");
+            throw new PasswordException("bad credentials");
+        }
+        if(!user.isEmailChecked()){
+            throw new Exception("mail not checked");
+        }
+        log.info("User found in the database: {}", username);
+        List<String> roles = new ArrayList<>();
+        Group group = user.getGroup();
+        group.getRoles().forEach(role -> {
+            roles.add(role.getName());
+        });
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        String schema = user.getGroup().getAccount().getSchema().getName();
 
-                    String accessToken = generateToken(user.getUsername(),user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),algorithm,false);
-                    String refreshToken = generateToken(user.getUsername(),user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),algorithm,true);
 
-                    AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-                    authResponseDTO.setAccessToken(accessToken);
-                    authResponseDTO.setRefreshToken(refreshToken);
-                    authResponseDTO.setTenant(schema);
-                    return Mono.just(authResponseDTO);
-                });
+        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, false);
+        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,true);
+
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+        authResponseDTO.setAccessToken(accessToken);
+        authResponseDTO.setRefreshToken(refreshToken);
+        authResponseDTO.setTenant(schema);
+        return Mono.just(authResponseDTO);
+
     }
 
-    public String generateToken(String username,List<String>authorities,Algorithm algorithm,boolean refreshToken){
+    public String generateToken(String username, List<String> authorities, String tenant,Algorithm algorithm, boolean refreshToken) {
         int duration = 60 * 60 * 1000;
-        if(refreshToken){
+        if (refreshToken) {
             duration = duration * 2;
         }
         return JWT.create()
                 .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + duration))
-                .withClaim("permissions",authorities)
+                .withClaim("permissions", authorities)
+                .withClaim("tenant",tenant)
                 .sign(algorithm);
     }
 
@@ -87,8 +110,12 @@ public class AuthServiceImpl implements AuthService {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         String username = decodedJWT.getSubject();
-        String accessToken = generateToken(username,decodedJWT.getClaim("permissions").asList(String.class),algorithm,false);
-        String refreshToken = generateToken(username,decodedJWT.getClaim("permissions").asList(String.class),algorithm,true);
+        String accessToken = generateToken(username, decodedJWT.getClaim("permissions").asList(String.class),
+                decodedJWT.getClaim("tenant").asString(),
+                algorithm, false);
+        String refreshToken = generateToken(username, decodedJWT.getClaim("permissions").asList(String.class),
+                decodedJWT.getClaim("tenant").asString(),
+                algorithm, true);
 
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setAccessToken(accessToken);
@@ -98,32 +125,32 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Mono<Void> processForgotPassword(String userEmail) {
-            return Mono.justOrEmpty(userRepository.findByEmail(userEmail))
-                    .switchIfEmpty(Mono.error(new EntityException("not found")))
-                    .flatMap(user->{
-                                ValidationToken token = new ValidationToken();
-                                String emailToken = UUID.randomUUID().toString();
-                                token.setToken(emailToken);
-                                token.setUser(user);
-                                token.setExpiryDate(Instant.ofEpochSecond(3600));
-                                validationTokenRepository.save(token);
-                                return Mono.justOrEmpty(emailToken);
-                            }
-                    )
-                            .flatMap(emailToken->{
-                                String emailBody = ForgotPasswordEmailTemplate.generateForgotMailTemplate(resetPasswordUrl,emailToken);
-                                emailSenderService.sendEmail("nizar.al.nasraoui@gmail.com",
-                                        "Réinitialisation de mot de passe",
-                                        emailBody);
-                                return Mono.empty();
-                            });
+        return Mono.justOrEmpty(userRepository.findByEmail(userEmail))
+                .switchIfEmpty(Mono.error(new EntityException("not found")))
+                .flatMap(user -> {
+                            ValidationToken token = new ValidationToken();
+                            String emailToken = UUID.randomUUID().toString();
+                            token.setToken(emailToken);
+                            token.setUser(user);
+                            token.setExpiryDate(Instant.ofEpochSecond(3600));
+                            validationTokenRepository.save(token);
+                            return Mono.justOrEmpty(emailToken);
+                        }
+                )
+                .flatMap(emailToken -> {
+                    String emailBody = ForgotPasswordEmailTemplate.generateForgotMailTemplate(resetPasswordUrl, emailToken);
+                    emailSenderService.sendEmail("nizar.al.nasraoui@gmail.com",
+                            "Réinitialisation de mot de passe",
+                            emailBody);
+                    return Mono.empty();
+                });
     }
 
     @Override
-    public Mono<Void>changePassword(ResetPasswordRequestDTO resetPasswordRequestDTO){
+    public Mono<Void> changePassword(ResetPasswordRequestDTO resetPasswordRequestDTO) {
         return Mono.justOrEmpty(validationTokenRepository.findByToken(resetPasswordRequestDTO.getResetPasswordToken()))
                 .switchIfEmpty(Mono.error(new EntityException("not found")))
-                .flatMap((token)->{
+                .flatMap((token) -> {
                     User user = token.getUser();
                     user.setPassword(passwordEncoder.encode(resetPasswordRequestDTO.getPassword()));
                     userRepository.save(user);
@@ -132,10 +159,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Mono<Void> validateMail(String validationToken){
+    public Mono<Void> validateMail(String validationToken) {
         return Mono.justOrEmpty(validationTokenRepository.findByToken(validationToken))
                 .switchIfEmpty(Mono.error(new EntityException("not found")))
-                .flatMap((token)->{
+                .flatMap((token) -> {
                     User user = token.getUser();
                     user.setEmailChecked(true);
                     userRepository.save(user);
@@ -145,38 +172,17 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public Mono<SuccessResponseDTO> register(RegisterDTO registerDTO){
-        UserDTO userDTO = registerDTO.getUser();
-        CenterDTO centerDTO = registerDTO.getCenter();
-        if(userRepository.findByUsername(userDTO.getUsername())!=null){
-            return Mono.error(new EntityException("user already exists"));
-        }
-        String schemaName = "_"+ UUID.randomUUID().toString().substring(0,6);
-        Center center = centerService.addCenter(centerDTO,schemaName).block();
-        Group centerAdminGroup = new Group();
-        centerAdminGroup.setName("CENTER_ADMIN");
-        centerAdminGroup.setCenter(center);
-        groupRepository.save(centerAdminGroup);
-        List<Role> roles = roleRepository.findAllByNameIn(Arrays.asList("READ_QUESTIONNAIRE","ADD_QUESTIONNAIRE"));
-        centerAdminGroup.setRoles(roles);
-        User user = userMapper.toBo(userDTO);
-        user.setGroup(centerAdminGroup);
-        user.setPassword(passwordEncoder.encode(registerDTO.getUser().getPassword()));
-        schemaService.addSchema(schemaName,userDTO.getUsername());
-        userService.saveUser(user);
-        emailVerification(user);
-        SuccessResponseDTO successResponseDTO = new SuccessResponseDTO();
-        successResponseDTO.setMessage("user added successfully");
-        return Mono.justOrEmpty(successResponseDTO);
+    public void register(RegisterDTO registerDTO) throws Exception {
+        initAccountService.register(registerDTO);
     }
 
-    public void emailVerification(User user){
+    public void emailVerification(User user) {
         ValidationToken validationToken = new ValidationToken();
         validationToken.setUser(user);
         String emailValidationToken = UUID.randomUUID().toString();
         validationToken.setToken(emailValidationToken);
         validationTokenRepository.save(validationToken);
-        String emailBody = ValidateEmailTemplate.generateConfirmMailTemplate(mailValidationUrl,emailValidationToken);
+        String emailBody = ValidateEmailTemplate.generateConfirmMailTemplate(mailValidationUrl, emailValidationToken);
         emailSenderService.sendEmail("nizar.al.nasraoui@gmail.com",
                 "Confirmation de l'adresse e-mail",
                 emailBody);

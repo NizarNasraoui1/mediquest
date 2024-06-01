@@ -36,15 +36,12 @@ public class TenantDataSource implements Serializable {
 
 	private List<Schema> dbDetails;
 
-	private Map<String,String> usernameSchemaMap;
-
 	@Autowired
 	private SchemaRepository schemaRepository;
 
 	@PostConstruct
 	public Map<String, DataSource> getAllTenantDS() {
 		List<Schema> schemas =schemaRepository.findAll();
-		usernameSchemaMap = schemas.stream().collect(Collectors.toMap(Schema::getUserName,Schema::getName));
 		Map<String, DataSource> result = schemas.stream()
 				.collect(Collectors.toMap(Schema::getName, db -> getDataSource(db.getName())));
 
@@ -55,9 +52,6 @@ public class TenantDataSource implements Serializable {
 		return dbDetails;
 	}
 
-	public Map<String, String> getUsernameSchemaMap() {
-		return usernameSchemaMap;
-	}
 
 	public DataSource getDataSource(String schema) {
 		if (dataSources.get(schema) != null) {

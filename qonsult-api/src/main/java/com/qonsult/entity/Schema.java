@@ -22,8 +22,6 @@ public class Schema implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	@Column(name = "USERNAME")
-	private String userName;
 	@Column(name = "SCHEMA")
 	private String name;
 }

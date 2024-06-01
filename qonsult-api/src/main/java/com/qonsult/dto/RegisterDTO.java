@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 public class RegisterDTO {
     UserDTO user;
-    CenterDTO center;
+    AccountDTO center;
 }
