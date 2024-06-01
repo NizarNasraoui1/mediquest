@@ -95,7 +95,7 @@ public class AuthServiceImpl implements AuthService {
     public String generateToken(String username, List<String> authorities, String tenant,Algorithm algorithm, boolean refreshToken) {
         int duration = 60 * 20 * 1;
         if (refreshToken) {
-            duration = 60 * 60 * 1000;
+            duration = 60 * 60 * 2000;
         }
         return JWT.create()
                 .withSubject(username)
