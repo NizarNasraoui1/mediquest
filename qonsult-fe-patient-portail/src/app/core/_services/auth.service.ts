@@ -61,7 +61,7 @@ export class AuthService {
     }
 
     getAccessTokenFromRefreshToken(){
-        return this.httpUtilService.post(`${AuthUrl}/token`,this.tokenStorageService.getRefreshToken());
+        return this.httpUtilService.post(`${AuthUrl}/refresh-token`,this.tokenStorageService.getRefreshToken());
     }
 
     public isTokenExpired(token: string): boolean {
