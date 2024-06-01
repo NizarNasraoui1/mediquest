@@ -52,8 +52,8 @@ public class InitAccountServiceImpl implements InitAccountService {
         String adminUsername = "_"+ UUID.randomUUID().toString().substring(0,6);
         String adminPassword = "_"+ UUID.randomUUID().toString().substring(0,6);
         createSchema(schemaName);
-        migrateSchema(schemaName);
         dataSourceBasedMultiTenantConnectionProvider.addDataSource(schemaName);
+        migrateSchema(schemaName);
         Schema schema = new Schema();
         schema.setName(schemaName);
         schemaRepository.save(schema);
