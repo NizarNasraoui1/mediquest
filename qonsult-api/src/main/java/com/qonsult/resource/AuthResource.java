@@ -41,8 +41,8 @@ public class AuthResource {
         return authService.validateMail(token);
     }
 
-    @PostMapping("token")
-    public ResponseEntity<Mono<AuthResponseDTO>>getAccessTokenFromRefreshToken(@RequestBody String token){
+    @PostMapping("/refresh-token")
+    public ResponseEntity<AuthResponseDTO>getAccessTokenFromRefreshToken(@RequestBody String token){
         return new ResponseEntity<>(authService.getAccessTokenFromRefreshToken(token), HttpStatus.OK);
     }
 }

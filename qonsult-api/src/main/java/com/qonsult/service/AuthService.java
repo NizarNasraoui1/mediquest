@@ -15,5 +15,5 @@ public interface AuthService {
 
     Mono<Void> validateMail(String validationToken);
 
-    Mono<AuthResponseDTO> getAccessTokenFromRefreshToken(String accessToken);
+    AuthResponseDTO getAccessTokenFromRefreshToken(String accessToken);
 }

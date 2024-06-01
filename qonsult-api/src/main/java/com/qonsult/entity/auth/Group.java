@@ -23,7 +23,7 @@ public class Group {
     private List<User> users = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name="center_id")
+    @JoinColumn(name="account_id")
     private Account account;
 
     @ManyToMany

@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), context);
 //        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/api/mediquest/auth/login/**", "/api/mediquest/token/refresh/**","/swagger-ui/**","/swagger-ui.html/**","/api-docs/**","/actuator/**","/api/mediquest/public/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/mediquest/auth/login/**", "/api/mediquest/public/auth/refresh-token","/swagger-ui/**","/swagger-ui.html/**","/api-docs/**","/actuator/**","/api/mediquest/public/**").permitAll();
 //        http.authorizeRequests().antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER");
 //        http.authorizeRequests().antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
 //        http.authorizeRequests().antMatchers(GET, "/api/**").hasAnyAuthority("ADMIN");

@@ -93,9 +93,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public String generateToken(String username, List<String> authorities, String tenant,Algorithm algorithm, boolean refreshToken) {
-        int duration = 60 * 60 * 1000;
+        int duration = 60*1000000000;
         if (refreshToken) {
-            duration = duration * 2;
+            duration = duration * 200000;
         }
         return JWT.create()
                 .withSubject(username)
@@ -105,7 +105,7 @@ public class AuthServiceImpl implements AuthService {
                 .sign(algorithm);
     }
 
-    public Mono<AuthResponseDTO> getAccessTokenFromRefreshToken(String token) {
+    public AuthResponseDTO getAccessTokenFromRefreshToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
@@ -120,7 +120,7 @@ public class AuthServiceImpl implements AuthService {
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setAccessToken(accessToken);
         authResponseDTO.setRefreshToken(refreshToken);
-        return Mono.just(authResponseDTO);
+        return authResponseDTO;
     }
 
     @Override

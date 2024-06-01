@@ -30,7 +30,12 @@ public class InitPublicSchema implements DBInitializer {
     @Override
     public void init() {
         if(!isAlreadyInitialized()){
+            Schema schema = new Schema();
+            schema.setName("public");
+            schemaRepository.save(schema);
+
             Account account = new Account();
+            account.setSchema(schema);
             accountRepository.save(account);
 
             User user = new User();
@@ -49,14 +54,12 @@ public class InitPublicSchema implements DBInitializer {
             }
             for (Group group : groups) {
                 group.setRoles(roles);
+                group.setAccount(account);
             }
             groupRepository.saveAll(groups);
             user.setGroup(adminGroup);
             userRepository.save(user);
-            Schema schema = new Schema();
-            schema.setName("public");
-//            schema.setUserName("admin");
-            schemaRepository.save(schema);
+
         }
     }
     @Override
