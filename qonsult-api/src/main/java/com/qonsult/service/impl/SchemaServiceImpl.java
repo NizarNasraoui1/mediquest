@@ -1,16 +1,12 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.config.tenant_config.DataSourceBasedMultiTenantConnectionProviderImpl;
-import com.qonsult.config.tenant_config.TenantContext;
-import com.qonsult.config.tenant_config.TenantDataSource;
-import com.qonsult.entity.Schema;
-import com.qonsult.init.InitQuestionnaires;
+import com.qonsult.entity.auth.Schema;
 import com.qonsult.init.InitSchema;
 import com.qonsult.repository.SchemaRepository;
 import com.qonsult.service.SchemaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

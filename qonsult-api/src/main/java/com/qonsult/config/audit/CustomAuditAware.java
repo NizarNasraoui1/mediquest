@@ -1,6 +1,6 @@
 package com.qonsult.config.audit;
 
-import com.qonsult.entity.User;
+import com.qonsult.entity.auth.User;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

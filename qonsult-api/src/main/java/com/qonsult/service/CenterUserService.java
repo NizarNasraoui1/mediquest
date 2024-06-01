@@ -1,7 +1,7 @@
 package com.qonsult.service;
 
 import com.qonsult.dto.CenterUserDTO;
-import com.qonsult.entity.CenterUser;
+import com.qonsult.entity.auth.CenterUser;
 import com.qonsult.generic.GenericService;
 import com.qonsult.mapper.CenterUserMapper;
 import com.qonsult.repository.CenterUserRepository;

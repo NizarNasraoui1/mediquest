@@ -9,13 +9,12 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
-import com.qonsult.entity.Schema;
+import com.qonsult.entity.auth.Schema;
 import com.qonsult.repository.SchemaRepository;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Component;
 
 

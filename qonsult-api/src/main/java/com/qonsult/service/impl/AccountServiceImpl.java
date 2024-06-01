@@ -1,7 +1,7 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.dto.AccountDTO;
-import com.qonsult.entity.Account;
+import com.qonsult.entity.auth.Account;
 import com.qonsult.mapper.AccountMapper;
 import com.qonsult.repository.AccountRepository;
 import com.qonsult.service.AccountService;

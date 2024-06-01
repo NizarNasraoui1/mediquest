@@ -1,6 +1,6 @@
 package com.qonsult.service;
 
-import com.qonsult.entity.Schema;
+import com.qonsult.entity.auth.Schema;
 import reactor.core.publisher.Mono;
 
 public interface SchemaService {

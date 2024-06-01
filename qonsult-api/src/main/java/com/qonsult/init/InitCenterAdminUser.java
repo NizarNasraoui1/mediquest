@@ -1,7 +1,7 @@
 //package com.qonsult.init;
 //
-//import com.qonsult.entity.Group;
-//import com.qonsult.entity.User;
+//import com.qonsult.entity.auth.Group;
+//import com.qonsult.entity.auth.User;
 //import com.qonsult.repository.GroupRepository;
 //import com.qonsult.service.UserService;
 //import lombok.RequiredArgsConstructor;

@@ -1,24 +1,17 @@
 package com.qonsult.service.impl;
 
-import com.qonsult.config.tenant_config.TenantContext;
 import com.qonsult.config.tenant_config.TenantDataSource;
-import com.qonsult.entity.*;
-import com.qonsult.exception.RoleAlreadyExistsException;
+import com.qonsult.entity.auth.User;
 import com.qonsult.repository.*;
 import com.qonsult.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bouncycastle.openssl.PasswordException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j

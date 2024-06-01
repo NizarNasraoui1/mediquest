@@ -1,7 +1,7 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.dto.SuccessResponseDTO;
-import com.qonsult.entity.CenterUser;
+import com.qonsult.entity.auth.CenterUser;
 import com.qonsult.init.InitQuestionnaires;
 import com.qonsult.service.CenterUserService;
 import com.qonsult.service.InitAccount;

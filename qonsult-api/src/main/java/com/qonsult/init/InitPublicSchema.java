@@ -1,6 +1,6 @@
 package com.qonsult.init;
 
-import com.qonsult.entity.*;
+import com.qonsult.entity.auth.*;
 import com.qonsult.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

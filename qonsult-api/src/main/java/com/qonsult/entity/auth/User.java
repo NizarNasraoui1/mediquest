@@ -1,4 +1,4 @@
-package com.qonsult.entity;
+package com.qonsult.entity.auth;
 
 import javax.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.qonsult.repository;
 
-import com.qonsult.entity.Role;
+import com.qonsult.entity.auth.Role;
 import com.qonsult.generic.GenericRepository;
 import org.springframework.stereotype.Repository;
 

@@ -3,7 +3,7 @@ package com.qonsult.service.impl;
 import com.qonsult.config.tenant_config.DataSourceBasedMultiTenantConnectionProviderImpl;
 import com.qonsult.dto.AccountDTO;
 import com.qonsult.dto.RegisterDTO;
-import com.qonsult.entity.*;
+import com.qonsult.entity.auth.*;
 import com.qonsult.init.InitSchema;
 import com.qonsult.init.MigrateDB;
 import com.qonsult.repository.*;
@@ -48,9 +48,9 @@ public class InitAccountServiceImpl implements InitAccountService {
 
     public void register(RegisterDTO registerDTO) throws Exception{
         AccountDTO accountDTO = registerDTO.getCenter();
-        String schemaName = "_"+ UUID.randomUUID().toString().substring(0,6);
-        String adminUsername = "_"+ UUID.randomUUID().toString().substring(0,6);
-        String adminPassword = "_"+ UUID.randomUUID().toString().substring(0,6);
+        String schemaName = "schema_"+ UUID.randomUUID().toString().substring(0,6);
+        String adminUsername = UUID.randomUUID().toString();
+        String adminPassword = UUID.randomUUID().toString();
         createSchema(schemaName);
         dataSourceBasedMultiTenantConnectionProvider.addDataSource(schemaName);
         migrateSchema(schemaName);

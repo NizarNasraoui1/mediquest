@@ -1,6 +1,6 @@
 package com.qonsult.repository;
 
-import com.qonsult.entity.CenterUser;
+import com.qonsult.entity.auth.CenterUser;
 import com.qonsult.generic.GenericRepository;
 import org.springframework.stereotype.Repository;
 

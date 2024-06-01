@@ -1,6 +1,6 @@
 package com.qonsult.repository;
 
-import com.qonsult.entity.Account;
+import com.qonsult.entity.auth.Account;
 import com.qonsult.generic.GenericRepository;
 
 import java.util.Optional;

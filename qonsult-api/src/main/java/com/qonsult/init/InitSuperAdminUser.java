@@ -1,8 +1,8 @@
 //package com.qonsult.init;
 //
-//import com.qonsult.entity.Group;
-//import com.qonsult.entity.Schema;
-//import com.qonsult.entity.User;
+//import com.qonsult.entity.auth.Group;
+//import com.qonsult.entity.auth.Schema;
+//import com.qonsult.entity.auth.User;
 //import com.qonsult.repository.GroupRepository;
 //import com.qonsult.repository.SchemaRepository;
 //import com.qonsult.repository.UserRepository;

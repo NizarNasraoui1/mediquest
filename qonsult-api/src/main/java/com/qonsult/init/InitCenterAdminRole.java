@@ -1,6 +1,6 @@
 //package com.qonsult.init;
 //
-//import com.qonsult.entity.Group;
+//import com.qonsult.entity.auth.Group;
 //import com.qonsult.exception.RoleAlreadyExistsException;
 //import com.qonsult.repository.GroupRepository;
 //import com.qonsult.service.UserService;

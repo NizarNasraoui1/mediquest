@@ -1,7 +1,6 @@
 package com.qonsult.init;
 
-import com.qonsult.entity.Group;
-import com.qonsult.entity.Role;
+import com.qonsult.entity.auth.Role;
 import com.qonsult.repository.RoleRepository;
 import com.qonsult.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.qonsult.repository;
 
-import com.qonsult.entity.ValidationToken;
+import com.qonsult.entity.auth.ValidationToken;
 import com.qonsult.generic.GenericRepository;
 import org.springframework.stereotype.Repository;
 
