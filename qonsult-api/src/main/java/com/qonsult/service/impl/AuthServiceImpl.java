@@ -54,6 +54,9 @@ public class AuthServiceImpl implements AuthService {
     private String resetPasswordUrl;
     @Value("${mail-validation-url}")
     private String mailValidationUrl;
+    private final int ACCESS_TOKEN_DURATION = 60 * 60 * 1000;
+    private final int REFRESH_TOKEN_DURATION = 30 * 24 * 60 * 60 * 1000;
+
 
     @Override
     public Mono<AuthResponseDTO> authenticate(AuthRequest authRequest) throws Exception {
@@ -81,8 +84,8 @@ public class AuthServiceImpl implements AuthService {
         String schema = user.getGroup().getAccount().getSchema().getName();
 
 
-        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, false);
-        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,true);
+        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, ACCESS_TOKEN_DURATION);
+        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,REFRESH_TOKEN_DURATION);
 
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setAccessToken(accessToken);
@@ -92,35 +95,14 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    public String generateToken(String username, List<String> authorities, String tenant,Algorithm algorithm, boolean refreshToken) {
-        int duration = 60 * 20 * 1;
-        if (refreshToken) {
-            duration = 60 * 60 * 2000;
-        }
+    public String generateToken(String username, List<String> authorities, String tenant, Algorithm algorithm, int duration) {
         return JWT.create()
                 .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + duration))
                 .withClaim("permissions", authorities)
-                .withClaim("tenant",tenant)
+                .withClaim("tenant", tenant)
                 .sign(algorithm);
     }
-
-//    public String generateToken(String username, List<String> authorities, String tenant, Algorithm algorithm, boolean refreshToken) {
-//        // Define standard durations
-//        int accessTokenDuration = 60 * 60 * 1000; // 1 hour in milliseconds
-//        int refreshTokenDuration = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
-//
-//        // Set the token duration based on the token type
-//        int duration = refreshToken ? refreshTokenDuration : accessTokenDuration;
-//
-//        // Create and return the token
-//        return JWT.create()
-//                .withSubject(username)
-//                .withExpiresAt(new Date(System.currentTimeMillis() + duration))
-//                .withClaim("permissions", authorities)
-//                .withClaim("tenant", tenant)
-//                .sign(algorithm);
-//    }
 
     public AuthResponseDTO getAccessTokenFromRefreshToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -138,8 +120,8 @@ public class AuthServiceImpl implements AuthService {
         String schema = user.getGroup().getAccount().getSchema().getName();
 
 
-        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, false);
-        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,true);
+        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, ACCESS_TOKEN_DURATION);
+        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,REFRESH_TOKEN_DURATION);
 
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setAccessToken(accessToken);
