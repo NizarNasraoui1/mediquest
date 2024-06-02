@@ -16,7 +16,7 @@ import java.util.Map;
 public class AuthResource {
     private final AuthService authService;
     @PostMapping("/login")
-    public Mono<AuthResponseDTO>login(@RequestBody AuthRequest authRequest) throws Exception {
+    public AuthResponseDTO login(@RequestBody AuthRequest authRequest) throws Exception {
         return authService.authenticate(authRequest);
     }
 

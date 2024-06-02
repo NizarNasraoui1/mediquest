@@ -12,9 +12,6 @@ import com.qonsult.entity.auth.Group;
 import com.qonsult.entity.auth.User;
 import com.qonsult.entity.auth.ValidationToken;
 import com.qonsult.exception.EntityException;
-import com.qonsult.mapper.UserMapper;
-import com.qonsult.repository.GroupRepository;
-import com.qonsult.repository.RoleRepository;
 import com.qonsult.repository.UserRepository;
 import com.qonsult.repository.ValidationTokenRepository;
 import com.qonsult.service.*;
@@ -24,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.openssl.PasswordException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,16 +34,10 @@ import java.util.*;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
 
-    private final ApplicationContext context;
     private final UserRepository userRepository;
     private final ValidationTokenRepository validationTokenRepository;
     private final EmailSenderService emailSenderService;
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
-    private final GroupRepository groupRepository;
-    private final RoleRepository roleRepository;
-    private final AccountService accountService;
-    private final SchemaService schemaService;
     private final UserService userService;
     private final InitAccountService initAccountService;
     @Value("${reset-password-url}")
@@ -59,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public Mono<AuthResponseDTO> authenticate(AuthRequest authRequest) throws Exception {
+    public AuthResponseDTO authenticate(AuthRequest authRequest) throws Exception {
         String username = authRequest.getUsername();
         String password = authRequest.getPassword();
         User user = userService.loadUserByUsername(authRequest.getUsername());
@@ -91,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
         authResponseDTO.setAccessToken(accessToken);
         authResponseDTO.setRefreshToken(refreshToken);
         authResponseDTO.setTenant(schema);
-        return Mono.just(authResponseDTO);
+        return authResponseDTO;
 
     }
 
