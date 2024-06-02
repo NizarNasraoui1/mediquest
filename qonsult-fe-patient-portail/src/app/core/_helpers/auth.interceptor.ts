@@ -27,13 +27,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.tokenService.getToken();
-    if (token && !req.url.includes('refresh-token')) {
-      req = this.addAuthorizationHeader(req, token);
+    const tenant = this.tokenService.getTenant();
+    if (token) {
+      req = this.addAuthorizationHeader(req, token,tenant);
     }
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403 && !req.url.includes('refresh-token')) {
+        if (error.status === 403 && !req.url.includes('public')) {
           return this.handle403Error(req, next);
         } else {
           return throwError(() => error);
@@ -42,9 +43,11 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
-  private addAuthorizationHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
+  private addAuthorizationHeader(request: HttpRequest<any>, token: string,tenant:string): HttpRequest<any> {
     return request.clone({
-      setHeaders: { Authorization: `Bearer ${token}`
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+        Tenant:tenant
     }
     });
   }
@@ -57,7 +60,8 @@ export class AuthInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
           this.tokenService.saveAccessToken(updatedToken.accessToken);
           this.tokenService.saveRefreshToken(updatedToken.refreshToken);
-          return next.handle(this.addAuthorizationHeader(request, updatedToken.accessToken));
+          this.tokenService.saveTenant(updatedToken.tenant);
+          return next.handle(this.addAuthorizationHeader(request, updatedToken.accessToken,updatedToken.tenant));
         }),
         catchError((error) => {
           this.isRefreshing = false;

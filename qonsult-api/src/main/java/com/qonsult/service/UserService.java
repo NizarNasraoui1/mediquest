@@ -10,5 +10,5 @@ public interface UserService {
 
     List<User>getUsers();
 
-    User loadUserByUsername(String username, String password);
+    User loadUserByUsername(String username);
 }

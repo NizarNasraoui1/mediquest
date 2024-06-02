@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
     public Mono<AuthResponseDTO> authenticate(AuthRequest authRequest) throws Exception {
         String username = authRequest.getUsername();
         String password = authRequest.getPassword();
-        User user = userService.loadUserByUsername(authRequest.getUsername(), authRequest.getPassword());
+        User user = userService.loadUserByUsername(authRequest.getUsername());
         if (user == null) {
             log.error("User " + username + " not found in the database");
             throw new UsernameNotFoundException("bad credentials");
@@ -127,16 +127,24 @@ public class AuthServiceImpl implements AuthService {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
         String username = decodedJWT.getSubject();
-        String accessToken = generateToken(username, decodedJWT.getClaim("permissions").asList(String.class),
-                decodedJWT.getClaim("tenant").asString(),
-                algorithm, false);
-        String refreshToken = generateToken(username, decodedJWT.getClaim("permissions").asList(String.class),
-                decodedJWT.getClaim("tenant").asString(),
-                algorithm, true);
+
+        User user = userService.loadUserByUsername(username);
+        log.info("User found in the database: {}", username);
+        List<String> roles = new ArrayList<>();
+        Group group = user.getGroup();
+        group.getRoles().forEach(role -> {
+            roles.add(role.getName());
+        });
+        String schema = user.getGroup().getAccount().getSchema().getName();
+
+
+        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, false);
+        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,true);
 
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setAccessToken(accessToken);
         authResponseDTO.setRefreshToken(refreshToken);
+        authResponseDTO.setTenant(schema);
         return authResponseDTO;
     }
 
