@@ -105,6 +105,23 @@ public class AuthServiceImpl implements AuthService {
                 .sign(algorithm);
     }
 
+//    public String generateToken(String username, List<String> authorities, String tenant, Algorithm algorithm, boolean refreshToken) {
+//        // Define standard durations
+//        int accessTokenDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+//        int refreshTokenDuration = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+//
+//        // Set the token duration based on the token type
+//        int duration = refreshToken ? refreshTokenDuration : accessTokenDuration;
+//
+//        // Create and return the token
+//        return JWT.create()
+//                .withSubject(username)
+//                .withExpiresAt(new Date(System.currentTimeMillis() + duration))
+//                .withClaim("permissions", authorities)
+//                .withClaim("tenant", tenant)
+//                .sign(algorithm);
+//    }
+
     public AuthResponseDTO getAccessTokenFromRefreshToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
