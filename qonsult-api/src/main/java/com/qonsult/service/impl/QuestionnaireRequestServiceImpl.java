@@ -47,11 +47,15 @@ public class QuestionnaireRequestServiceImpl implements QuestionnaireRequestServ
     }
 
     @Override
+    public QuestionnaireRequest saveQuestionnaireRequestFromModel(QuestionnaireModel questionnaireModel) {
+        return questionnaireRequestRepository.save(createQuestionnaireRequestFromModel(questionnaireModel));
+    }
+
     public QuestionnaireRequest createQuestionnaireRequestFromModel(QuestionnaireModel questionnaireModel) {
         QuestionnaireRequest questionnaireRequest = new QuestionnaireRequest();
         questionnaireRequest.setQuestionnaireModel(questionnaireModel);
         questionnaireRequest.setUsedForQrCode(true);
-        return questionnaireRequestRepository.save(questionnaireRequest);
+        return questionnaireRequest;
     }
 
 }

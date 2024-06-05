@@ -6,12 +6,13 @@ import com.qonsult.dto.AccountDTO;
 import com.qonsult.dto.RegisterDTO;
 import com.qonsult.entity.*;
 import com.qonsult.entity.auth.*;
-import com.qonsult.enumeration.QuestionTypeEnum;
 import com.qonsult.init.InitQuestionnaires;
 import com.qonsult.init.MigrateDB;
+import com.qonsult.init.models.DentistQuestionnaireModel;
 import com.qonsult.repository.*;
 import com.qonsult.service.AccountService;
 import com.qonsult.service.InitAccountService;
+import com.qonsult.service.QuestionnaireRequestService;
 import com.qonsult.util.JPAUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,9 +51,7 @@ public class InitAccountServiceImpl implements InitAccountService {
 
     private final MigrateDB migrateDB;
 
-    private final InitQuestionnaires initQuestionnaires;
-
-    private final TenantDataSource tenantDataSource;
+    private final QuestionnaireRequestService questionnaireRequestService;
 
 
     public void register(RegisterDTO registerDTO) throws Exception{
@@ -111,40 +110,11 @@ public class InitAccountServiceImpl implements InitAccountService {
         try {
             em.getTransaction().begin();
 
-            QuestionnaireModel questionnaireModel = new QuestionnaireModel();
-            questionnaireModel.setName("Health Assessment");
-
-            Topic informationGenerales = new Topic();
-            informationGenerales.setName("Informations générales");
-
-            Topic antecedent = new Topic();
-            antecedent.setName("Antécédent, problèmes de santé");
-
-            Topic hygiene = new Topic();
-            hygiene.setName("Hygiène dentaire");
-
-            informationGenerales.setQuestions(new ArrayList<>());
-            antecedent.setQuestions(new ArrayList<>());
-            hygiene.setQuestions(new ArrayList<>());
-
-            // Example adding questions to 'informationGenerales'
-            informationGenerales.getQuestions().add(Question.builder()
-                    .rank(1)
-                    .label("Quel est le motif de votre consultation ?")
-                    .type(QuestionTypeEnum.CHECKBOX)
-                    .content(new ArrayList<>(Arrays.asList(
-                            new CodeLabel("Urgence"),new CodeLabel("Douleur"),new CodeLabel("1ère consultation"),new CodeLabel("Bilan bucco-dentaire (BBD)"),new CodeLabel("Rendez-vous de contrôle"),new CodeLabel("Détartrage"),new CodeLabel("Devis pour prothèse"),new CodeLabel("Autres")
-                    ))).build());
-
-            // Similar blocks for 'antecedent' and 'hygiene'
-
-            questionnaireModel.setTopics(Arrays.asList(informationGenerales, antecedent, hygiene));
+            QuestionnaireModel questionnaireModel = DentistQuestionnaireModel.getModel();
 
             em.persist(questionnaireModel);
 
-            QuestionnaireRequest questionnaireRequest = new QuestionnaireRequest();
-            questionnaireRequest.setQuestionnaireModel(questionnaireModel);
-            questionnaireRequest.setUsedForQrCode(true);
+            QuestionnaireRequest questionnaireRequest = questionnaireRequestService.createQuestionnaireRequestFromModel(questionnaireModel);
             em.persist(questionnaireRequest);
 
             em.getTransaction().commit();

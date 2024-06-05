@@ -64,6 +64,6 @@ public class BuildQuestionnaireServiceImpl implements BuildQuestionnaireService 
 
         }
         questionnaireModelRepository.save(questionnaireModel);
-        questionnaireRequestService.createQuestionnaireRequestFromModel(questionnaireModel);
+        questionnaireRequestService.saveQuestionnaireRequestFromModel(questionnaireModel);
     }
 }
