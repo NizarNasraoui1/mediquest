@@ -15,6 +15,9 @@ import com.qonsult.service.InitAccountService;
 import com.qonsult.service.QuestionnaireRequestService;
 import com.qonsult.util.JPAUtility;
 import lombok.RequiredArgsConstructor;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ConfigurationBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Method;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -109,23 +110,33 @@ public class InitAccountServiceImpl implements InitAccountService {
 
         try {
             em.getTransaction().begin();
+            Set<Class<?>> classes = getAllClassesInPackage("com.qonsult.init.models");
 
-            QuestionnaireModel questionnaireModel = DentistQuestionnaireModel.getModel();
+            for (Class<?> cls : classes) {
+                Method getModelMethod = cls.getMethod("getModel");
+                QuestionnaireModel questionnaireModel = (QuestionnaireModel) getModelMethod.invoke(null);
 
-            em.persist(questionnaireModel);
+                em.persist(questionnaireModel);
 
-            QuestionnaireRequest questionnaireRequest = questionnaireRequestService.createQuestionnaireRequestFromModel(questionnaireModel);
-            em.persist(questionnaireRequest);
+                QuestionnaireRequest questionnaireRequest = questionnaireRequestService.createQuestionnaireRequestFromModel(questionnaireModel);
+                em.persist(questionnaireRequest);
+            }
 
             em.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
         } finally {
             em.close();
             emf.close();
         }
+    }
+    public static Set<Class<?>> getAllClassesInPackage(String packageName) {
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .forPackages(packageName) // Specify the package to scan
+                .addScanners(new SubTypesScanner(false))); // Include SubTypesScanner, without excluding Object class
+        return reflections.getSubTypesOf(Object.class); // Fetch all subclasses of Object (i.e., all classes)
     }
 }

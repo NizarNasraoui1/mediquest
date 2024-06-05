@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DentistQuestionnaireModel {
+public class DentistQuestionnaireModel{
     private static final String questionnaireName = "Questionnaire Dentiste";
     public static QuestionnaireModel getModel(){
         QuestionnaireModel questionnaireModel = new QuestionnaireModel();
