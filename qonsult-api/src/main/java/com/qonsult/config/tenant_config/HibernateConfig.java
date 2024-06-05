@@ -41,7 +41,7 @@ public class HibernateConfig {
 		jpaPropertiesMap.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolverImpl);
 
 		jpaPropertiesMap.put(Environment.FORMAT_SQL, true);
-		jpaPropertiesMap.put(Environment.SHOW_SQL, true);
+//		jpaPropertiesMap.put(Environment.SHOW_SQL, true);
 
 		jpaPropertiesMap.put(Environment.HBM2DDL_AUTO, "update"); // or "create", "create-drop", "validate", etc.
 
