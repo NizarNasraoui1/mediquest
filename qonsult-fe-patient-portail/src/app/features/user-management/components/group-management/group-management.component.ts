@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./group-management.component.scss']
 })
 export class GroupManagementComponent {
-    users=[
+    isCreateGroupModalVisible = false;
+    groups=[
         {
             id:"1",
             groupName:"groupName",
@@ -15,7 +16,18 @@ export class GroupManagementComponent {
         }
     ]
 
-    deleteUser(id){
+    deleteGroup(id){
 
+    }
+
+    showAddGroupModal(){
+        this.isCreateGroupModalVisible = true;
+    }
+
+    saveGroup(group){
+        this.isCreateGroupModalVisible = false;
+        if(group!==null){
+            console.log("save");
+        }
     }
 }

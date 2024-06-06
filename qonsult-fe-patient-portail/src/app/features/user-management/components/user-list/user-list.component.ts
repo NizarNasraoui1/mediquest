@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+    isCreateUserModalVisible = false;
     users=[
         {
             id:"1",
@@ -25,5 +26,16 @@ export class UserListComponent implements OnInit {
 
     deleteUser(id){
 
+    }
+
+    showAddUserModal(){
+        this.isCreateUserModalVisible = true;
+    }
+
+    saveUser(user){
+        this.isCreateUserModalVisible = false;
+        if(user!==null){
+            console.log("save");
+        }
     }
 }

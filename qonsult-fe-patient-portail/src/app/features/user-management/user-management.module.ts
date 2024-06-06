@@ -11,6 +11,10 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { AddGroupComponent } from './components/add-group/add-group.component';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @NgModule({
@@ -18,7 +22,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserManagementComponent,
     RolesManagementComponent,
     UserListComponent,
-    GroupManagementComponent
+    GroupManagementComponent,
+    AddUserComponent,
+    AddGroupComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ButtonModule,
     CheckboxModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DialogModule,
+    InputTextModule
   ]
 })
 export class UserManagementModule { }

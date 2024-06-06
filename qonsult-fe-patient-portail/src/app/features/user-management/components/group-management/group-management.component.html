@@ -1,5 +1,5 @@
 <div class="card">
-    <p-table [value]="users" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [value]="groups" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
                 <th>Groupe</th>
@@ -13,7 +13,7 @@
                 <td>{{product.createdDate}}</td>
 
                 <td>
-                    <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <button (click)="deleteGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
                 </td>
             </tr>
         </ng-template>
@@ -21,5 +21,6 @@
 </div>
 
 <div class="add-group">
-    <p-button label="Ajouter un groupe"/>
+    <p-button (click)="showAddGroupModal()" label="Ajouter un groupe"/>
 </div>
+<app-add-group (Group)="saveGroup($event)" [visible]="isCreateGroupModalVisible"></app-add-group>

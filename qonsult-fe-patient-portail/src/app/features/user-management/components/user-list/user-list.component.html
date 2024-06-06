@@ -26,10 +26,9 @@
         </ng-template>
     </p-table>
     <div class="add-user">
-        <p-button label="Ajouter un utilisateur"/>
+        <p-button (click)="showAddUserModal()" label="Ajouter un utilisateur"/>
     </div>
 </div>
-
 <div>
-
 </div>
+<app-add-user (user)="saveUser($event)" [visible]="isCreateUserModalVisible"></app-add-user>
