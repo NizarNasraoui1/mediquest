@@ -75,9 +75,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleRefreshTokenFailure(): void {
-    // this.tokenService.clearToken();
-    // this.toastr.error('Session has expired. Please log in again.');
-    this.router.navigate(['/login']);
+    this.authService.logOut();
+    this.router.navigate(['/auth/login']);
   }
 }
 
