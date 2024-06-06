@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("${mail-validation-url}")
     private String mailValidationUrl;
     private final int ACCESS_TOKEN_DURATION = 60 * 60 * 1000;
-    private final int REFRESH_TOKEN_DURATION = 30 * 24 * 60 * 60 * 1000;
+    private final int REFRESH_TOKEN_DURATION = 15 * 24 * 60 * 60 * 1000;
 
 
     @Override
