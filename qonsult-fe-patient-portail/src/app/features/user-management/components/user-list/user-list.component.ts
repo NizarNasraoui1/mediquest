@@ -30,22 +30,21 @@ export class UserListComponent implements OnInit {
     }
 
     modifyUser(user){
-        console.log("here");
-        this.showAddUserModal();
+        this.changeModalState();
         this.addUserComponent.userToUpdate = user;
     }
 
-    showAddUserModal(){
-        this.isCreateUserModalVisible = true;
+    changeModalState(){
+        this.isCreateUserModalVisible = !this.isCreateUserModalVisible;
     }
 
     addUser(){
         this.addUserComponent.userToUpdate = null;
-        this.showAddUserModal();
+        this.changeModalState();
     }
 
     saveUser(user){
-        this.isCreateUserModalVisible = false;
+        this.changeModalState();
         if(user!==null){
             console.log("save");
         }
