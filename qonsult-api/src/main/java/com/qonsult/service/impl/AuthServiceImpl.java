@@ -94,10 +94,10 @@ public class AuthServiceImpl implements AuthService {
                 .sign(algorithm);
     }
 
-    public AuthResponseDTO getAccessTokenFromRefreshToken(String token) {
+    public AuthResponseDTO getAccessTokenFromRefreshToken(String refreshToken) {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
+        DecodedJWT decodedJWT = verifier.verify(refreshToken);
         String username = decodedJWT.getSubject();
 
         User user = userService.loadUserByUsername(username);
@@ -109,13 +109,11 @@ public class AuthServiceImpl implements AuthService {
         });
         String schema = user.getGroup().getAccount().getSchema().getName();
 
-
-        String accessToken = generateToken(user.getUsername(), roles, schema,algorithm, ACCESS_TOKEN_DURATION);
-        String refreshToken = generateToken(user.getUsername(), roles, schema,algorithm,REFRESH_TOKEN_DURATION);
+        String accessToken = generateToken(user.getUsername(), roles, schema, algorithm, ACCESS_TOKEN_DURATION);
 
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setAccessToken(accessToken);
-        authResponseDTO.setRefreshToken(refreshToken);
+        authResponseDTO.setRefreshToken(refreshToken); // Use the existing refresh token
         authResponseDTO.setTenant(schema);
         return authResponseDTO;
     }
