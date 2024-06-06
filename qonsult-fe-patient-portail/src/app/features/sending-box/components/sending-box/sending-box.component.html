@@ -43,9 +43,9 @@
     <form [formGroup]="form">
         <div class="row">
             <div class="questionnaire-preview-container">
-                <p class="field">Selectionner un consentement :</p>
+                <p class="field">Selectionner un questionnaire :</p>
                 <div>
-                    <p-dropdown [options]="questionnaireNames" formControlName="questionnaire" placeholder="selectionner un consentement" [editable]="true" optionLabel="name"></p-dropdown>
+                    <p-dropdown [options]="questionnaireNames" formControlName="questionnaire" placeholder="selectionner un questionnaire" [editable]="true" optionLabel="name"></p-dropdown>
                 </div>
 
                 <div class="consent-preview">
@@ -55,7 +55,7 @@
 
                     </div>
                     <ng-template #noQuestionnaireSelected>
-                        <div class="no-questionnaire-selected">Selectionner un consentement pour le visualiser ici</div>
+                        <div class="no-questionnaire-selected">Selectionner un questionnaire pour le visualiser ici</div>
                     </ng-template>
                 </div>
             </div>

@@ -1,0 +1,25 @@
+<div class="card">
+    <p-table [value]="users" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Groupe</th>
+                <th>Date de création</th>
+                <th>Effacer</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.groupName }}</td>
+                <td>{{product.createdDate}}</td>
+
+                <td>
+                    <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="add-group">
+    <p-button label="Ajouter un groupe"/>
+</div>

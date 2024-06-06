@@ -40,11 +40,6 @@ export class AppMenuComponent implements OnInit {
                         label: 'Qr codes',
                         icon: 'pi pi-fw pi-qrcode',
                         routerLink: ['./my-questionnaires'],
-                    },
-                    {
-                        label: 'Gestion des favoris',
-                        icon: 'pi pi-fw pi-star',
-                        routerLink: ['./my-questionnaires/favourites'],
                     }
                 ],
             },
@@ -75,6 +70,16 @@ export class AppMenuComponent implements OnInit {
                         label: 'Recherche',
                         icon: 'pi pi-fw pi-search',
                         routerLink: ['./history'],
+                    },
+                ],
+            },
+            {
+                label: 'Paramètres',
+                items: [
+                    {
+                        label: 'Gestion des utilisateurs',
+                        icon: 'pi pi-fw pi-cog',
+                        routerLink: ['./user-management'],
                     },
                 ],
             }

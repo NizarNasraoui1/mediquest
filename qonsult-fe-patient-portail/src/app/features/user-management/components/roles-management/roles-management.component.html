@@ -1,0 +1,29 @@
+<form>
+    <div class="card">
+        <p-table [value]="groups" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Groupe</th>
+                    <th>Prévilège</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user let-i="rowIndex">
+                <tr>
+                    <td>{{ user.groupName }}</td>
+                    <td>
+                        <div *ngFor="let role of roles" class="field-checkbox">
+                            <p-checkbox
+                            [(ngModel)]="selectedRoles[i].alreadySelectedRoles"
+                                [label]="role.name"
+                                name="group"
+                                [value]="role" />
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</form>
+<div class="add-group">
+    <p-button (click)="save()" label="Enregirer"></p-button>

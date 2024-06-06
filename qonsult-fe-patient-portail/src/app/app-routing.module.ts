@@ -43,6 +43,10 @@ import { HomeComponent } from './features/home/home/home.component';
             {
                 path: 'build-questionnaire',
                 loadChildren: () => import('./features/questionnaire-builder/questionnaire-builder.module').then((m) => m.QuestionnaireBuilderModule),
+            },
+            {
+                path:'user-management',
+                loadChildren: ()=>import('./features/user-management/user-management.module').then((m)=>m.UserManagementModule)
             }
         ],
         canActivate: [AuthGard],
