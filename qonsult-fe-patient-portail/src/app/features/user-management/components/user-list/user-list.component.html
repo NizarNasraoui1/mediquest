@@ -7,6 +7,7 @@
                 <th>Groupe</th>
                 <th>Date de création</th>
                 <th>Réinitialiser le mot de passe</th>
+                <th>Modifier</th>
                 <th>Effacer</th>
             </tr>
         </ng-template>
@@ -17,10 +18,16 @@
                 <td>{{ product.groupName }}</td>
                 <td>{{product.createdDate}}</td>
                 <td>
-                    <button>Réinitialiser</button>
+                    <div class="reset-pw">
+                        <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-sync" class="p-button-rounded p-button-outlined"></button>
+
+                    </div>
                 </td>
                 <td>
-                    <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
+                </td>
+                <td>
+                    <button (click)="modifyUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
                 </td>
             </tr>
         </ng-template>
