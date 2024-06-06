@@ -7,7 +7,7 @@ import { AddUserComponent } from '../add-user/add-user.component';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-    @ViewChild("addUser") addUserComponent:AddUserComponent;
+    @ViewChild("addUpdateUserComponent") addUpdateUserComponent:AddUserComponent;
     isCreateUserModalVisible = false;
     users=[
         {
@@ -29,24 +29,28 @@ export class UserListComponent implements OnInit {
 
     }
 
+    displayModal(){
+        this.isCreateUserModalVisible = true;
+    }
+
     modifyUser(user){
-        this.changeModalState();
-        this.addUserComponent.userToUpdate = user;
+        this.displayModal();
+        this.addUpdateUserComponent.userToUpdate = user;
     }
 
-    changeModalState(){
-        this.isCreateUserModalVisible = !this.isCreateUserModalVisible;
-    }
-
-    addUser(){
-        this.addUserComponent.userToUpdate = null;
-        this.changeModalState();
+    addNewUser(){
+        this.addUpdateUserComponent.userToUpdate = null;
+        this.displayModal();
     }
 
     saveUser(user){
-        this.changeModalState();
+        this.displayModal();
         if(user!==null){
             console.log("save");
         }
+    }
+
+    onModalClosed(){
+        this.isCreateUserModalVisible = false;
     }
 }

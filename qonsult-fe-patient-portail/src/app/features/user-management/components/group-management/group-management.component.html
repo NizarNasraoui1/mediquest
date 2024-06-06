@@ -13,10 +13,10 @@
                 <td>{{ product.groupName }}</td>
                 <td>{{product.createdDate}}</td>
                 <td>
-                    <button (click)="deleteGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <button (click)="modifyGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
                 </td>
                 <td>
-                    <button (click)="modifyGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
+                    <button (click)="deleteGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
                 </td>
             </tr>
         </ng-template>
@@ -24,6 +24,6 @@
 </div>
 
 <div class="add-group">
-    <p-button (click)="showAddGroupModal()" label="Ajouter un groupe"/>
+    <p-button (click)="addNewGroup()" label="Ajouter un groupe"/>
 </div>
-<app-add-group (Group)="saveGroup($event)" [visible]="isCreateGroupModalVisible"></app-add-group>
+<app-add-group #addUpdateGroupComponent (closedModal)="onModalClosed()" (Group)="saveGroup($event)" [visible]="isCreateGroupModalVisible" (modifyGroup)="modifyGroup($event)" (saveGroup)="saveGroup($event)" [visible]="isCreateGroupModalVisible"></app-add-group>

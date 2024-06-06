@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { AddGroupComponent } from '../add-group/add-group.component';
 
 @Component({
   selector: 'app-group-management',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./group-management.component.scss']
 })
 export class GroupManagementComponent {
+    @ViewChild('addUpdateGroupComponent')addUpdateGroupComponent:AddGroupComponent;
     isCreateGroupModalVisible = false;
     groups=[
         {
@@ -20,18 +22,28 @@ export class GroupManagementComponent {
 
     }
 
-    showAddGroupModal(){
+    displayModal(){
         this.isCreateGroupModalVisible = true;
     }
 
-    saveGroup(group){
-        this.isCreateGroupModalVisible = false;
-        if(group!==null){
+    modifyGroup(Group){
+        this.displayModal();
+        this.addUpdateGroupComponent.groupToUpdate = Group;
+    }
+
+    addNewGroup(){
+        this.addUpdateGroupComponent.groupToUpdate = null;
+        this.displayModal();
+    }
+
+    saveGroup(Group){
+        this.displayModal();
+        if(Group!==null){
             console.log("save");
         }
     }
 
-    modifyGroup(id){
-
+    onModalClosed(){
+        this.isCreateGroupModalVisible = false;
     }
 }

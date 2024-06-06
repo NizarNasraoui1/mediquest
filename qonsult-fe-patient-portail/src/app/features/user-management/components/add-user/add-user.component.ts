@@ -9,23 +9,27 @@ export class AddUserComponent {
     @Input() visible: boolean = true;
     @Output() saveUser = new EventEmitter<any>();
     @Output() modifyUser = new EventEmitter<any>();
+    @Output() closedModal = new EventEmitter<any>();
     userToUpdate: any;
 
     showDialog() {
         this.visible = true;
     }
 
-    closeModal(save: boolean) {
+    submit() {
         if (this.userToUpdate != null) {
-            if (!save) this.saveUser.emit(null);
-            else this.saveUser.emit(null);
+            this.saveUser.emit("user");
         } else {
-            if (!save) this.modifyUser.emit(null);
-            else this.modifyUser.emit(null);
+            this.modifyUser.emit("updated user");
         }
+        this.onModalClose();
+    }
+
+    cancel(){
+        this.onModalClose();
     }
 
     onModalClose() {
-        this.closeModal(null);
+        this.closedModal.emit();
     }
 }

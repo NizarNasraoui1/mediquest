@@ -7,14 +7,30 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AddGroupComponent {
     @Input() visible: boolean = true;
-    @Output() user = new EventEmitter<any>();
+    @Output() saveGroup = new EventEmitter<any>();
+    @Output() modifyGroup = new EventEmitter<any>();
+    @Output() closedModal = new EventEmitter<any>();
+    groupToUpdate: any;
 
     showDialog() {
         this.visible = true;
     }
 
-    closeModal(save:boolean){
-        if(!save)this.user.emit(null);
-        else this.user.emit("a");
+    submit() {
+        if (this.groupToUpdate != null) {
+            this.saveGroup.emit("Group");
+        } else {
+            this.modifyGroup.emit("updated Group");
+        }
+        this.onModalClose();
     }
+
+    cancel(){
+        this.onModalClose();
+    }
+
+    onModalClose() {
+        this.closedModal.emit();
+    }
+
 }

@@ -33,9 +33,9 @@
         </ng-template>
     </p-table>
     <div class="add-user">
-        <p-button (click)="changeModalState()" label="Ajouter un utilisateur"/>
+        <p-button (click)="addNewUser()" label="Ajouter un utilisateur"/>
     </div>
 </div>
 <div>
 </div>
-<app-add-user #addUser (modifyUser)="modifyUser($event)" (saveUser)="saveUser($event)" [visible]="isCreateUserModalVisible"></app-add-user>
+<app-add-user #addUpdateUserComponent (modifyUser)="modifyUser($event)" (closedModal)="onModalClosed()" (saveUser)="saveUser($event)" [visible]="isCreateUserModalVisible"></app-add-user>
