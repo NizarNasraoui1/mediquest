@@ -30,4 +30,8 @@ export class GroupManagementComponent {
             console.log("save");
         }
     }
+
+    modifyGroup(id){
+
+    }
 }

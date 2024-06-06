@@ -4,6 +4,7 @@
             <tr>
                 <th>Groupe</th>
                 <th>Date de création</th>
+                <th>Modifier</th>
                 <th>Effacer</th>
             </tr>
         </ng-template>
@@ -11,9 +12,11 @@
             <tr>
                 <td>{{ product.groupName }}</td>
                 <td>{{product.createdDate}}</td>
-
                 <td>
                     <button (click)="deleteGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                </td>
+                <td>
+                    <button (click)="modifyGroup(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
                 </td>
             </tr>
         </ng-template>

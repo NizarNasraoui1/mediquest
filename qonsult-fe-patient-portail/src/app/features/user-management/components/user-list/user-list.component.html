@@ -11,23 +11,23 @@
                 <th>Effacer</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-user>
             <tr>
-                <td>{{ product.userName }}</td>
-                <td>{{ product.email }}</td>
-                <td>{{ product.groupName }}</td>
-                <td>{{product.createdDate}}</td>
+                <td>{{ user.userName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.groupName }}</td>
+                <td>{{user.createdDate}}</td>
                 <td>
                     <div class="reset-pw">
-                        <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-sync" class="p-button-rounded p-button-outlined"></button>
+                        <button [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-sync" class="p-button-rounded p-button-outlined"></button>
 
                     </div>
                 </td>
                 <td>
-                    <button (click)="deleteUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
+                    <button (click)="deleteUser(user.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
                 </td>
                 <td>
-                    <button (click)="modifyUser(product.id)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <button (click)="modifyUser(user)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
                 </td>
             </tr>
         </ng-template>
@@ -38,4 +38,4 @@
 </div>
 <div>
 </div>
-<app-add-user (user)="saveUser($event)" [visible]="isCreateUserModalVisible"></app-add-user>
+<app-add-user #addUser (user)="saveUser($event)" [visible]="isCreateUserModalVisible"></app-add-user>

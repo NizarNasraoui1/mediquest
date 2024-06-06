@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-user-list',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+    @ViewChild("addUser") addUserComponent:AddUserComponent;
     isCreateUserModalVisible = false;
     users=[
         {
@@ -20,7 +22,6 @@ export class UserListComponent implements OnInit {
 
     constructor(){}
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
     }
 
 
@@ -28,8 +29,19 @@ export class UserListComponent implements OnInit {
 
     }
 
+    modifyUser(user){
+        console.log("here");
+        this.showAddUserModal();
+        this.addUserComponent.userToUpdate = user;
+    }
+
     showAddUserModal(){
         this.isCreateUserModalVisible = true;
+    }
+
+    addUser(){
+        this.addUserComponent.userToUpdate = null;
+        this.showAddUserModal();
     }
 
     saveUser(user){

@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AddUserComponent {
     @Input() visible: boolean = true;
     @Output() user = new EventEmitter<any>();
+    userToUpdate:any;
 
     showDialog() {
         this.visible = true;
