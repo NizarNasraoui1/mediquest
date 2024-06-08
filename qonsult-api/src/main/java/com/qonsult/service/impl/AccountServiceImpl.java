@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public Account addCenter(AccountDTO accountDTO) throws Exception {
+    public Account addNewAccount(AccountDTO accountDTO) throws Exception {
         if(this.accountRepository.findByName(accountDTO.getName()).isPresent()){
             throw new Exception("Center already exists");
         }

@@ -20,6 +20,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String tel;
     private boolean enabled = true;
     private boolean emailChecked = false;
     private boolean accountInitialized = false;

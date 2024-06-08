@@ -11,17 +11,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "SCHEMA")
+@Table(name = "schema")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
-public class Schema implements Serializable {
-	private static final long serialVersionUID = 6364902041896237890L;
+public class Schema {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "id")
 	private Long id;
-	@Column(name = "SCHEMA")
+	@Column(name = "schema")
 	private String name;
 }

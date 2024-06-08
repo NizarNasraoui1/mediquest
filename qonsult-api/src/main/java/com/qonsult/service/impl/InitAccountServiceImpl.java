@@ -1,14 +1,11 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.config.tenant_config.DataSourceBasedMultiTenantConnectionProviderImpl;
-import com.qonsult.config.tenant_config.TenantDataSource;
 import com.qonsult.dto.AccountDTO;
 import com.qonsult.dto.RegisterDTO;
 import com.qonsult.entity.*;
 import com.qonsult.entity.auth.*;
-import com.qonsult.init.InitQuestionnaires;
 import com.qonsult.init.MigrateDB;
-import com.qonsult.init.models.DentistQuestionnaireModel;
 import com.qonsult.repository.*;
 import com.qonsult.service.AccountService;
 import com.qonsult.service.InitAccountService;
@@ -66,7 +63,7 @@ public class InitAccountServiceImpl implements InitAccountService {
         Schema schema = new Schema();
         schema.setName(schemaName);
         schemaRepository.save(schema);
-        Account account = accountService.addCenter(accountDTO);
+        Account account = accountService.addNewAccount(accountDTO);
         account.setSchema(schema);
         accountRepository.save(account);
         User user = new User();

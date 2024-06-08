@@ -19,7 +19,6 @@ public class Account {
     private UUID uuid;
     private String name;
     private String address;
-    private String schemaName;
     @OneToMany(mappedBy = "account")
     List<Group>groups;
 
