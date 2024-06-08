@@ -12,6 +12,8 @@ export class UserListComponent implements OnInit {
     users=[
         {
             id:"1",
+            firstName:"firstName",
+            lastName:"lastName",
             userName:"userName",
             email:"email",
             groupName:"groupName",
