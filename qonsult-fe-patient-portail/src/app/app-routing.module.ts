@@ -47,6 +47,10 @@ import { HomeComponent } from './features/home/home/home.component';
             {
                 path:'user-management',
                 loadChildren: ()=>import('./features/user-management/user-management.module').then((m)=>m.UserManagementModule)
+            },
+            {
+                path:'my-account',
+                loadChildren: ()=>import('./features/my-account/my-account.module').then((m)=>m.MyAccountModule)
             }
         ],
         canActivate: [AuthGard],

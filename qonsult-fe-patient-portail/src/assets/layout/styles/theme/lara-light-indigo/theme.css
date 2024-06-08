@@ -2215,9 +2215,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     margin-right: 0;
 }
 
-.p-fluid .p-button {
+/* .p-fluid .p-button {
     width: 100%;
-}
+} */
 .p-fluid .p-button-icon-only {
     width: 3rem;
 }
