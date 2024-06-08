@@ -14,7 +14,7 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Reporting',
+                label: '',
                 items: [
                     {
                         label: 'Dashboard',
@@ -24,7 +24,7 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Créer un questionnaire',
+                label: '',
                 items: [
                     {
                         label: 'Créer un questionnaire',
@@ -34,7 +34,7 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Mes QR codes',
+                label: '',
                 items: [
                     {
                         label: 'Qr codes',
@@ -44,7 +44,7 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Boite de réception',
+                label: '',
                 items: [
                     {
                         label: 'Boite de réception',
@@ -54,17 +54,17 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: "Boite d'envoie",
+                label: "",
                 items: [
                     {
                         label: 'Envoyer par SMS/Mail',
-                        icon: 'pi pi-fw pi-envelope',
+                        icon: 'pi pi-fw pi-send',
                         routerLink: ['./sending-box'],
                     },
                 ],
             },
             {
-                label: 'Historique des questionnaires',
+                label: '',
                 items: [
                     {
                         label: 'Recherche',
@@ -74,7 +74,17 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Paramètres',
+                label: '',
+                items: [
+                    {
+                        label: 'Mon Compte',
+                        icon: 'pi pi-fw pi-user',
+                        routerLink: ['./my-account'],
+                    },
+                ],
+            },
+            {
+                label: '',
                 items: [
                     {
                         label: 'Gestion des utilisateurs',

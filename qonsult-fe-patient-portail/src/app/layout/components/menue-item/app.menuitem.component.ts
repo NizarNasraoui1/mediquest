@@ -42,7 +42,7 @@ import { LayoutService } from '../../service/app.layout.service';
                 pRipple
             >
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-                <span class="layout-menuitem-text">{{ item.label }}</span>
+                <span style="font-size: large;" class="layout-menuitem-text">{{ item.label }}</span>
                 <i
                     class="pi pi-fw pi-angle-down layout-submenu-toggler"
                     *ngIf="item.items"
@@ -69,7 +69,7 @@ import { LayoutService } from '../../service/app.layout.service';
                 pRipple
             >
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-                <span class="layout-menuitem-text">{{ item.label }}</span>
+                <span style="font-size: meduim;" class="layout-menuitem-text">{{ item.label }}</span>
                 <i
                     class="pi pi-fw pi-angle-down layout-submenu-toggler"
                     *ngIf="item.items"

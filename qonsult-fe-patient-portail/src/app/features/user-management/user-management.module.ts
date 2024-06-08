@@ -15,6 +15,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { AddGroupComponent } from './components/add-group/add-group.component';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ReactiveFormsModule,
     FormsModule,
     DialogModule,
-    InputTextModule
+    InputTextModule,
+    DropdownModule
   ]
 })
 export class UserManagementModule { }
