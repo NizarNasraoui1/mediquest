@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Getter @Setter
-@Table(name = "UserGroup")
+@Table(name = "security_group")
 public class Group {
 
     @Id
@@ -28,7 +28,7 @@ public class Group {
 
     @ManyToMany
     @JoinTable(
-            name = "roles_permission",
+            name = "group_role",
             joinColumns = @JoinColumn(
                     name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(

@@ -3,6 +3,7 @@ package com.qonsult.service.impl;
 import com.qonsult.config.tenant_config.TenantContext;
 import com.qonsult.config.tenant_config.TenantSchemaResolver;
 import com.qonsult.dto.*;
+import com.qonsult.entity.auth.Account;
 import com.qonsult.entity.auth.Group;
 import com.qonsult.entity.auth.Role;
 import com.qonsult.entity.auth.User;
@@ -53,7 +54,10 @@ public class AccountManagementServiceImpl implements AccountManagementService {
     }
 
     public GroupDTO addGroup(GroupDTO groupDTO){
-        return groupMapper.toDto(groupRepository.save(groupMapper.toBo(groupDTO)));
+        Account adminAccount = getCurrentAdmin().getGroup().getAccount();
+        Group newGroup = groupMapper.toBo(groupDTO);
+        newGroup.setAccount(adminAccount);
+        return groupMapper.toDto(groupRepository.save(newGroup));
     }
 
     public List<RoleDTO>getRolesByCurrentSchemaName(){
@@ -88,12 +92,16 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         });
     }
 
+    private User getCurrentAdmin(){
+        return userService.loadUserByUsername(userService.getCurrentUserUsername());
+    }
+
     public UserDTO getAdminInformations(){
-        return userMapper.toDto(userService.loadUserByUsername(userService.getCurrentUserUsername()));
+        return userMapper.toDto(getCurrentAdmin());
     }
 
     public void changePassword(String password){
-        User user = userService.loadUserByUsername(userService.getCurrentUserUsername());
+        User user = getCurrentAdmin();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
