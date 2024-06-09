@@ -14,6 +14,8 @@ public interface UserRepository extends GenericRepository<User,Long> {
 
     User findByEmail(String userEmail);
 
+    boolean existsByUsername(String username);
+
     static Specification<User> hasSchemaName(String schemaName) {
         return (root, query, criteriaBuilder) -> {
             Join<User, Schema> userAccountJoin = root.join("group").join("account").join("schema");

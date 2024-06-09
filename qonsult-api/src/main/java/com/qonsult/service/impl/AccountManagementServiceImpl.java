@@ -6,6 +6,7 @@ import com.qonsult.dto.*;
 import com.qonsult.entity.auth.Group;
 import com.qonsult.entity.auth.Role;
 import com.qonsult.entity.auth.User;
+import com.qonsult.exception.UsernameExistsException;
 import com.qonsult.mapper.GroupMapper;
 import com.qonsult.mapper.RoleMapper;
 import com.qonsult.mapper.UserMapper;
@@ -40,11 +41,15 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         return userMapper.toDtos(userRepository.findAll(UserRepository.hasSchemaName(schemaName)));
     }
 
-    public UserDTO addUserToGroup(Long groupId,UserDTO userDTO){
+    public UserDTO addUserToGroup(Long groupId,UserDTO userDTO) throws UsernameExistsException {
+        if(userService.doesUserNameExists(userDTO.getUsername())){
+            throw new UsernameExistsException("username already exists");
+        }
         Group group = groupRepository.findById(groupId).orElseThrow(()->new EntityNotFoundException("group not found"));
         User user = userMapper.toBo(userDTO);
         user.setGroup(group);
-        return userMapper.toDto(user);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        return userMapper.toDto(userRepository.save(user));
     }
 
     public GroupDTO addGroup(GroupDTO groupDTO){

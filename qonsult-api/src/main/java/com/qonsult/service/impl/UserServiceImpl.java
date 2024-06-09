@@ -52,4 +52,8 @@ public class UserServiceImpl implements UserService {
         log.info("Fetching all users");
         return userRepository.findAll();
     }
+
+    public boolean doesUserNameExists(String username){
+        return userRepository.existsByUsername(username);
+    }
 }

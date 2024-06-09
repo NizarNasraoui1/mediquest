@@ -53,7 +53,7 @@ export class TokenStorageService {
 
     public getUser(): any {
         let user = localStorage.getItem(USER_KEY);
-        return user ? JSON.parse(user) : null;
+        return user ? user : null;
     }
 
     public saveTenant(tenant:string){
@@ -63,6 +63,6 @@ export class TokenStorageService {
 
     public getTenant(): any {
         let tenant = localStorage.getItem(TENANT);
-        return tenant ? JSON.parse(tenant) : null;
+        return tenant ? tenant : null;
     }
 }

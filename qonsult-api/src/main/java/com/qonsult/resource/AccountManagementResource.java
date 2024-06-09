@@ -1,6 +1,7 @@
 package com.qonsult.resource;
 
 import com.qonsult.dto.*;
+import com.qonsult.exception.UsernameExistsException;
 import com.qonsult.service.AccountManagementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AccountManagementResource {
     }
 
     @PostMapping("/groups/{groupId}/users")
-    public ResponseEntity<UserDTO> addUserToGroup(@PathVariable Long groupId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> addUserToGroup(@PathVariable Long groupId, @RequestBody UserDTO userDTO) throws UsernameExistsException {
         return ResponseEntity.ok(accountManagementService.addUserToGroup(groupId, userDTO));
     }
     @PostMapping("/groups")

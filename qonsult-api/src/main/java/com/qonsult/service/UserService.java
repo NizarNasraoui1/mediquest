@@ -13,4 +13,6 @@ public interface UserService {
     User loadUserByUsername(String username);
 
     String getCurrentUserUsername();
+
+    boolean doesUserNameExists(String username);
 }
