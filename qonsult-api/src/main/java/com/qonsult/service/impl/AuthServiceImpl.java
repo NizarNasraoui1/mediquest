@@ -81,6 +81,7 @@ public class AuthServiceImpl implements AuthService {
         authResponseDTO.setAccessToken(accessToken);
         authResponseDTO.setRefreshToken(refreshToken);
         authResponseDTO.setTenant(schema);
+        authResponseDTO.setUsername(user.getUsername());
         return authResponseDTO;
 
     }

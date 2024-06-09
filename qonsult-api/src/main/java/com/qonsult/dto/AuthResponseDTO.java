@@ -13,5 +13,6 @@ public class AuthResponseDTO {
     private String accessToken;
     private String refreshToken;
     private String tenant;
+    private String username;
 
 }

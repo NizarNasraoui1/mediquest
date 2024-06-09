@@ -12,7 +12,8 @@ import { ResetPassword } from '../auth/reset-password/models/reset-password.mode
 export interface loginResponse{
     accessToken:string,
     refreshToken:string,
-    tenant:string
+    tenant:string,
+    username:string
 }
 
 const AuthUrl = 'api/mediquest/public/auth';
@@ -58,6 +59,7 @@ export class AuthService {
         this.tokenStorageService.saveAccessToken(loginResponse.accessToken);
         this.tokenStorageService.saveRefreshToken(loginResponse.refreshToken);
         this.tokenStorageService.saveTenant(loginResponse.tenant);
+        this.tokenStorageService.saveUserName(loginResponse.username);
     }
 
     getAccessTokenFromRefreshToken(){
