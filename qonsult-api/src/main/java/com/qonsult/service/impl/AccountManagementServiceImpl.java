@@ -1,6 +1,7 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.config.tenant_config.TenantContext;
+import com.qonsult.config.tenant_config.TenantSchemaResolver;
 import com.qonsult.dto.*;
 import com.qonsult.entity.auth.Group;
 import com.qonsult.entity.auth.Role;
@@ -11,7 +12,10 @@ import com.qonsult.mapper.UserMapper;
 import com.qonsult.repository.GroupRepository;
 import com.qonsult.repository.RoleRepository;
 import com.qonsult.repository.UserRepository;
+import com.qonsult.service.AccountManagementService;
+import com.qonsult.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,27 +24,25 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AccountManagementServiceImpl {
+public class AccountManagementServiceImpl implements AccountManagementService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final GroupMapper groupMapper;
     private final RoleMapper roleMapper;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final TenantSchemaResolver tenantSchemaResolver;
 
     public List<UserDTO> getAllUsersBySchema(){
-        String schemaName = TenantContext.getCurrentTenant();
+        String schemaName = tenantSchemaResolver.resolveCurrentTenantIdentifier();
         return userMapper.toDtos(userRepository.findAll(UserRepository.hasSchemaName(schemaName)));
     }
 
-    public UserDTO addUserToGroup(AddUserGroupDTO addUserGroupDTO){
-        Group group = groupRepository.findById(addUserGroupDTO.getGroupId()).orElseThrow(()->new EntityNotFoundException("group not found"));
-        User user = new User();
-        user.setUsername(addUserGroupDTO.getUserName());
-        user.setFirstName(addUserGroupDTO.getFirstName());
-        user.setLastName(addUserGroupDTO.getLastName());
-        user.setEmail(addUserGroupDTO.getEmail());
-        user.setTel(addUserGroupDTO.getTel());
+    public UserDTO addUserToGroup(Long groupId,UserDTO userDTO){
+        Group group = groupRepository.findById(groupId).orElseThrow(()->new EntityNotFoundException("group not found"));
+        User user = userMapper.toBo(userDTO);
         user.setGroup(group);
         return userMapper.toDto(user);
     }
@@ -50,12 +52,12 @@ public class AccountManagementServiceImpl {
     }
 
     public List<RoleDTO>getRolesByCurrentSchemaName(){
-        String schemaName = TenantContext.getCurrentTenant();
+        String schemaName = tenantSchemaResolver.resolveCurrentTenantIdentifier();
         return roleMapper.toDtos(roleRepository.findAll(RoleRepository.hasSchemaName(schemaName)));
     }
 
     public List<GroupDTO>getGroupsByCurrentSchemaName(){
-        String schemaName = TenantContext.getCurrentTenant();
+        String schemaName = tenantSchemaResolver.resolveCurrentTenantIdentifier();
         return groupMapper.toDtos(groupRepository.findAll(GroupRepository.hasSchemaName(schemaName)));
     }
 
@@ -79,6 +81,16 @@ public class AccountManagementServiceImpl {
             group.setRoles(newRoles);
             groupRepository.save(group);
         });
+    }
+
+    public UserDTO getAdminInformations(){
+        return userMapper.toDto(userService.loadUserByUsername(userService.getCurrentUserUsername()));
+    }
+
+    public void changePassword(String password){
+        User user = userService.loadUserByUsername(userService.getCurrentUserUsername());
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 
 }
