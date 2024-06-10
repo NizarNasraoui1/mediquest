@@ -15,6 +15,7 @@ public interface RoleRepository extends GenericRepository<Role,Long> {
     static Specification<Role> hasSchemaName(String schemaName) {
         return (root, query, criteriaBuilder) -> {
             Join<Role, Schema> userAccountJoin = root.join("groups").join("account").join("schema");
+            query.distinct(true);
             return criteriaBuilder.equal(userAccountJoin.get("name"), schemaName);
         };
     }

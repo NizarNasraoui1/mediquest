@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllBySchemaName(String schemaName) {
+        return userRepository.findAll(UserRepository.hasSchemaName(schemaName));
+    }
+
+    @Override
     public User saveUser(User user) {
         log.info("Saving new user {} to the database", user.getLastName());
         return userRepository.save(user);
