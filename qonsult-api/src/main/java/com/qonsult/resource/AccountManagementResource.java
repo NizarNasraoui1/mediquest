@@ -21,6 +21,11 @@ public class AccountManagementResource {
         return ResponseEntity.ok(accountManagementService.getAllUsersBySchema());
     }
 
+    @GetMapping("/groups")
+    public ResponseEntity<List<GroupDTO>> getAccountGroups() {
+        return ResponseEntity.ok(accountManagementService.getAccountGroups());
+    }
+
     @PostMapping("/groups/{groupId}/users")
     public ResponseEntity<UserDTO> addUserToGroup(@PathVariable Long groupId, @RequestBody UserDTO userDTO) throws UsernameExistsException {
         return ResponseEntity.ok(accountManagementService.addUserToGroup(groupId, userDTO));

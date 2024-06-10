@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -20,4 +21,7 @@ public class UserDTO {
     private String password;
     private String email;
     private String tel;
+    private Date createdDate;
+    private Date modifiedDate;
+    private GroupDTO group;
 }

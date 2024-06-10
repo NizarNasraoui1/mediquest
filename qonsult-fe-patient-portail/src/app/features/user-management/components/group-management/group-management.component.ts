@@ -1,22 +1,29 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddGroupComponent } from '../add-group/add-group.component';
+import { UserManagementService } from '../../services/user-management.service';
+import { Group } from 'src/app/shared/models/group';
 
 @Component({
   selector: 'app-group-management',
   templateUrl: './group-management.component.html',
   styleUrls: ['./group-management.component.scss']
 })
-export class GroupManagementComponent {
+export class GroupManagementComponent implements OnInit {
     @ViewChild('addUpdateGroupComponent')addUpdateGroupComponent:AddGroupComponent;
     isCreateGroupModalVisible = false;
-    groups=[
-        {
-            id:"1",
-            groupName:"groupName",
-            groupId:"groupId",
-            createdDate:"createdDate"
-        }
-    ]
+    groups:Group[];
+
+    constructor(private userManagementService:UserManagementService){}
+
+    ngOnInit(): void {
+        this.getGroups();
+    }
+
+    getGroups(){
+        this.userManagementService.getGroups().subscribe((res)=>{
+            this.groups = res;
+        })
+    }
 
     deleteGroup(id){
 
@@ -26,9 +33,9 @@ export class GroupManagementComponent {
         this.isCreateGroupModalVisible = true;
     }
 
-    modifyGroup(Group){
+    modifyGroup(group){
         this.displayModal();
-        this.addUpdateGroupComponent.groupToUpdate = Group;
+        this.addUpdateGroupComponent.groupToUpdate = group;
     }
 
     addNewGroup(){

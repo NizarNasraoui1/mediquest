@@ -7,7 +7,6 @@
                 <th>Nom d'utilisateur</th>
                 <th>Email</th>
                 <th>Groupe</th>
-                <th>Date de création</th>
                 <th>Réinitialiser le mot de passe</th>
                 <th>Modifier</th>
                 <th>Effacer</th>
@@ -17,10 +16,9 @@
             <tr>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
-                <td>{{ user.userName }}</td>
+                <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.groupName }}</td>
-                <td>{{user.createdDate}}</td>
                 <td>
                     <div class="reset-pw">
                         <button  [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-sync" class="p-button-rounded p-button-outlined"></button>

@@ -1,3 +1,5 @@
+import { Group } from "./group"
+
 export interface User{
     id: number,
     firstName: string,
@@ -6,4 +8,5 @@ export interface User{
     password: string,
     email: string,
     address:string
+    group: Group
 }

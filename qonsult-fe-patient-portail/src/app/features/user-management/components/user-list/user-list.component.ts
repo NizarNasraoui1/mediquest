@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddUserComponent } from '../add-user/add-user.component';
+import { UserManagementService } from '../../services/user-management.service';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-user-list',
@@ -9,21 +12,18 @@ import { AddUserComponent } from '../add-user/add-user.component';
 export class UserListComponent implements OnInit {
     @ViewChild("addUpdateUserComponent") addUpdateUserComponent:AddUserComponent;
     isCreateUserModalVisible = false;
-    users=[
-        {
-            id:"1",
-            firstName:"firstName",
-            lastName:"lastName",
-            userName:"userName",
-            email:"email",
-            groupName:"groupName",
-            groupId:"groupId",
-            createdDate:"createdDate"
-        }
-    ]
+    users:User[];
 
-    constructor(){}
+    constructor(private userManagementService:UserManagementService){}
+
     ngOnInit(): void {
+        this.getUsers();
+    }
+
+    getUsers(){
+        this.userManagementService.getUsers().subscribe((res)=>{
+            this.users = res;
+        })
     }
 
 

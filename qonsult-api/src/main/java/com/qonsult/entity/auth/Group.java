@@ -1,10 +1,14 @@
 package com.qonsult.entity.auth;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,6 +16,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Getter @Setter
 @Table(name = "security_group")
+@EntityListeners(AuditingEntityListener.class)
 public class Group {
 
     @Id
@@ -34,6 +39,12 @@ public class Group {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
+
+    @CreatedDate
+    Date createdDate;
+
+    @LastModifiedDate
+    Date modifiedDate;
 
     public Group(String roleName){
         this.name = roleName;

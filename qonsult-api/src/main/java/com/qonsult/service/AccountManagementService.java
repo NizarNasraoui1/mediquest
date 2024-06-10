@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AccountManagementService {
     List<UserDTO> getAllUsersBySchema();
+
+    List<GroupDTO> getAccountGroups();
     UserDTO addUserToGroup(Long groupId,UserDTO userDTO) throws UsernameExistsException;
     GroupDTO addGroup(GroupDTO groupDTO);
     List<RoleDTO> getRolesByCurrentSchemaName();

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,5 +15,7 @@ import java.util.List;
 public class GroupDTO {
     private Long id;
     private String name;
+    Date createdDate;
+    Date modifiedDate;
     private List<RoleDTO>roles;
 }

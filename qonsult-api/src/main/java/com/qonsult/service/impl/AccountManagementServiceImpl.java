@@ -39,6 +39,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         return userMapper.toDtos(userService.findAllBySchemaName(schemaName));
     }
 
+    @Override
+    public List<GroupDTO> getAccountGroups() {
+        return groupMapper.toDtos(getCurrentAdmin().getGroup().getAccount().getGroups());
+    }
+
     public UserDTO addUserToGroup(Long groupId,UserDTO userDTO) throws UsernameExistsException {
         if(userService.doesUserNameExists(userDTO.getUsername())){
             throw new UsernameExistsException("username already exists");
