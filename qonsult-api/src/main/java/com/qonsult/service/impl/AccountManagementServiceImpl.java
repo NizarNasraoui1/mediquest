@@ -17,6 +17,8 @@ import com.qonsult.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,9 +97,12 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         return userMapper.toDto(getCurrentAdmin());
     }
 
-    public void changePassword(String password){
+    public void changePassword(ChangePasswordDTO changePasswordDTO) throws AuthenticationException {
         User user = getCurrentAdmin();
-        user.setPassword(passwordEncoder.encode(password));
+        if(!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())){
+            throw new AuthenticationException("wrong password");
+        }
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
         userService.saveUser(user);
     }
 

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 
 @RestController
@@ -46,8 +47,8 @@ public class AccountManagementResource {
     }
 
     @PutMapping("/admin-password")
-    public ResponseEntity<Void> changePassword(@RequestBody String password) {
-        accountManagementService.changePassword(password);
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) throws AuthenticationException {
+        accountManagementService.changePassword(changePasswordDTO);
         return ResponseEntity.ok().build();
     }
 }

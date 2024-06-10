@@ -36,31 +36,33 @@
         <div class="card p-fluid">
             <h5>Changement de mot de passe</h5>
             <div>
-                <form>
+                <form [formGroup]="changePasswordForm">
                     <div class="grid">
                         <div class="field col">
-                            <label htmlFor="firstName"
+                            <label htmlFor="oldPassword"
                                 >Mot de passe actuel</label
                             >
-                            <input pInputText id="firstName" type="text" />
+                            <input formControlName="oldPassword" pInputText id="oldPassword" type="text" />
                         </div>
                         <div class="field col">
-                            <label htmlFor="lastName"
+                            <label htmlFor="oldPasswordConfirmation"
                                 >Nouveau mot de passe</label
                             >
-                            <input pInputText id="lastName" type="text" />
+                            <input formControlName="oldPasswordConfirmation" pInputText id="oldPasswordConfirmation" type="text" />
                         </div>
                         <div class="field col">
-                            <label htmlFor="lastName"
+                            <label htmlFor="newPassword"
                                 >Confirmation du mot de passe</label
                             >
-                            <input pInputText id="lastName" type="text" />
+                            <input formControlName="newPassword" pInputText id="newPassword" type="text" />
                         </div>
                     </div>
+                    <p *ngIf="passwordsNotEquals" class="passwords-not-equals">Les mots de passes ne sont pas identiques</p>
+                    <p *ngIf="wrongPassword" class="passwords-not-equals">Le mot de passe est erroné</p>
                 </form>
             </div>
             <div class="save-button">
-                <p-button label="Enregistrer" type="submit"></p-button>
+                <p-button (click)="changePassword()" label="Enregistrer" type="submit"></p-button>
             </div>
         </div>
     </div>

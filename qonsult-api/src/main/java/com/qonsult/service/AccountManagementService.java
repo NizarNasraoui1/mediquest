@@ -3,6 +3,7 @@ package com.qonsult.service;
 import com.qonsult.dto.*;
 import com.qonsult.exception.UsernameExistsException;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 
 public interface AccountManagementService {
@@ -14,5 +15,5 @@ public interface AccountManagementService {
     RoleManagementDTO getRoleManagementByCurrentSchemaName();
     void changeGroupRoles(List<ChangeRolesDTO> changeRolesDTOS);
     UserDTO getAdminInformations();
-    void changePassword(String password);
+    void changePassword(ChangePasswordDTO changePasswordDTO) throws AuthenticationException;
 }

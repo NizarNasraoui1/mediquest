@@ -16,7 +16,8 @@ import { InputTextModule } from 'primeng/inputtext';
     MyAccountRoutingModule,
     ButtonModule,
     ReactiveFormsModule,
-    InputTextModule
+    InputTextModule,
+    ReactiveFormsModule
 
   ]
 })
