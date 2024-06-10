@@ -106,4 +106,16 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         userService.saveUser(user);
     }
 
+    public UserDTO changeAdminInformations(UserDTO userDTO){
+        User user = getCurrentAdmin();
+        user.setTel(userDTO.getTel());
+        user.setEmail(userDTO.getEmail());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        User updatedUser = userService.saveUser(user);
+        UserDTO updatedUserDto = userMapper.toDto(updatedUser);
+        updatedUserDto.setPassword(null);
+        return updatedUserDto;
+    }
+
 }

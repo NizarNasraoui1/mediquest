@@ -16,4 +16,6 @@ public interface AccountManagementService {
     void changeGroupRoles(List<ChangeRolesDTO> changeRolesDTOS);
     UserDTO getAdminInformations();
     void changePassword(ChangePasswordDTO changePasswordDTO) throws AuthenticationException;
+
+    UserDTO changeAdminInformations(UserDTO userDTO);
 }

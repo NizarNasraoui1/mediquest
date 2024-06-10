@@ -51,4 +51,9 @@ public class AccountManagementResource {
         accountManagementService.changePassword(changePasswordDTO);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/admin-informations")
+    public ResponseEntity<UserDTO>changeAdminInformations(@RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(accountManagementService.changeAdminInformations(userDTO));
+    }
 }

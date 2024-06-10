@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user';
 import { MyAccountService } from '../../services/my-account.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ToasterService } from 'src/app/shared/services/toast.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { ToasterService } from 'src/app/shared/services/toast.service';
 export class MyAccountComponent implements OnInit{
     adminInformations:User;
     changePasswordForm;
+    adminInformationsForm;
     passwordsNotEquals = false;
     wrongPassword = false;
 
@@ -19,11 +20,22 @@ export class MyAccountComponent implements OnInit{
 
     ngOnInit(): void {
         this.initChangePasswordForm();
+        this.getAdminInformations();
     }
 
     getAdminInformations(){
         this.myAccountService.getAdminInformations().subscribe((res)=>{
             this.adminInformations = res;
+            this.initAdminInforamtions(res);
+        });
+    }
+
+    initAdminInforamtions(adminInformations) {
+        this.adminInformationsForm = this.fb.group({
+            firstName: [adminInformations.firstName,[Validators.required]],
+            lastName: [adminInformations.lastName,[Validators.required]],
+            email: [adminInformations.email, [Validators.required, Validators.email]],
+            tel: [adminInformations.tel,[Validators.required]]
         });
     }
 
@@ -33,6 +45,17 @@ export class MyAccountComponent implements OnInit{
             oldPasswordConfirmation:[''],
             newPassword:['']
         })
+    }
+
+    updateAdminInformations(){
+        console.log(this.adminInformationsForm.value)
+        if(!this.adminInformationsForm.valid){
+            this.toasterService.addWarnMessage("Le formulaire saisi contient des erreurs");
+            return;
+        }
+        this.myAccountService.upateAdminInformations(this.adminInformationsForm.value).subscribe((res)=>{
+            this.toasterService.addSuccessMessage("Modification faite avec succèes");
+        });
     }
 
     changePassword(){
