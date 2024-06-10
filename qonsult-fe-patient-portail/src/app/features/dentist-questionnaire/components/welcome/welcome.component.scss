@@ -1,7 +1,7 @@
 .text-content{
     text-align: justify;
 }
-.container{
+.hello-questionnaire-container{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -12,7 +12,7 @@
     .text-content{
         width: 70%;
     }
-    .container{
+    .hello-questionnaire-container{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -28,7 +28,7 @@
 }
 
 @media(min-width: 768px){
-    .container{
+    .hello-questionnaire-container{
         display: flex;
         justify-content: center;
         width: 100%;
@@ -37,4 +37,8 @@
 
 img{
     height: 80%;
+}
+
+.hello-sign-content{
+    font-size: 130% !important;
 }

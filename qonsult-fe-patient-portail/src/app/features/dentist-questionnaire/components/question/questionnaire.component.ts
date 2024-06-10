@@ -204,7 +204,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
 
     scrollToTopBar() {
-        let top = document.getElementById('questionnaire-container');
+        let top = document.getElementById('root');
         top!!.scrollIntoView();
     }
 

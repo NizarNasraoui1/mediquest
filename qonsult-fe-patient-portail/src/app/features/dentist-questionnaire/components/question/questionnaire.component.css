@@ -9439,6 +9439,7 @@ label{
 .questionLabel
 {
     font-weight: 550;
+    font-size: 130% !important;
 }
 .p-button-label{
     font-weight : 400 !important;
@@ -9448,10 +9449,6 @@ label{
 }
 .questionnaire-question-title{
     font-size: 197% !important;
-}
-
-p{
-    font-size: 130% !important;
 }
 .spinner-container {
     display: flex;
