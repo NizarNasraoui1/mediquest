@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-add-user',
@@ -6,18 +6,33 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
     styleUrls: ['./add-user.component.scss'],
     encapsulation:ViewEncapsulation.None
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit,OnChanges {
     @Input() visible: boolean = true;
     @Output() saveUser = new EventEmitter<any>();
     @Output() modifyUser = new EventEmitter<any>();
     @Output() closedModal = new EventEmitter<any>();
     userToUpdate: any;
     groups = [];
+    title ='';
 
     constructor(){}
 
     ngOnInit(): void {
         this.getGroups();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.setTitle();
+    }
+
+    setTitle(){
+        if(this.userToUpdate!=null){
+            this.title = "Modifier";
+        }
+        else{
+            this.title = "Créer";
+        }
+        this.title = this.title + " l'utilisateur";
     }
 
     showDialog() {
