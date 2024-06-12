@@ -8,6 +8,7 @@ const USER_MANAGEMENT_BASE_URL = "/api/mediquest/account-management";
 const GET_USERS_URL = `${USER_MANAGEMENT_BASE_URL}/users`;
 const GET_GROUPS_URL = `${USER_MANAGEMENT_BASE_URL}/groups`;
 const GET_ROLES_URL = `${USER_MANAGEMENT_BASE_URL}/role-management`;
+const PUT_ROLES_URL = `${USER_MANAGEMENT_BASE_URL}/group-roles`;
 
 
 @Injectable({
@@ -27,5 +28,9 @@ export class UserManagementService {
 
   getRoleManagement(){
     return this.httpUtil.get(GET_ROLES_URL);
+  }
+
+  updateRoles(groupRoles){
+    return this.httpUtil.put(PUT_ROLES_URL,groupRoles);
   }
 }

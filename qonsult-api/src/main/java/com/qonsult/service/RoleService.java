@@ -7,4 +7,6 @@ import java.util.List;
 public interface RoleService {
     Role findById(Long id);
     List<Role>findAllBySchemaName(String schemaName);
+
+    List<Role>getRolesByIds(List<Long>rolesIds);
 }

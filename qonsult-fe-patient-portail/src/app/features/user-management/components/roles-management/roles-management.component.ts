@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UserManagementService } from '../../services/user-management.service';
+import { ToasterService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-roles-management',
@@ -13,7 +14,7 @@ export class RolesManagementComponent implements OnInit {
     groups = [];
     groupRoles= [];
 
-    constructor(private fb:FormBuilder,private userManagementService:UserManagementService){}
+    constructor(private fb:FormBuilder,private userManagementService:UserManagementService,private toasterService:ToasterService){}
 
     ngOnInit(): void {
         this.getRoles();
@@ -40,6 +41,15 @@ export class RolesManagementComponent implements OnInit {
     }
 
     save(){
-        console.log(this.groupRoles);
+        let groupRoles = this.groupRoles.map((e)=>{
+            let rolesIds = e.selectedRoles.map((e)=>e.id);
+            return {
+                groupId:e.id,
+                rolesIds:rolesIds
+            }
+        });
+        this.userManagementService.updateRoles(groupRoles).subscribe((e)=>{
+            this.toasterService.addSuccessMessage("Vos roles sont mises à jour avec succèes");
+        })
     }
 }

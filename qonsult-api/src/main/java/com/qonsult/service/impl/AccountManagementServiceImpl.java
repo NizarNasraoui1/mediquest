@@ -84,12 +84,8 @@ public class AccountManagementServiceImpl implements AccountManagementService {
     public void changeGroupRoles(List<ChangeRolesDTO> changeRolesDTOS){
         changeRolesDTOS.forEach((dto)->{
             Group group = groupService.findById(dto.getGroupId());
-            List<Role>newRoles = new ArrayList<>();
-            dto.getRolesIds().forEach((roleId)->{
-                Role role = roleService.findById(roleId);
-                newRoles.add(role);
-            });
-            group.setRoles(newRoles);
+            List<Role> roles = roleService.getRolesByIds(dto.getRolesIds());
+            group.setRoles(roles);
             groupService.saveGroup(group);
         });
     }

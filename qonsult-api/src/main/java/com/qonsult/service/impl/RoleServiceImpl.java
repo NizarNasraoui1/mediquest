@@ -23,4 +23,8 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> findAllBySchemaName(String schemaName) {
         return roleRepository.findAll(RoleRepository.hasSchemaName(schemaName));
     }
+
+    public List<Role>getRolesByIds(List<Long>rolesIds){
+        return roleRepository.findAllById(rolesIds);
+    }
 }
