@@ -12,7 +12,7 @@
                     <td>{{ group.name }}</td>
                     <td>
                         <form>
-                            <div *ngFor="let role of group.roles" class="field-checkbox">
+                            <div *ngFor="let role of roles" class="field-checkbox">
                                 <p-checkbox
                                     [(ngModel)]="groupRoles[i].selectedRoles"
                                     [label]="role.name"
