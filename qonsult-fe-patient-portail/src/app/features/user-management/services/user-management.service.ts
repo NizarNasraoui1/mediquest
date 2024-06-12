@@ -7,7 +7,7 @@ import { HttpUtilService } from 'src/app/util/service/http-util.service';
 const USER_MANAGEMENT_BASE_URL = "/api/mediquest/account-management";
 const GET_USERS_URL = `${USER_MANAGEMENT_BASE_URL}/users`;
 const GET_GROUPS_URL = `${USER_MANAGEMENT_BASE_URL}/groups`;
-const GET_ROLES_URL = `${USER_MANAGEMENT_BASE_URL}/users`;
+const GET_ROLES_URL = `${USER_MANAGEMENT_BASE_URL}/role-management`;
 
 
 @Injectable({
@@ -23,5 +23,9 @@ export class UserManagementService {
 
   getGroups():Observable<Group[]>{
     return this.httpUtil.get(GET_GROUPS_URL);
+  }
+
+  getRoleManagement(){
+    return this.httpUtil.get(GET_ROLES_URL);
   }
 }

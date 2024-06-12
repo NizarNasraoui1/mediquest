@@ -17,6 +17,6 @@ public class CustomAuditAware implements AuditorAware<String> {
             return null;
         }
 
-        return Optional.of(((User) authentication.getPrincipal()).getUsername());
+        return Optional.of(authentication.getName());
     }
 }

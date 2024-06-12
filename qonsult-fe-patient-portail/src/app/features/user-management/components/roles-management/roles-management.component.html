@@ -7,17 +7,19 @@
                     <th>Permissions</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-user let-i="rowIndex">
+            <ng-template pTemplate="body" let-group let-i="rowIndex">
                 <tr>
-                    <td>{{ user.groupName }}</td>
+                    <td>{{ group.name }}</td>
                     <td>
-                        <div *ngFor="let role of roles" class="field-checkbox">
-                            <p-checkbox
-                            [(ngModel)]="selectedRoles[i].alreadySelectedRoles"
-                                [label]="role.name"
-                                name="group"
-                                [value]="role" />
-                        </div>
+                        <form>
+                            <div *ngFor="let role of group.roles" class="field-checkbox">
+                                <p-checkbox
+                                    [(ngModel)]="selectedRoles[i].alreadySelectedRoles"
+                                    [label]="role.name"
+                                    name="group"
+                                    [value]="role" />
+                            </div>
+                        </form>
                     </td>
                 </tr>
             </ng-template>
