@@ -31,8 +31,8 @@ public class AccountManagementResource {
         return ResponseEntity.ok(accountManagementService.addUserToGroup(groupId, userDTO));
     }
     @PostMapping("/groups")
-    public ResponseEntity<GroupDTO> addGroup(@RequestBody GroupDTO groupDTO) {
-        return ResponseEntity.ok(accountManagementService.addGroup(groupDTO));
+    public ResponseEntity<GroupDTO> addGroup(@RequestBody String groupName) {
+        return ResponseEntity.ok(accountManagementService.addGroup(groupName));
     }
 
     @GetMapping("/role-management")

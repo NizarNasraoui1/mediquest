@@ -11,7 +11,7 @@ public interface AccountManagementService {
 
     List<GroupDTO> getAccountGroups();
     UserDTO addUserToGroup(Long groupId,UserDTO userDTO) throws UsernameExistsException;
-    GroupDTO addGroup(GroupDTO groupDTO);
+    GroupDTO addGroup(String groupName);
     List<RoleDTO> getRolesByCurrentSchemaName();
     List<GroupDTO> getGroupsByCurrentSchemaName();
     RoleManagementDTO getRoleManagementByCurrentSchemaName();

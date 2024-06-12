@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import { UserManagementService } from '../../services/user-management.service';
 import { Group } from 'src/app/shared/models/group';
+import { ToasterService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-group-management',
@@ -13,7 +14,7 @@ export class GroupManagementComponent implements OnInit {
     isCreateGroupModalVisible = false;
     groups:Group[];
 
-    constructor(private userManagementService:UserManagementService){}
+    constructor(private userManagementService:UserManagementService,private toasterService:ToasterService){}
 
     ngOnInit(): void {
         this.getGroups();
@@ -43,11 +44,10 @@ export class GroupManagementComponent implements OnInit {
         this.displayModal();
     }
 
-    saveGroup(Group){
-        this.displayModal();
-        if(Group!==null){
-            console.log("save");
-        }
+    saveGroup(group){
+        this.userManagementService.addGroup(group).subscribe((res)=>{
+            this.toasterService.addSuccessMessage("Group ajouté avec succèes");
+        })
     }
 
     onModalClosed(){

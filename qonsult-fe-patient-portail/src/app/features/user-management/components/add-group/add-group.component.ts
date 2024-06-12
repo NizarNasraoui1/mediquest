@@ -12,6 +12,7 @@ export class AddGroupComponent implements OnInit,OnChanges {
     @Output() closedModal = new EventEmitter<any>();
     groupToUpdate: any;
     title ='';
+    groupName: string;
 
     ngOnInit(): void {
     }
@@ -23,9 +24,11 @@ export class AddGroupComponent implements OnInit,OnChanges {
     setTitle(){
         if(this.groupToUpdate!=null){
             this.title = "Modifier";
+            this.groupName = this.groupToUpdate.name;
         }
         else{
             this.title = "Créer";
+            this.groupName = '';
         }
         this.title = this.title + " le groupe";
     }
@@ -36,9 +39,9 @@ export class AddGroupComponent implements OnInit,OnChanges {
 
     submit() {
         if (this.groupToUpdate != null) {
-            this.saveGroup.emit("Group");
+            this.modifyGroup.emit(this.groupToUpdate);
         } else {
-            this.modifyGroup.emit("updated Group");
+            this.saveGroup.emit(this.groupName);
         }
         this.onModalClose();
     }

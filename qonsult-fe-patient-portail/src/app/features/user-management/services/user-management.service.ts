@@ -9,6 +9,7 @@ const GET_USERS_URL = `${USER_MANAGEMENT_BASE_URL}/users`;
 const GET_GROUPS_URL = `${USER_MANAGEMENT_BASE_URL}/groups`;
 const GET_ROLES_URL = `${USER_MANAGEMENT_BASE_URL}/role-management`;
 const PUT_ROLES_URL = `${USER_MANAGEMENT_BASE_URL}/group-roles`;
+const ADD_USER_TO_GROUP_URL = `${USER_MANAGEMENT_BASE_URL}/groups`;
 
 
 @Injectable({
@@ -33,4 +34,13 @@ export class UserManagementService {
   updateRoles(groupRoles){
     return this.httpUtil.put(PUT_ROLES_URL,groupRoles);
   }
+
+  addUser(user,groupId){
+    return this.httpUtil.post(`${ADD_USER_TO_GROUP_URL}/${groupId}/users`,user);
+  }
+
+  addGroup(group){
+    return this.httpUtil.post(`${ADD_USER_TO_GROUP_URL}`,group);
+  }
+
 }
