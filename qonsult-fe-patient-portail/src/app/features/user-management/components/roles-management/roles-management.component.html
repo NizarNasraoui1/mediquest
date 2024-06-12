@@ -14,7 +14,7 @@
                         <form>
                             <div *ngFor="let role of group.roles" class="field-checkbox">
                                 <p-checkbox
-                                    [(ngModel)]="selectedRoles[i].alreadySelectedRoles"
+                                    [(ngModel)]="groupRoles[i].selectedRoles"
                                     [label]="role.name"
                                     name="group"
                                     [value]="role" />
