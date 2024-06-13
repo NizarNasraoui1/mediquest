@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { UserManagementService } from '../../services/user-management.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-add-user',
@@ -14,11 +16,13 @@ export class AddUserComponent implements OnInit,OnChanges {
     userToUpdate: any;
     groups = [];
     title ='';
+    form;
 
-    constructor(){}
+    constructor(private fb:FormBuilder, private userManagementService:UserManagementService){}
 
     ngOnInit(): void {
         this.getGroups();
+        this.initForm();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -28,6 +32,7 @@ export class AddUserComponent implements OnInit,OnChanges {
     setTitle(){
         if(this.userToUpdate!=null){
             this.title = "Modifier";
+            this.populateForm(this.userToUpdate);
         }
         else{
             this.title = "Créer";
@@ -35,19 +40,38 @@ export class AddUserComponent implements OnInit,OnChanges {
         this.title = this.title + " l'utilisateur";
     }
 
+    initForm(){
+        this.form = this.fb.group({
+            firstName:['',[Validators.required]],
+            lastName:['',[Validators.required]],
+            username:['',[Validators.required]],
+            email:['',[Validators.required,Validators.email]],
+            tel:['',[Validators.required]],
+        });
+    }
+
+    populateForm(user){
+        this.form.setValue({
+            firstName: user.firstName || '',
+            lastName: user.lastName || '',
+            username: user.username || '',
+            email: user.email || '',
+            tel: user.tel || '',
+        });
+    }
+
     showDialog() {
         this.visible = true;
     }
 
     getGroups(){
-        this.groups = [
-            { name: 'ADMIN', id: '1' },
-            { name: 'MEDECIN', id: '2' },
-            { name: 'AUTRE', id: '3' }
-        ];
+        this.userManagementService.getGroups().subscribe((res)=>{
+            this.groups = res;
+        })
     }
 
     submit() {
+        console.log(this.form.value);
         if (this.userToUpdate != null) {
             this.saveUser.emit("user");
         } else {
