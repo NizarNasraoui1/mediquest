@@ -49,12 +49,17 @@ export class UserListComponent implements OnInit {
     saveUser(user){
         this.displayModal();
         if(user!==null){
-            this.userManagementService.addUser(user,user.group.id).subscribe((res)=>{
-                this.toasterService.addSuccessMessage("l'utilisateur est ajouré avec succèes");
-                this.getUsers();
-            })
-        }
+            this.userManagementService.addUser(user,user.group.id).subscribe({
+                next:(res)=>{
+                    this.toasterService.addSuccessMessage("l'utilisateur est ajouré avec succèes");
+                    this.getUsers();
+                },
+                error:(err)=>{
+                    this.toasterService.addWarnMessage("le nom d'utilisateur est déja pris");
+                }
+        })
     }
+}
 
     onModalClosed(){
         this.isCreateUserModalVisible = false;

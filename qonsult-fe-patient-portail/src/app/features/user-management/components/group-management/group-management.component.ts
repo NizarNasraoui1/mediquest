@@ -45,9 +45,12 @@ export class GroupManagementComponent implements OnInit {
     }
 
     saveGroup(group){
-        this.userManagementService.addGroup(group).subscribe((res)=>{
-            this.toasterService.addSuccessMessage("Group ajouté avec succèes");
-        })
+        if(group!=null){
+            this.userManagementService.addGroup(group).subscribe((res)=>{
+                this.toasterService.addSuccessMessage("Group ajouté avec succèes");
+                this.getGroups();
+            });
+        }
     }
 
     onModalClosed(){

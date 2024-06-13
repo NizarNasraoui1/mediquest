@@ -62,11 +62,10 @@ public class AccountManagementServiceImpl implements AccountManagementService {
     }
 
     public GroupDTO addGroup(String groupName){
+        Account adminAccount = getCurrentAdmin().getGroup().getAccount();
         Group group = new Group();
         group.setName(groupName);
-//        Account adminAccount = getCurrentAdmin().getGroup().getAccount();
-//        Group newGroup = groupMapper.toBo(groupDTO);
-//        newGroup.setAccount(adminAccount);
+        group.setAccount(adminAccount);
         return groupMapper.toDto(groupService.saveGroup(group));
     }
 
