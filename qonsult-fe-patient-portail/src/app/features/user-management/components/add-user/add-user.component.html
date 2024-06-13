@@ -1,16 +1,19 @@
     <p-dialog header="{{title}}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="onModalClose()">
+        <form [formGroup]="addUpdateUserForm">
         <span class="p-text-secondary block mb-5"></span>
         <div class="flex align-items-center gap-3 mb-5">
             <label for="email" class="font-semibold w-6rem">Groupe</label>
                 <p-dropdown
-                [(ngModel)]="selectedGroup"
+                formControlName="group"
                 class="select-group"
                 [options]="groups"
                 optionLabel="name"
                 placeholder="Groupe" />
         </div>
-        <p *ngIf="displayAddGroupWarnMsg" class="create-user-warn-msg">Veuillez sélectionner un groupe</p>
-        <form [formGroup]="addUpdateUserForm">
+        <p class="create-user-warn-msg" *ngIf="addUpdateUserForm.get('group').errors && addUpdateUserForm.get('group').touched">
+            * ce champs est obligatoire
+        </p>
+
             <div class="flex align-items-center gap-3 mb-3">
                 <label for="firstName" class="font-semibold w-6rem">Nom</label>
                 <input formControlName="firstName" pInputText id="firstName" class="flex-auto" autocomplete="off" />

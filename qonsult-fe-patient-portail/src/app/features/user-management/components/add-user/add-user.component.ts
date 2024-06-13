@@ -18,7 +18,6 @@ export class AddUserComponent implements OnInit,OnChanges {
     groups = [];
     title ='';
     addUpdateUserForm;
-    selectedGroup:Group;
     displayAddGroupWarnMsg = false;
 
     constructor(private fb:FormBuilder, private userManagementService:UserManagementService){}
@@ -40,7 +39,6 @@ export class AddUserComponent implements OnInit,OnChanges {
         else{
             this.title = "Créer";
             this.initForm();
-            this.selectedGroup = null;
         }
         this.title = this.title + " l'utilisateur";
     }
@@ -52,6 +50,7 @@ export class AddUserComponent implements OnInit,OnChanges {
             username:['',[Validators.required]],
             email:['',[Validators.required,Validators.email]],
             tel:['',[Validators.required]],
+            group:['',[Validators.required]]
         });
     }
 
@@ -62,8 +61,8 @@ export class AddUserComponent implements OnInit,OnChanges {
             username: user.username || '',
             email: user.email || '',
             tel: user.tel || '',
+            group: user.group
         });
-        this.selectedGroup = user.group;
     }
 
     showDialog() {
@@ -77,27 +76,14 @@ export class AddUserComponent implements OnInit,OnChanges {
     }
 
     submit() {
-        let isFormInvalid = false;
-        if(this.selectedGroup==null){
-            this.displayAddGroupWarnMsg = true;
-            isFormInvalid = true;
-        }
-        else{
-            this.displayAddGroupWarnMsg = false;
-        }
         if(this.addUpdateUserForm.invalid){
             this.addUpdateUserForm.markAllAsTouched();
-            isFormInvalid = true;
-        }
-        if(isFormInvalid) return;
-        let user = {
-            groupId:this.selectedGroup.id,
-            ...this.addUpdateUserForm.value
+            return;
         }
         if (this.userToUpdate != null) {
-            this.modifyUser.emit(user);
+            this.modifyUser.emit(this.addUpdateUserForm.value);
         } else {
-            this.saveUser.emit(user);
+            this.saveUser.emit(this.addUpdateUserForm.value);
         }
         this.onModalClose();
     }
