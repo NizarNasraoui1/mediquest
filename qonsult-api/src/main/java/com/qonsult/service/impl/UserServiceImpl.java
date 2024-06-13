@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByid(Long id) {
+        return userRepository.findById(id).orElseThrow(()->new EntityNotFoundException("user not found"));
+    }
+
+    @Override
     public List<User> findAllBySchemaName(String schemaName) {
         return userRepository.findAll(UserRepository.hasSchemaName(schemaName));
     }

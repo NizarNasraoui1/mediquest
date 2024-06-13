@@ -26,4 +26,4 @@
 <div class="add-group">
     <p-button (click)="addNewGroup()" label="Ajouter un groupe"/>
 </div>
-<app-add-group #addUpdateGroupComponent (closedModal)="onModalClosed()" [visible]="isCreateGroupModalVisible" (modifyGroup)="modifyGroup($event)" (saveGroup)="saveGroup($event)" [visible]="isCreateGroupModalVisible"></app-add-group>
+<app-add-group #addUpdateGroupComponent (closedModal)="onModalClosed()" [visible]="isCreateGroupModalVisible" (modifyGroup)="updateGroup($event)" (saveGroup)="saveGroup($event)" [visible]="isCreateGroupModalVisible"></app-add-group>

@@ -20,4 +20,8 @@ public interface AccountManagementService {
     void changePassword(ChangePasswordDTO changePasswordDTO) throws AuthenticationException;
 
     UserDTO changeAdminInformations(UserDTO userDTO);
+
+    UserDTO updateUser(Long id,UserDTO userDTO);
+
+    GroupDTO updateGroup(Long id,String groupName);
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserService {
 
+    User findByid(Long id);
+
     List<User>findAllBySchemaName(String name);
     User saveUser(User user);
 

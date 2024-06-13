@@ -126,4 +126,26 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         return updatedUserDto;
     }
 
+    @Override
+    public UserDTO updateUser(Long id,UserDTO userDTO) {
+        User user = userService.findByid(id);
+        user.setUsername(user.getUsername());
+        user.setTel(userDTO.getTel());
+        user.setEmail(userDTO.getEmail());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        if(user.getGroup().getId()!=userDTO.getGroup().getId()){
+            Group group = groupService.findById(userDTO.getId());
+            user.setGroup(group);
+        }
+        return userMapper.toDto(userService.saveUser(user));
+    }
+
+    @Override
+    public GroupDTO updateGroup(Long id,String groupName) {
+        Group group = groupService.findById(id);
+        group.setName(groupName);
+        return groupMapper.toDto(groupService.saveGroup(group));
+    }
+
 }

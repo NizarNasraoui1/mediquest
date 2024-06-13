@@ -61,4 +61,14 @@ public class AccountManagementResource {
     public ResponseEntity<UserDTO>changeAdminInformations(@RequestBody UserDTO userDTO){
         return ResponseEntity.ok(accountManagementService.changeAdminInformations(userDTO));
     }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<UserDTO>updateUser(@PathVariable("id")Long id,@RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(accountManagementService.updateUser(id,userDTO));
+    }
+
+    @PutMapping("/groups/{id}")
+    public ResponseEntity<GroupDTO>updateGroup(@PathVariable("id")Long id,@RequestBody String groupName){
+        return ResponseEntity.ok(accountManagementService.updateGroup(id,groupName));
+    }
 }
