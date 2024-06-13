@@ -75,14 +75,16 @@ export class AddUserComponent implements OnInit,OnChanges {
     }
 
     submit() {
+        let user = this.addUpdateUserForm.value;
         if(this.addUpdateUserForm.invalid){
             this.addUpdateUserForm.markAllAsTouched();
             return;
         }
         if (this.userToUpdate != null) {
-            this.modifyUser.emit(this.addUpdateUserForm.value);
+            user.id= this.userToUpdate.id;
+            this.modifyUser.emit(user);
         } else {
-            this.saveUser.emit(this.addUpdateUserForm.value);
+            this.saveUser.emit(user);
         }
         this.onModalClose();
     }

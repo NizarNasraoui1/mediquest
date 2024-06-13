@@ -41,6 +41,7 @@ export class UserListComponent implements OnInit {
         this.addUpdateUserComponent.userToUpdate = user;
     }
 
+
     addNewUser(){
         this.addUpdateUserComponent.userToUpdate = null;
         this.displayModal();
@@ -51,7 +52,7 @@ export class UserListComponent implements OnInit {
         if(user!==null){
             this.userManagementService.addUser(user,user.group.id).subscribe({
                 next:(res)=>{
-                    this.toasterService.addSuccessMessage("l'utilisateur est ajouré avec succèes");
+                    this.toasterService.addSuccessMessage("l'utilisateur est ajouté avec succèes");
                     this.getUsers();
                 },
                 error:(err)=>{
@@ -60,6 +61,21 @@ export class UserListComponent implements OnInit {
         })
     }
 }
+
+    updateUser(user){
+        this.displayModal();
+        if(user!==null){
+            this.userManagementService.updateUser(user.id,user).subscribe({
+                next:(res)=>{
+                    this.toasterService.addSuccessMessage("l'utilisateur est mis à jour avec succèes");
+                    this.getUsers();
+                },
+                error:(err)=>{
+                    this.toasterService.addWarnMessage("le nom d'utilisateur est déja pris");
+                }
+        })
+    }
+    }
 
     onModalClosed(){
         this.isCreateUserModalVisible = false;

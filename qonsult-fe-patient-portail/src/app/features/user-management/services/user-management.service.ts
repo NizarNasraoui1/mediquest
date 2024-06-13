@@ -46,7 +46,7 @@ export class UserManagementService {
   }
 
   updateUser(id:number,user:User){
-    return this.httpUtil.put(`${PUT_USER}/${id}}`,user);
+    return this.httpUtil.put(`${PUT_USER}/${id}`,user);
   }
 
   updateGroup(id:number,groupName:string){

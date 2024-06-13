@@ -135,7 +135,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         if(user.getGroup().getId()!=userDTO.getGroup().getId()){
-            Group group = groupService.findById(userDTO.getId());
+            Group group = groupService.findById(userDTO.getGroup().getId());
             user.setGroup(group);
         }
         return userMapper.toDto(userService.saveUser(user));
