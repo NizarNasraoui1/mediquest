@@ -14,16 +14,20 @@ import com.qonsult.service.AccountManagementService;
 import com.qonsult.service.GroupService;
 import com.qonsult.service.RoleService;
 import com.qonsult.service.UserService;
+import com.qonsult.util.PasswordGenerator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AccountManagementServiceImpl implements AccountManagementService {
     private final UserMapper userMapper;
     private final GroupMapper groupMapper;
@@ -51,7 +55,9 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         Group group = groupService.findById(groupId);
         User user = userMapper.toBo(userDTO);
         user.setGroup(group);
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        String password = PasswordGenerator.generatePassword(12);
+        log.info("should send email with temporary password "+password);
+        user.setPassword(passwordEncoder.encode(password));
         return userMapper.toDto(userService.saveUser(user));
     }
 

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { UserManagementService } from '../../services/user-management.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Group } from 'src/app/shared/models/group';
 
 @Component({
     selector: 'app-add-user',
