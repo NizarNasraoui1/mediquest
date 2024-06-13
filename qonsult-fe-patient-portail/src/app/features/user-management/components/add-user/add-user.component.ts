@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { UserManagementService } from '../../services/user-management.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Group } from 'src/app/shared/models/group';
 
 @Component({
     selector: 'app-add-user',
@@ -16,7 +17,9 @@ export class AddUserComponent implements OnInit,OnChanges {
     userToUpdate: any;
     groups = [];
     title ='';
-    form;
+    addUpdateUserForm;
+    selectedGroup:Group;
+    displayAddGroupWarnMsg = false;
 
     constructor(private fb:FormBuilder, private userManagementService:UserManagementService){}
 
@@ -36,12 +39,14 @@ export class AddUserComponent implements OnInit,OnChanges {
         }
         else{
             this.title = "Créer";
+            this.initForm();
+            this.selectedGroup = null;
         }
         this.title = this.title + " l'utilisateur";
     }
 
     initForm(){
-        this.form = this.fb.group({
+        this.addUpdateUserForm = this.fb.group({
             firstName:['',[Validators.required]],
             lastName:['',[Validators.required]],
             username:['',[Validators.required]],
@@ -51,13 +56,14 @@ export class AddUserComponent implements OnInit,OnChanges {
     }
 
     populateForm(user){
-        this.form.setValue({
+        this.addUpdateUserForm.setValue({
             firstName: user.firstName || '',
             lastName: user.lastName || '',
             username: user.username || '',
             email: user.email || '',
             tel: user.tel || '',
         });
+        this.selectedGroup = user.group;
     }
 
     showDialog() {
@@ -67,15 +73,31 @@ export class AddUserComponent implements OnInit,OnChanges {
     getGroups(){
         this.userManagementService.getGroups().subscribe((res)=>{
             this.groups = res;
-        })
+        });
     }
 
     submit() {
-        console.log(this.form.value);
+        let isFormInvalid = false;
+        if(this.selectedGroup==null){
+            this.displayAddGroupWarnMsg = true;
+            isFormInvalid = true;
+        }
+        else{
+            this.displayAddGroupWarnMsg = false;
+        }
+        if(this.addUpdateUserForm.invalid){
+            this.addUpdateUserForm.markAllAsTouched();
+            isFormInvalid = true;
+        }
+        if(isFormInvalid) return;
+        let user = {
+            groupId:this.selectedGroup.id,
+            ...this.addUpdateUserForm.value
+        }
         if (this.userToUpdate != null) {
-            this.saveUser.emit("user");
+            this.modifyUser.emit(user);
         } else {
-            this.modifyUser.emit("updated user");
+            this.saveUser.emit(user);
         }
         this.onModalClose();
     }

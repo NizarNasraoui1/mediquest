@@ -3,32 +3,53 @@
         <div class="flex align-items-center gap-3 mb-5">
             <label for="email" class="font-semibold w-6rem">Groupe</label>
                 <p-dropdown
+                [(ngModel)]="selectedGroup"
                 class="select-group"
                 [options]="groups"
                 optionLabel="name"
                 placeholder="Groupe" />
         </div>
-        <form [formGroup]="form">
+        <p *ngIf="displayAddGroupWarnMsg" class="create-user-warn-msg">Veuillez sélectionner un groupe</p>
+        <form [formGroup]="addUpdateUserForm">
             <div class="flex align-items-center gap-3 mb-3">
                 <label for="firstName" class="font-semibold w-6rem">Nom</label>
                 <input formControlName="firstName" pInputText id="firstName" class="flex-auto" autocomplete="off" />
             </div>
+            <p class="create-user-warn-msg" *ngIf="addUpdateUserForm.get('firstName').errors && addUpdateUserForm.get('firstName').touched">
+                * ce champs est obligatoire
+            </p>
             <div class="flex align-items-center gap-3 mb-3">
                 <label for="lastName" class="font-semibold w-6rem">Prénom</label>
                 <input formControlName="lastName" pInputText id="lastName" class="flex-auto" autocomplete="off" />
+
             </div>
+                            <p class="create-user-warn-msg" *ngIf="addUpdateUserForm.get('lastName').errors && addUpdateUserForm.get('lastName').touched">
+                    * ce champs est obligatoire
+                </p>
             <div class="flex align-items-center gap-3 mb-3">
                 <label for="username" class="font-semibold w-6rem">Nom d'utilisateur</label>
                 <input formControlName="username" pInputText id="username" class="flex-auto" autocomplete="off" />
+
             </div>
+                            <p class="create-user-warn-msg" *ngIf="addUpdateUserForm.get('username').errors && addUpdateUserForm.get('username').touched">
+                    * ce champs est obligatoire
+                </p>
             <div class="flex align-items-center gap-3 mb-5">
                 <label for="email" class="font-semibold w-6rem">Email</label>
                 <input formControlName="email" pInputText id="email" class="flex-auto" autocomplete="off" />
+
             </div>
+                            <p class="create-user-warn-msg" *ngIf="addUpdateUserForm.get('email').errors && addUpdateUserForm.get('email').touched">
+                    * ce champs est obligatoire
+                </p>
             <div class="flex align-items-center gap-3 mb-5">
                 <label for="tel" class="font-semibold w-6rem">Tel</label>
                 <input pInputText formControlName="tel" id="tel" class="flex-auto" autocomplete="off" />
+
             </div>
+                            <p class="create-user-warn-msg" *ngIf="addUpdateUserForm.get('tel').errors && addUpdateUserForm.get('tel').touched">
+                    * ce champs est obligatoire
+                </p>
             <div class="flex justify-content-end gap-2">
                 <p-button label="Cancel" severity="secondary" (click)="cancel()" />
                 <p-button label="Save" (click)="submit()" />
