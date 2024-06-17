@@ -17,26 +17,52 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
-    private UUID uuid;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private String email;
-    private String tel;
-    private boolean enabled = true;
-    private boolean emailChecked = false;
-    private boolean accountInitialized = false;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id")
-    private Group group;
-    @CreatedDate
-    Date createdDate;
-    @LastModifiedDate
-    Date modifiedDate;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
+        private Long id;
+
+        @Column(name = "uuid")
+        private UUID uuid;
+
+        @Column(name = "first_name")
+        private String firstName;
+
+        @Column(name = "last_name")
+        private String lastName;
+
+        @Column(name = "username")
+        private String username;
+
+        @Column(name = "password")
+        private String password;
+
+        @Column(name = "email")
+        private String email;
+
+        @Column(name = "tel")
+        private String tel;
+
+        @Column(name = "enabled")
+        private boolean enabled = true;
+
+        @Column(name = "email_checked")
+        private boolean emailChecked = false;
+
+        @Column(name = "account_initialized")
+        private boolean accountInitialized = false;
+
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "group_id")
+        private Group group;
+
+        @CreatedDate
+        @Column(name = "created_date")
+        private Date createdDate;
+
+        @LastModifiedDate
+        @Column(name = "modified_date")
+        private Date modifiedDate;
 
 
 }

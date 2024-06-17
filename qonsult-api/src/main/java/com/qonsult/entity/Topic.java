@@ -18,8 +18,14 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name="topic_question",joinColumns = @JoinColumn(name="topic_id"),inverseJoinColumns = @JoinColumn(name="question_id"))
-    List<Question>questions = new ArrayList<>();
+    @JoinTable(
+            name = "topic_question",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
+    List<Question> questions = new ArrayList<>();
 }

@@ -3,17 +3,12 @@ import { NgModule } from '@angular/core';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { NotfoundComponent } from './features/notfound/notfound.component';
 import { AuthGardService as AuthGard } from './core/_services/auth-gard.service';
-import { HomeComponent } from './features/home/home/home.component';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
     {
         path: '',
-        component: HomeComponent,
-    },
-    {
-        path: 'home',
         component: AppLayoutComponent,
         children: [
             {

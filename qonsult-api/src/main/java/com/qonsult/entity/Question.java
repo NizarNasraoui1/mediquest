@@ -16,12 +16,22 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "rank")
     private int rank;
+
+    @Column(name = "label")
     private String label;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private QuestionTypeEnum type;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<CodeLabel> content = new ArrayList<>();
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Condition> conditions = new ArrayList<>();
 

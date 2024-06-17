@@ -22,22 +22,36 @@ import java.util.UUID;
 public class QuestionnaireRequest {
     @Id
     @GeneratedValue(generator = "UUID")
+    @Column(name = "id")
     private UUID id;
+
+    @Column(name = "appointment_date")
     private LocalDate appointmentDate;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "questionnaire_request_state")
     private QuestionnaireRequestStateEnum questionnaireRequestState = QuestionnaireRequestStateEnum.SENT;
-    @Column(name="used_for_qr_code")
+
+    @Column(name = "used_for_qr_code")
     private boolean usedForQrCode = false;
+
     @Column(name = "created_date", updatable = false)
     @CreatedDate
     private Date createdDate;
+
     @CreatedDate
     private Date passedDate;
+
     @ManyToOne
-    @JoinColumn(name="questionnaire_model_id")
-    QuestionnaireModel questionnaireModel;
+    @JoinColumn(name = "questionnaire_model_id")
+    private QuestionnaireModel questionnaireModel;
+
     @OneToOne
-    @JoinTable(name = "questionnaire_request_response",joinColumns = @JoinColumn(name="questionnaire_request_id"),inverseJoinColumns = @JoinColumn(name = "questionnaire_response_id"))
-    QuestionnaireResponse questionnaireResponse;
+    @JoinTable(
+            name = "questionnaire_request_response",
+            joinColumns = @JoinColumn(name = "questionnaire_request_id"),
+            inverseJoinColumns = @JoinColumn(name = "questionnaire_response_id")
+    )
+    private QuestionnaireResponse questionnaireResponse;
 
 }

@@ -14,21 +14,25 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "security_group")
 @EntityListeners(AuditingEntityListener.class)
 public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
     @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name="account_id")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToMany
@@ -41,12 +45,14 @@ public class Group {
     private List<Role> roles = new ArrayList<>();
 
     @CreatedDate
-    Date createdDate;
+    @Column(name = "created_date")
+    private Date createdDate;
 
     @LastModifiedDate
-    Date modifiedDate;
+    @Column(name = "modified_date")
+    private Date modifiedDate;
 
-    public Group(String roleName){
+    public Group(String roleName) {
         this.name = roleName;
     }
 }

@@ -15,8 +15,12 @@ import java.util.List;
 public class QuestionnaireModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
     @OneToMany(cascade = CascadeType.PERSIST)
-    List<Topic>topics = new ArrayList<>();
+    private List<Topic> topics = new ArrayList<>();
 }

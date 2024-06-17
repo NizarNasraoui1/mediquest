@@ -15,14 +15,19 @@ import java.util.UUID;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private UUID uuid;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "address")
     private String address;
+
     @OneToMany(mappedBy = "account")
-    List<Group>groups;
+    private List<Group> groups;
 
     @OneToOne
     @JoinColumn(name = "schema_id")
-    Schema schema;
+    private Schema schema;
 }
