@@ -53,6 +53,6 @@ export class LoginComponent implements OnInit {
 
 
     navigateToMainPage(): void {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
     }
 }
