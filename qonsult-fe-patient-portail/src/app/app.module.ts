@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -26,8 +26,7 @@ import {provideClientHydration} from '@angular/platform-browser';
         MatSelectModule,
         ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        provideClientHydration(),
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
         authInterceptorProviders,
         AuthService,
         HttpUtilService,
