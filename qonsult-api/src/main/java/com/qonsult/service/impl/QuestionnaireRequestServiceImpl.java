@@ -31,14 +31,12 @@ public class QuestionnaireRequestServiceImpl implements QuestionnaireRequestServ
     @Override
     public QuestionnaireModelDTO getQuestionnaireModelByQuestionnaireRequestId(UUID id) throws QuestionnaireAlreadyPassedException {
         QuestionnaireRequest questionnaireRequest = questionnaireRequestRepository.findById(id).orElseThrow(()->new EntityNotFoundException("questionnaire request not found"));
-        switch (questionnaireRequest.getQuestionnaireRequestState()){
-            case SENT:{
-                questionnaireRequest.setQuestionnaireRequestState(QuestionnaireRequestStateEnum.OPENED);
-                questionnaireRequestRepository.save(questionnaireRequest);
-            }
-            case TERMINATED:{
-                throw new QuestionnaireAlreadyPassedException("questionnaire already passed");
-            }
+        if(questionnaireRequest.getQuestionnaireRequestState()==QuestionnaireRequestStateEnum.SENT){
+            questionnaireRequest.setQuestionnaireRequestState(QuestionnaireRequestStateEnum.OPENED);
+            questionnaireRequestRepository.save(questionnaireRequest);
+        }
+        if(questionnaireRequest.getQuestionnaireRequestState()==QuestionnaireRequestStateEnum.TERMINATED){
+            throw new QuestionnaireAlreadyPassedException("questionnaire already passed");
         }
         return questionnaireModelMapper.toDto(questionnaireRequest.getQuestionnaireModel());
     }
