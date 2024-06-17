@@ -23,11 +23,11 @@ export class GroupManagementComponent implements OnInit {
     getGroups(){
         this.userManagementService.getGroups().subscribe((res)=>{
             this.groups = res;
-        })
+        });
     }
 
-    deleteGroup(id){
-
+    deleteGroup(group){
+        console.log(group);
     }
 
     displayModal(){

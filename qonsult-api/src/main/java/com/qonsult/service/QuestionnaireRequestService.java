@@ -1,6 +1,7 @@
 package com.qonsult.service;
 
 import com.qonsult.dto.QuestionnaireModelDTO;
+import com.qonsult.dto.QuestionnairePassedDTO;
 import com.qonsult.entity.QuestionnaireModel;
 import com.qonsult.entity.QuestionnaireRequest;
 import com.qonsult.exception.QuestionnaireAlreadyPassedException;
@@ -18,4 +19,6 @@ public interface QuestionnaireRequestService {
     QuestionnaireRequest saveQuestionnaireRequestFromModel(QuestionnaireModel questionnaireModel);
 
     QuestionnaireRequest createQuestionnaireRequestFromModel(QuestionnaireModel questionnaireModel);
+
+    QuestionnairePassedDTO getPassedQuestionnaireInformations(UUID id);
 }

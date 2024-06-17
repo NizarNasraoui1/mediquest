@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QuestionnaireBuilderService } from '../../services/questionnaire-builder.service';
+import { ToasterService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-questionnaire-builder',
@@ -10,7 +12,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class QuestionnaireBuilderComponent implements OnInit {
     form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private questionnaireBuilderService:QuestionnaireBuilderService,private toasterService:ToasterService) {
     this.form = this.fb.group({
       sections: this.fb.array([]),
       questionnaireTitle:['']
@@ -36,6 +38,11 @@ export class QuestionnaireBuilderComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.questionnaireBuilderService.saveQuestionnaire(this.form.value).subscribe((res)=>{
+        this.toasterService.addSuccessMessage("Le Questionnaire a été enregistré avec succèes");
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+    })
   }
 }

@@ -21,7 +21,7 @@ public class InitRoles implements DBInitializer{
         return !roleRepository.findAll().isEmpty();
     }
     public void initRoles(){
-        List<String>rolesNames = Arrays.asList("ADD_QUESTIONNAIRE","READ_QUESTIONNAIRE","REMOVE_QUESTIONNAIRE");
+        List<String>rolesNames = Arrays.asList("ADD_QUESTIONNAIRE","READ_QUESTIONNAIRE","REMOVE_QUESTIONNAIRE","SEND_QUESTIONNAIRE","USER_MANAGEMENT");
         List<Role> roles = getRolesFromNames(rolesNames);
         roleRepository.saveAll(roles);
     }

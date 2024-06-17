@@ -1,6 +1,7 @@
 package com.qonsult.service.impl;
 
 import com.qonsult.dto.QuestionnaireModelDTO;
+import com.qonsult.dto.QuestionnairePassedDTO;
 import com.qonsult.dto.QuestionnaireRequestDTO;
 import com.qonsult.entity.QuestionnaireModel;
 import com.qonsult.entity.QuestionnaireRequest;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +41,14 @@ public class QuestionnaireRequestServiceImpl implements QuestionnaireRequestServ
             }
         }
         return questionnaireModelMapper.toDto(questionnaireRequest.getQuestionnaireModel());
+    }
+
+    public QuestionnairePassedDTO getPassedQuestionnaireInformations(UUID id){
+        QuestionnaireRequest questionnaireRequest = questionnaireRequestRepository.findById(id).orElseThrow(()->new EntityNotFoundException("questionnaire request not found"));
+        QuestionnairePassedDTO questionnairePassedDTO = new QuestionnairePassedDTO();
+        questionnairePassedDTO.setQuestionnaireId(questionnaireRequest.getId());
+        questionnairePassedDTO.setCompletionDate(questionnaireRequest.getPassedDate());
+        return questionnairePassedDTO;
     }
 
     @Override

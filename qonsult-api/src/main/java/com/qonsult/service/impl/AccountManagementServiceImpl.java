@@ -24,6 +24,7 @@ import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +41,13 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
     public List<UserDTO> getAllUsersBySchema(){
         String schemaName = tenantSchemaResolver.resolveCurrentTenantIdentifier();
-        return userMapper.toDtos(userService.findAllBySchemaName(schemaName));
+        User currentUser = getCurrentUser();
+        return userMapper.toDtos(userService.findAllBySchemaName(schemaName).stream().filter((user)->user.getUsername()!= currentUser.getUsername()).collect(Collectors.toList()));
     }
 
     @Override
     public List<GroupDTO> getAccountGroups() {
-        return groupMapper.toDtos(getCurrentAdmin().getGroup().getAccount().getGroups());
+        return groupMapper.toDtos(getCurrentUser().getGroup().getAccount().getGroups());
     }
 
     public UserDTO addUserToGroup(Long groupId,UserDTO userDTO) throws UsernameExistsException {
@@ -62,7 +64,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
     }
 
     public GroupDTO addGroup(String groupName){
-        Account adminAccount = getCurrentAdmin().getGroup().getAccount();
+        Account adminAccount = getCurrentUser().getGroup().getAccount();
         Group group = new Group();
         group.setName(groupName);
         group.setAccount(adminAccount);
@@ -97,16 +99,16 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         });
     }
 
-    private User getCurrentAdmin(){
+    private User getCurrentUser(){
         return userService.loadUserByUsername(userService.getCurrentUserUsername());
     }
 
     public UserDTO getAdminInformations(){
-        return userMapper.toDto(getCurrentAdmin());
+        return userMapper.toDto(getCurrentUser());
     }
 
     public void changePassword(ChangePasswordDTO changePasswordDTO) throws AuthenticationException {
-        User user = getCurrentAdmin();
+        User user = getCurrentUser();
         if(!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())){
             throw new AuthenticationException("wrong password");
         }
@@ -115,7 +117,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
     }
 
     public UserDTO changeAdminInformations(UserDTO userDTO){
-        User user = getCurrentAdmin();
+        User user = getCurrentUser();
         user.setTel(userDTO.getTel());
         user.setEmail(userDTO.getEmail());
         user.setFirstName(userDTO.getFirstName());

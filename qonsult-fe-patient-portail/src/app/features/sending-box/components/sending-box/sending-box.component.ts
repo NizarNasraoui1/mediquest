@@ -5,6 +5,7 @@ import {
     OnInit,
     Renderer2,
     ViewChild,
+    ViewContainerRef,
     ViewEncapsulation,
 } from '@angular/core';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -20,6 +21,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToasterService } from 'src/app/shared/services/toast.service';
 import { SubSink } from 'subsink';
 import { DropdownModule } from 'primeng/dropdown';
+import { QuestionnaireComponent } from 'src/app/features/dentist-questionnaire/components/question/questionnaire.component';
 
 interface AutoCompleteCompleteEvent {
     originalEvent: Event;
@@ -46,6 +48,7 @@ interface AutoCompleteCompleteEvent {
     encapsulation: ViewEncapsulation.None,
 })
 export class SendingBoxComponent implements OnInit, OnDestroy {
+    @ViewChild('questionnaireComponent',{read:ViewContainerRef}) formRef!:ViewContainerRef;
     selected: Date | null;
     selectedItems: any[] | undefined = [];
     questionnaireNames: any[] | undefined = [];
@@ -146,6 +149,17 @@ export class SendingBoxComponent implements OnInit, OnDestroy {
                     window.location.reload();
                 }, 2000);
             });
+    }
+
+    showQuestionnaire(id){
+        this.formRef.clear();
+        const componentRef=this.formRef.createComponent(QuestionnaireComponent);
+        componentRef.instance.preview= true;
+        componentRef.instance.id = id;
+    }
+
+    viewQuestionnaire(){
+        this.showQuestionnaire(this.form.value.questionnaire.questionnaireRequest);
     }
 
     ngOnDestroy(): void {

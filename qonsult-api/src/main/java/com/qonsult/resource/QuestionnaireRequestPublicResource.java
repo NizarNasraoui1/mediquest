@@ -1,6 +1,7 @@
 package com.qonsult.resource;
 
 import com.qonsult.dto.QuestionnaireModelDTO;
+import com.qonsult.dto.QuestionnairePassedDTO;
 import com.qonsult.exception.QuestionnaireAlreadyPassedException;
 import com.qonsult.service.QuestionnaireRequestService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,15 @@ public class QuestionnaireRequestPublicResource {
     private final QuestionnaireRequestService questionnaireRequestService;
 
     @GetMapping("/{id}/questionnaire-model")
-    public ResponseEntity<QuestionnaireModelDTO> getQuestionnaireModelByQuestionnaireRequestId(@PathVariable UUID id) throws QuestionnaireAlreadyPassedException {
-        return ResponseEntity.ok().body(questionnaireRequestService.getQuestionnaireModelByQuestionnaireRequestId(id));
+    public ResponseEntity<?> getQuestionnaireModelByQuestionnaireRequestId(@PathVariable UUID id) {
+        try{
+            QuestionnaireModelDTO questionnaireModelDTO = questionnaireRequestService.getQuestionnaireModelByQuestionnaireRequestId(id);
+            return ResponseEntity.ok().body(questionnaireModelDTO);
+        }
+        catch(QuestionnaireAlreadyPassedException questionnaireAlreadyPassedException){
+            QuestionnairePassedDTO questionnairePassedDTO = questionnaireRequestService.getPassedQuestionnaireInformations(id);
+            return ResponseEntity.ok(questionnairePassedDTO);
+        }
+
     }
 }

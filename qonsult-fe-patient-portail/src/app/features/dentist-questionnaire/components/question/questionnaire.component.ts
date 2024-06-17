@@ -1,19 +1,13 @@
 import {
     Component,
     Input,
-    Output,
-    EventEmitter,
     OnInit,
     ViewEncapsulation,
     NgZone,
-    OnChanges,
-    SimpleChanges,
 } from '@angular/core';
 import {
     FormGroup,
     FormBuilder,
-    Validators,
-    FormArray,
     FormControl,
 } from '@angular/forms';
 import { Question } from '../../models/question';
@@ -29,7 +23,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Signature } from 'src/app/shared/models/signature';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'src/app/shared/services/toast.service';
-import { Condition } from '../../models/condition';
 import { CodeLabel } from 'src/app/shared/models/code-label';
 import { ArraysUtil } from 'src/app/util/arrays-util';
 import { NumbersUtil } from 'src/app/util/numbers-util';
@@ -42,9 +35,9 @@ registerLocaleData(localeFr, 'fr');
     styleUrls: ['./questionnaire.component.css'],
     encapsulation: ViewEncapsulation.None,
 })
-export class QuestionnaireComponent implements OnInit, OnChanges {
-    @Input() preview = false;
-    @Input() id: string;
+export class QuestionnaireComponent implements OnInit {
+    preview = false;
+    id: string;
     questionnaire: Questionnaire;
     generalInformtionsForm: FormGroup;
     questionForm!: FormGroup;
@@ -66,13 +59,10 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     constructor(
         private fb: FormBuilder,
         private questionnaireService: QuestionnaireService,
-        private elRef: ElementRef,
         private primengConfig: PrimeNGConfig,
         public dialog: MatDialog,
-        private zone: NgZone,
         private activatedRoute: ActivatedRoute,
         private toasterService: ToasterService,
-        private router:Router
     ) {
         this.configureCalendarLanguage();
     }
@@ -88,21 +78,17 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.getQuestionnaireAndInitParams();
-    }
-
     getQuestionnaireAndInitParams() {
-        this.questionnaireService.getQuestions(this.id).subscribe({
-            next: (res) => {
+        this.questionnaireService.getQuestions(this.id).subscribe((res)=>{
+            if(res.passed){
+                this.questionnaireAlreadyPassed = true;
+                return;
+            }
             this.questionnaire = res;
             this.initForms();
             this.generateTopicQuestionsMap();
             this.initializeQuestionnaireSubArray();
-            },
-            error: ()=>{
-                this.questionnaireAlreadyPassed = true;
-            }
+
         });
     }
 

@@ -13,10 +13,10 @@
                 <td>{{ group.name }}</td>
                 <td>{{group.createdDate | date:'dd/MM/yyyy'}}</td>
                 <td>
-                    <button (click)="modifyGroup(group)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
+                    <button *ngIf="group.name!='ADMIN'" (click)="modifyGroup(group)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success p-button-outlined"></button>
                 </td>
                 <td>
-                    <button (click)="deleteGroup(group)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
+                    <button *ngIf="group.name!='ADMIN'" (click)="deleteGroup(group)" [ngStyle]="{'margin-bottom':'2%'}" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"></button>
                 </td>
             </tr>
         </ng-template>

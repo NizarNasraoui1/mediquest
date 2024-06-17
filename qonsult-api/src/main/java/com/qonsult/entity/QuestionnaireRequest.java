@@ -31,6 +31,8 @@ public class QuestionnaireRequest {
     @Column(name = "created_date", updatable = false)
     @CreatedDate
     private Date createdDate;
+    @CreatedDate
+    private Date passedDate;
     @ManyToOne
     @JoinColumn(name="questionnaire_model_id")
     QuestionnaireModel questionnaireModel;

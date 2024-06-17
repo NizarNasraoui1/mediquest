@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Group } from 'src/app/shared/models/group';
 
 @Component({
   selector: 'app-add-group',
@@ -44,7 +43,6 @@ export class AddGroupComponent implements OnInit,OnChanges {
         if (this.groupToUpdate != null) {
             group["id"] = this.groupToUpdate.id;
             this.modifyGroup.emit(group);
-            console.log(group)
         } else {
             this.saveGroup.emit(group);
         }

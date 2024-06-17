@@ -45,13 +45,14 @@
             <div class="questionnaire-preview-container">
                 <p class="field">Selectionner un questionnaire :</p>
                 <div>
-                    <p-dropdown [options]="questionnaireNames" formControlName="questionnaire" placeholder="selectionner un questionnaire" [editable]="true" optionLabel="name"></p-dropdown>
+                    <p-dropdown (onChange)="viewQuestionnaire()" [options]="questionnaireNames" formControlName="questionnaire" placeholder="selectionner un questionnaire" [editable]="true" optionLabel="name"></p-dropdown>
                 </div>
 
                 <div class="consent-preview">
                     <div class="sign-questionnaire-preview">
+                        <ng-template #questionnaireComponent></ng-template>
                         <!-- <app-sign-consent *ngIf="form.value.consent.consentId;else noConsentSelected" [consentRequestId]="form.value.consent.consentRequestId"></app-sign-consent> -->
-                        <app-question *ngIf="form.value.questionnaire.questionnaireRequest;else noQuestionnaireSelected" [preview]="true" [id]="form.value.questionnaire.questionnaireRequest"></app-question>
+                        <!-- <app-question *ngIf="form.value.questionnaire.questionnaireRequest;else noQuestionnaireSelected" [preview]="true" [id]="form.value.questionnaire.questionnaireRequest"></app-question> -->
 
                     </div>
                     <ng-template #noQuestionnaireSelected>
